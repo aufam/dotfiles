@@ -1,3 +1,7 @@
+" cd
+" curl https://raw.githubusercontent.com/aufam/configs/main/.vimrc
+
+
 set number
 set relativenumber
 set spell
