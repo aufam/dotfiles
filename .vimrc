@@ -1,5 +1,4 @@
-" cd
-" curl https://raw.githubusercontent.com/aufam/configs/main/.vimrc
+" curl -fLo ~/.vimrc https://raw.githubusercontent.com/aufam/configs/main/.vimrc
 
 
 set number
