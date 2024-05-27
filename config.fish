@@ -1,4 +1,4 @@
-# curl -fLo
+# curl -fLo ~/.config/fish/config.fish --create-dirs https://raw.githubusercontent.com/aufam/configs/main/config.fish
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
