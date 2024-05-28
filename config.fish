@@ -7,4 +7,4 @@ end
 # sudo apt install bat exa
 alias cat batcat
 alias ls exa
-alias ll exa -l
+alias ll 'exa -l'
