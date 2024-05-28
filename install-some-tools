@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # sudo curl https://raw.githubusercontent.com/aufam/configs/main/install-some-tools | bash
-sudo apt install vim fish htop neofetch axel bat fzf fd-find rsync httpie
+sudo apt install vim fish htop neofetch axel bat exa fzf fd-find rsync httpie
 sudo pip install thefuck
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
