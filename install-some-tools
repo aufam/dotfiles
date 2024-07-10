@@ -1,10 +1,28 @@
 #!/usr/bin/env bash
 
-# Install some usefull cli
-# how to use:
-# curl https://raw.githubusercontent.com/aufam/configs/main/install-some-tools | bash
+# Install some useful CLI tools
+# How to use:
+# curl -s https://raw.githubusercontent.com/aufam/configs/main/install-some-tools | bash
 
-sudo apt install git cmake curl build-essential python3-pip vim fish btop neofetch axel bat exa fzf fd-find rsync ascii duf
+# Update and install dependencies
+sudo apt update
+sudo apt install -y git cmake curl build-essential python3-pip vim fish btop neofetch axel bat exa fzf fd-find rsync ascii duf
+
+# Install Python packages
 sudo pip install httpie thefuck
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+
+# Install Vim-Plug
+if [ ! -f ~/.vim/autoload/plug.vim ]; then
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+else
+  echo "Vim-Plug already installed."
+fi
+
+# Install Oh My Fish
+if ! command -v fish &> /dev/null; then
+  echo "Fish shell is not installed. Skipping Oh My Fish installation."
+else
+  curl -L https://get.oh-my.fish | fish
+fi
+
+echo "Installation complete."
