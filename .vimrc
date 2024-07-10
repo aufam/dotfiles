@@ -25,7 +25,7 @@ set expandtab
 set autoindent
 set backspace=indent,eol,start
 set list
-set listchars=tab:▶︎\ ,trail:•
+set listchars=tab:\ \ ,trail:-
 
 " highlight and search
 set hlsearch
@@ -47,6 +47,7 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
 " status line
+set cursorline
 set modeline
 set modelines=10
 set title
@@ -60,13 +61,11 @@ if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
 noremap YY "+y<CR>
-noremap  "+gP<CR>
+noremap <leader>p "+gP<CR>
 noremap XX "+x<CR>
 
 " buffer nav
-noremap <leader>z :bp<CR>
 noremap <leader>q :bp<CR>
-noremap <leader>x :bn<CR>
 noremap <leader>w :bn<CR>
 noremap <leader>c :bd<CR>
 
@@ -104,7 +103,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
-Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
@@ -150,6 +148,9 @@ autocmd FileType c,cpp setlocal commentstring=//\ %s
 " floaterm
 nnoremap <silent> <leader>sh :FloatermToggle<CR>
 
+" ale
+let g:ale_linters = {}
+
 " fzf
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
@@ -179,7 +180,7 @@ augroup END
 " python
 augroup vimrc-python
   autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4
       \ formatoptions+=croq softtabstop=4
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
