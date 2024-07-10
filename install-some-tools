@@ -6,7 +6,7 @@
 
 # Update and install dependencies
 sudo apt update
-sudo apt install -y git cmake curl build-essential python3-pip vim fish btop neofetch axel bat exa fzf fd-find rsync ascii ripgrep
+sudo apt install -y git cmake curl build-essential python3-pip vim fish btop neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
 
 if grep -q "ARM" /proc/cpuinfo; then
   sudo apt install -y htop
