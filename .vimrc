@@ -1,3 +1,10 @@
+" ~/.vimrc
+"
+" This is the Vim configuration file used by the user. It includes settings
+" for general usability, indentation, search behavior, key mappings, plugin
+" management using vim-plug, color scheme preferences, and filetype-specific
+" configurations for C/C++, HTML, JavaScript, and Python.
+"
 " curl -fLo ~/.vimrc https://raw.githubusercontent.com/aufam/configs/main/.vimrc
 
 " common settings
@@ -20,7 +27,7 @@ set backspace=indent,eol,start
 set list
 set listchars=tab:▶︎\ ,trail:●
 
-" enable highlight search pattern
+" highlight and search
 set hlsearch
 set incsearch
 set hidden
@@ -28,6 +35,8 @@ set ignorecase
 set smartcase
 set wildmenu
 nnoremap <silent> <leader><space> :noh<cr>
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " maintain visual mode after shifting > and <
 vmap < <gv
@@ -45,11 +54,6 @@ set titleold="Terminal"
 set titlestring=%F
 set laststatus=2
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-nnoremap n nzzzv
-nnoremap N Nzzzv
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
 
 " copy paste cut
 if has('unnamedplus')
@@ -96,7 +100,6 @@ Plug 'voldikss/vim-floaterm'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -106,16 +109,10 @@ Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
-Plug 'editor-bootstrap/vim-bootstrap-updater'
-Plug 'tpope/vim-rhubarb' " required by fugitive to :GBrowse
 
 " vim session
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-
-" snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
 " html
 Plug 'hail2u/vim-css3-syntax'
