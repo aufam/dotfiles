@@ -25,7 +25,7 @@ set expandtab
 set autoindent
 set backspace=indent,eol,start
 set list
-set listchars=tab:▶︎\ ,trail:●
+set listchars=tab:▶︎\ ,trail:•
 
 " highlight and search
 set hlsearch
@@ -147,6 +147,9 @@ colorscheme ayu
 " comment string for c/cpp
 autocmd FileType c,cpp setlocal commentstring=//\ %s
 
+" floaterm
+nnoremap <silent> <leader>sh :FloatermToggle<CR>
+
 " fzf
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
@@ -172,7 +175,6 @@ augroup vimrc-javascript
   autocmd!
   autocmd FileType javascript setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
 augroup END
-
 
 " python
 augroup vimrc-python
