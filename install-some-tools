@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+# Install some usefull cli
+# how to use:
 # curl https://raw.githubusercontent.com/aufam/configs/main/install-some-tools | bash
-sudo apt install git cmake build-essential python3-pip vim fish btop neofetch axel bat exa fzf fd-find rsync httpie ascii duf
-sudo pip install thefuck
+
+sudo apt install git cmake curl build-essential python3-pip vim fish btop neofetch axel bat exa fzf fd-find rsync ascii duf
+sudo pip install httpie thefuck
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
