@@ -12,15 +12,22 @@ set number
 set relativenumber
 set wrap!
 set mouse=a
+set scrolloff=8
 set autoread
+set cursorline
 let mapleader=','
 syntax on
+
+" encoding
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+set ttyfast
 
 " indentation
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set scrolloff=8
 set expandtab
 set autoindent
 set backspace=indent,eol,start
@@ -47,7 +54,6 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
 " status line
-set cursorline
 set modeline
 set modelines=10
 set title
@@ -82,6 +88,25 @@ cnoreabbrev Q q
 cnoreabbrev Qall qall
 command! FixWhitespace :%s/\s\+$//e
 
+" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
+augroup vimrc-sync-fromstart
+  autocmd!
+  autocmd BufEnter * :syntax sync maxlines=200
+augroup END
+
+" remember cursor position
+augroup vimrc-remember-cursor-position
+  autocmd!
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+
+" make/cmake
+augroup vimrc-make-cmake
+  autocmd!
+  autocmd FileType make setlocal noexpandtab
+  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+augroup END
+
 " plugin
 call plug#begin('~/.vim/plugged')
 if isdirectory('/usr/local/opt/fzf')
@@ -104,7 +129,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
 Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 
@@ -146,7 +170,7 @@ colorscheme ayu
 autocmd FileType c,cpp setlocal commentstring=//\ %s
 
 " floaterm
-nnoremap <silent> <leader>sh :FloatermToggle<CR>
+nnoremap <silent> <leader>sh :terminal<CR>
 
 " ale
 let g:ale_linters = {}
@@ -166,6 +190,24 @@ if executable('rg')
   set grepprg=rg\ --vimgrep
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 endif
+
+" NERDTree
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['node_modules','\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,*node_modules/
+nnoremap <silent> <F2> :NERDTreeFind<CR>
+nnoremap <silent> <F3> :NERDTreeToggle<CR>
+
+" grep.vim
+nnoremap <silent> <leader>f :Rgrep<CR>
+let Grep_Default_Options = '-IR'
+let Grep_Skip_Files = '*.log *.db'
+let Grep_Skip_Dirs = '.git node_modules'
 
 " html
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
@@ -197,12 +239,17 @@ let python_highlight_all = 1
 :call extend(g:ale_linters, {
     \'python': ['flake8'], })
 
+" IndentLine
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = ''
+let g:indentLine_char = '┆'
+let g:indentLine_faster = 1
+
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-
 let g:airline#extensions#tabline#left_sep     = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_left_sep                        = '▶'
