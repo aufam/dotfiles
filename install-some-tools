@@ -15,7 +15,7 @@ else
 fi
 
 # Install Python packages
-sudo pip install httpie thefuck
+sudo pip install httpie thefuck --break-system-packages
 
 # Install Vim-Plug
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
