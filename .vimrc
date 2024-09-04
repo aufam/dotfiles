@@ -3,7 +3,7 @@
 " This is the Vim configuration file used by the user. It includes settings
 " for general usability, indentation, search behavior, key mappings, plugin
 " management using vim-plug, color scheme preferences, and filetype-specific
-" configurations for C/C++, Python, Go, and Rust.
+" configurations for C/C++, HTML, JavaScript, and Python.
 "
 " curl -fLo ~/.vimrc https://raw.githubusercontent.com/aufam/configs/main/.vimrc
 
@@ -187,8 +187,26 @@ endif
 " comment string for c/cpp
 autocmd FileType c,cpp setlocal commentstring=//\ %s
 
+" Toggle YCM activation
+command! ToggleYcm call ToggleYcm()
+
+function! ToggleYcm()
+    if exists("g:ycm_active") && g:ycm_active
+        let g:ycm_active = 0
+        " Disable YCM
+        autocmd! User YcmIdle * call ToggleYcm()
+        echo "YCM disabled"
+    else
+        let g:ycm_active = 1
+        " Enable YCM
+        autocmd User YcmIdle call ToggleYcm()
+        echo "YCM enabled"
+    endif
+endfunction
+
 " floaterm
 nnoremap <silent> <leader>sh :terminal<CR>
+nnoremap <F12> :FloatermToggle<CR>
 
 " ale
 let g:ale_linters = {}
