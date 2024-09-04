@@ -3,7 +3,7 @@
 " This is the Vim configuration file used by the user. It includes settings
 " for general usability, indentation, search behavior, key mappings, plugin
 " management using vim-plug, color scheme preferences, and filetype-specific
-" configurations for C/C++, HTML, JavaScript, and Python.
+" configurations for C/C++, Python, Go, and Rust.
 "
 " curl -fLo ~/.vimrc https://raw.githubusercontent.com/aufam/configs/main/.vimrc
 
