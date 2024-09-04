@@ -107,6 +107,18 @@ augroup vimrc-make-cmake
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
 
+if executable('cmake-language-server')
+  au User lsp_setup call lsp#register_server({
+  \ 'name': 'cmake',
+  \ 'cmd': {server_info->['cmake-language-server']},
+  \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'build/'))},
+  \ 'whitelist': ['cmake'],
+  \ 'initialization_options': {
+  \   'buildDirectory': 'build',
+  \ }
+  \})
+endif
+
 " plugin
 call plug#begin('~/.vim/plugged')
 if isdirectory('/usr/local/opt/fzf')
@@ -165,6 +177,12 @@ endif
 set termguicolors
 let ayucolor="dark"
 colorscheme ayu
+
+if $TERM == "xterm-kitty"
+    let &t_ut=''
+    colorscheme default
+    set nocursorline
+endif
 
 " comment string for c/cpp
 autocmd FileType c,cpp setlocal commentstring=//\ %s
