@@ -145,6 +145,7 @@ Plug 'Yggdroot/indentLine'
 
 " themes
 Plug 'alligator/accent.vim'
+Plug 'davidosomething/vim-colors-meh'
 Plug 'ayu-theme/ayu-vim'
 
 " vim session
@@ -181,7 +182,8 @@ set termguicolors
 let ayucolor="dark"
 " colorscheme ayu
 let g:accent_darken = 1
-colorscheme accent
+" colorscheme accent
+colorscheme meh
 
 if $TERM == "xterm-kitty"
     let &t_ut=''
