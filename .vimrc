@@ -128,7 +128,6 @@ else
   Plug 'junegunn/fzf.vim'
 endif
 
-Plug 'ayu-theme/ayu-vim'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'sheerun/vim-polyglot'
 Plug 'bfrg/vim-cpp-modern'
@@ -143,6 +142,10 @@ Plug 'vim-scripts/grep.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
+
+" themes
+Plug 'alligator/accent.vim'
+Plug 'ayu-theme/ayu-vim'
 
 " vim session
 Plug 'xolox/vim-misc'
@@ -176,33 +179,16 @@ if !has('gui_running')
 endif
 set termguicolors
 let ayucolor="dark"
-colorscheme ayu
+" colorscheme ayu
+let g:accent_darken = 1
+colorscheme accent
 
 if $TERM == "xterm-kitty"
     let &t_ut=''
-    colorscheme default
-    set nocursorline
 endif
 
 " comment string for c/cpp
 autocmd FileType c,cpp setlocal commentstring=//\ %s
-
-" Toggle YCM activation
-command! ToggleYcm call ToggleYcm()
-
-function! ToggleYcm()
-    if exists("g:ycm_active") && g:ycm_active
-        let g:ycm_active = 0
-        " Disable YCM
-        autocmd! User YcmIdle * call ToggleYcm()
-        echo "YCM disabled"
-    else
-        let g:ycm_active = 1
-        " Enable YCM
-        autocmd User YcmIdle call ToggleYcm()
-        echo "YCM enabled"
-    endif
-endfunction
 
 " floaterm
 nnoremap <silent> <leader>sh :terminal<CR>
