@@ -2,6 +2,7 @@
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
+    neofetch
 end
 
 # sudo apt install bat exa
