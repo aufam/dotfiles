@@ -5,13 +5,20 @@ if status is-interactive
     neofetch
 end
 
-# sudo apt install bat exa
+# aliases
 alias cat batcat
-alias ls 'exa --group-directories-first'
-alias la 'exa -a --group-directories-first'
-alias ll 'exa -l --group-directories-first'
-alias lt 'exa -T --group-directories-first'
+alias ls 'eza --group-directories-first'
+alias la 'eza -a --group-directories-first'
+alias ll 'eza -l --group-directories-first'
+alias lt 'eza -T --group-directories-first'
 alias please 'echo sudo $history[1] && eval command sudo $history[1]'
+alias .. "cd .."
+alias ... "cd ../.."
+alias .... "cd ../../.."
+alias ..... "cd ../../../.."
+
+# CPM.cmake
+set CPM_SOURCE_CACHE $HOME/.cache/CPM
 
 # bobthefish theme
 set -g fish_prompt_pwd_dir_length 0
