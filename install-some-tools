@@ -4,7 +4,7 @@
 # How to use:
 # curl -s https://raw.githubusercontent.com/aufam/configs/main/install-some-tools | bash
 
-# Update and install dependencies
+### Some useful CLI tools
 sudo apt update
 sudo apt install -y git cmake curl build-essential ninja-build python3-pip vim-gtk3 fish neofetch axel bat eza fzf fd-find rsync ascii ripgrep xclip
 
@@ -14,27 +14,28 @@ else
   sudo apt install -y btop cpufetch duf
 fi
 
-# Install Python packages
 sudo pip install httpie thefuck cmake-language-server --break-system-packages
 
-# Install Vim-Plug
+### Vim setup
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 else
   echo "Vim-Plug already installed."
 fi
+curl https://raw.githubusercontent.com/aufam/configs/main/.vimrc -o ~/.vimrc
+vim -u NONE -c 'source ~/.vim/plugins.vim' -c 'PlugInstall' -c 'qa'
+python3 ~/.vim/plugged/YouCompleteMe/install.py
 
-# Install Kitty
+### Kitty
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 
-# Install Oh My Fish
+### Fish setup
 if ! command -v fish &> /dev/null; then
   echo "Fish shell is not installed. Skipping Oh My Fish installation."
 else
   curl -L https://get.oh-my.fish | fish
 fi
-
 omf install bobthefish
-curl https://raw.githubusercontent.com/aufam/configs/main/config.fish -o 
+curl https://raw.githubusercontent.com/aufam/configs/main/config.fish -o ~/.config/fish/config.fish 
 
 echo "Installation complete."
