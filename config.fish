@@ -18,7 +18,7 @@ alias .... "cd ../../.."
 alias ..... "cd ../../../.."
 
 # CPM.cmake
-set CPM_SOURCE_CACHE $HOME/.cache/CPM
+set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 
 # bobthefish theme
 set -g fish_prompt_pwd_dir_length 0
