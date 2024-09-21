@@ -28,18 +28,17 @@ vim -u NONE -c 'source ~/.vim/plugins.vim' -c 'PlugInstall' -c 'qa'
 python3 ~/.vim/plugged/YouCompleteMe/install.py
 
 ### Fish setup
-echo $(which fish) | sudo tee -a /etc/shells
-sudo chsh -s $(which fish)
-
 if ! command -v fish &> /dev/null; then
   echo "Fish shell is not installed. Skipping Oh My Fish installation."
 else
-  curl -L https://get.oh-my.fish | fish
-fi
+  echo $(which fish) | sudo tee -a /etc/shells
+  chsh -s $(which fish)
 
-omf install bobthefish
-curl https://raw.githubusercontent.com/aufam/dotfiles/main/config.fish -o ~/.config/fish/config.fish 
-omf reload
+  curl -L https://get.oh-my.fish | fish
+  omf install bobthefish
+  curl https://raw.githubusercontent.com/aufam/dotfiles/main/config.fish -o ~/.config/fish/config.fish 
+  omf reload
+fi
 
 ### Kitty
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
