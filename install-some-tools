@@ -24,6 +24,9 @@ else
   echo "Vim-Plug already installed."
 fi
 
+# Install Kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
 # Install Oh My Fish
 if ! command -v fish &> /dev/null; then
   echo "Fish shell is not installed. Skipping Oh My Fish installation."
@@ -31,7 +34,7 @@ else
   curl -L https://get.oh-my.fish | fish
 fi
 
-# Install Kitty
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+omf install bobthefish
+curl https://raw.githubusercontent.com/aufam/configs/main/config.fish -o 
 
 echo "Installation complete."
