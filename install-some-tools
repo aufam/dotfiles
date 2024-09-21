@@ -31,4 +31,7 @@ else
   curl -L https://get.oh-my.fish | fish
 fi
 
+# Install Kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
 echo "Installation complete."
