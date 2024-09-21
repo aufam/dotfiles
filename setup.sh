@@ -27,10 +27,10 @@ curl https://raw.githubusercontent.com/aufam/dotfiles/main/.vimrc -o ~/.vimrc
 vim -u NONE -c 'source ~/.vim/plugins.vim' -c 'PlugInstall' -c 'qa'
 python3 ~/.vim/plugged/YouCompleteMe/install.py
 
-### Kitty
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-
 ### Fish setup
+echo $(which fish) | sudo tee -a /etc/shells
+sudo chsh -s $(which fish)
+
 if ! command -v fish &> /dev/null; then
   echo "Fish shell is not installed. Skipping Oh My Fish installation."
 else
@@ -39,5 +39,9 @@ fi
 
 omf install bobthefish
 curl https://raw.githubusercontent.com/aufam/dotfiles/main/config.fish -o ~/.config/fish/config.fish 
+omf reload
+
+### Kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 
 echo "Installation complete."
