@@ -53,7 +53,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 # project settings
 set($PROJECT_VERSION_DEFINITION "$PROJECT_VERSION")
 project($PROJECT_NAME VERSION \${$PROJECT_VERSION_DEFINITION})
-message(STATUS "Configuring $PROJECT_NAME v\${PROJECT_VERSION_DEFINITION}...")
+message(STATUS "Configuring $PROJECT_NAME v\${$PROJECT_VERSION_DEFINITION}...")
 
 # executable
 file(GLOB_RECURSE SOURCES src/*.cpp)
