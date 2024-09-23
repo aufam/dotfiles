@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # C++ project initializer
+# How to use:
+# curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/cpp-init.sh | bash -s -- $project_name $optional_project_version
 
 # Set the project name
 PROJECT_NAME=$1
@@ -26,7 +28,7 @@ mkdir -p $PROJECT_NAME/cmake
 
 # Include CPM
 echo "Downloading CPM.cmake..."
-wget -q -O $PROJECT_NAME/cmake/CPM.cmake https://github.com/cpm-cmake/CPM.cmake/releases/latest/download/get_cpm.cmake
+curl https://github.com/cpm-cmake/CPM.cmake/releases/latest/download/get_cpm.cmake -o $PROJECT_NAME/cmake/CPM.cmake
 
 # Check if CPM.cmake was successfully downloaded
 if [ $? -ne 0 ]; then
