@@ -41,7 +41,7 @@ cat <<EOL > $PROJECT_NAME/src/main.cpp
 #include <fmt/format.h>
 
 int main() {
-    fmt::println("Hello world from {}v{}!", "$PROJECT_NAME", $PROJECT_VERSION_DEFINITION);
+    fmt::println("Hello world from {} v{}!", "$PROJECT_NAME", $PROJECT_VERSION_DEFINITION);
     return 0;
 }
 EOL
