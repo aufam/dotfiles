@@ -28,7 +28,7 @@ mkdir -p $PROJECT_NAME/cmake
 
 # Include CPM
 echo "Downloading CPM.cmake..."
-curl https://github.com/cpm-cmake/CPM.cmake/releases/latest/download/get_cpm.cmake -o $PROJECT_NAME/cmake/CPM.cmake
+curl -s -o $PROJECT_NAME/cmake/CPM.cmake https://github.com/cpm-cmake/CPM.cmake/releases/latest/download/get_cpm.cmake
 
 # Check if CPM.cmake was successfully downloaded
 if [ $? -ne 0 ]; then
