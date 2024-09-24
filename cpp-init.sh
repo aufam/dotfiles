@@ -56,7 +56,7 @@ project($PROJECT_NAME VERSION \${$PROJECT_VERSION_DEFINITION})
 message(STATUS "Configuring $PROJECT_NAME v\${$PROJECT_VERSION_DEFINITION}...")
 
 # executable
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE SOURCES src/*)
 add_executable($PROJECT_NAME \${SOURCES})
 
 # external libraries
