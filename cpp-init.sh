@@ -71,12 +71,6 @@ target_link_libraries($PROJECT_NAME PRIVATE
     Catch2
 )
 
-# C/C++ standard
-target_compile_features($PROJECT_NAME PRIVATE
-    c_std_23
-    cxx_std_23
-)
-
 # warnings
 target_compile_options($PROJECT_NAME PRIVATE
     -Wall
