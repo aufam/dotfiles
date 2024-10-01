@@ -2,15 +2,16 @@
 
 # C++ project initializer
 # How to use:
-# curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/cpp-init.sh | bash -s -- $project_name $optional_project_version
+# curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/cpp-init.sh | bash -s -- $project_name $project_version $project_definition
 
 # Set the project name
 PROJECT_NAME=$1
 PROJECT_VERSION=$2
+PROJECT_DESCRIPTION=$3
 
 # Check if project name is provided
 if [ -z "$PROJECT_NAME" ]; then
-    echo "Usage: $0 <project_name>"
+    echo "Usage: $0 <project_name> <project_version> <project_description>"
     exit 1
 fi
 
@@ -18,9 +19,6 @@ fi
 if [ -z "$PROJECT_VERSION" ]; then
     PROJECT_VERSION=0.1.0
 fi
-
-# Generating $PROJECT_VERSION_DEFINITION
-PROJECT_VERSION_DEFINITION="$(echo $PROJECT_NAME | tr '[:lower:]' '[:upper:]' | tr '-' '_')_VERSION"
 
 # Create the project directory structure
 mkdir -p $PROJECT_NAME/src
@@ -41,7 +39,7 @@ cat <<EOL > $PROJECT_NAME/src/main.cpp
 #include <fmt/format.h>
 
 int main() {
-    fmt::println("Hello world from {} v{}!", "$PROJECT_NAME", $PROJECT_VERSION_DEFINITION);
+    fmt::println("Hello world from {} v{}!", "$PROJECT_NAME", "$PROJECT_VERSION");
     return 0;
 }
 EOL
@@ -51,9 +49,10 @@ cat <<EOL > $PROJECT_NAME/CMakeLists.txt
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # project settings
-set($PROJECT_VERSION_DEFINITION "$PROJECT_VERSION")
-project($PROJECT_NAME VERSION \${$PROJECT_VERSION_DEFINITION})
-message(STATUS "Configuring $PROJECT_NAME v\${$PROJECT_VERSION_DEFINITION}...")
+project($PROJECT_NAME
+    VERSION $PROJECT_VERSION
+    DESCRIPTION $PROJECT_DESCRIPTION
+)
 
 # executable
 file(GLOB_RECURSE SOURCES src/*)
@@ -78,10 +77,22 @@ target_compile_options($PROJECT_NAME PRIVATE
     -pedantic
 )
 
-# version
-target_compile_definitions($PROJECT_NAME PUBLIC
-    $PROJECT_VERSION_DEFINITION="\${$PROJECT_VERSION_DEFINITION}"
+# install
+install(
+    TARGETS $PROJECT_NAME
+    DESTINATION \${CMAKE_INSTALL_BINDIR}
 )
+
+# cpack
+set(CPACK_PACKAGE_NAME $PROJECT_NAME)
+set(CPACK_PACKAGE_VERSION \${$(echo $PROJECT_NAME)_VERSION})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY \${$(echo $PROJECT_NAME)_DESCRIPTIION})
+
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER $(whoami))
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+
+include(CPack)
+
 EOL
 
 # Create basic .gitgnore

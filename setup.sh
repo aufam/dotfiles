@@ -6,7 +6,7 @@
 
 ### Some useful CLI tools
 sudo apt update
-sudo apt install -y git cmake curl build-essential ninja-build python3-pip vim-gtk3 fish neofetch axel bat eza fzf fd-find rsync ascii ripgrep xclip
+sudo apt install -y git cmake curl build-essential ninja-build python3-pip vim-gtk3 fish neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
 
 if grep -q "ARM" /proc/cpuinfo; then
   sudo apt install -y htop

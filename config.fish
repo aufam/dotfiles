@@ -7,10 +7,10 @@ end
 
 # aliases
 alias cat batcat
-alias ls 'eza --group-directories-first'
-alias la 'eza -a --group-directories-first'
-alias ll 'eza -l --group-directories-first'
-alias lt 'eza -T --group-directories-first'
+alias ls 'exa --group-directories-first'
+alias la 'exa -a --group-directories-first'
+alias ll 'exa -l --group-directories-first'
+alias lt 'exa -T --group-directories-first'
 alias please 'echo sudo $history[1] && eval command sudo $history[1]'
 alias .. "cd .."
 alias ... "cd ../.."
