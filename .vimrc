@@ -142,6 +142,7 @@ Plug 'vim-scripts/grep.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " themes
 Plug 'alligator/accent.vim'
