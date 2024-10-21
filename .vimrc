@@ -15,7 +15,7 @@ set mouse=a
 set scrolloff=8
 set autoread
 set cursorline
-let mapleader=','
+let mapleader=' '
 syntax on
 
 " encoding
@@ -67,7 +67,7 @@ if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
 noremap YY "+y<CR>
-noremap <leader>p "+gP<CR>
+noremap <leader>p "_dP<CR>
 noremap XX "+x<CR>
 
 " buffer nav

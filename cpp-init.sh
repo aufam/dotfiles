@@ -51,7 +51,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 # project settings
 project($PROJECT_NAME
     VERSION $PROJECT_VERSION
-    DESCRIPTION $PROJECT_DESCRIPTION
+    DESCRIPTION "$PROJECT_DESCRIPTION"
 )
 
 # executable
