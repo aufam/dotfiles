@@ -66,8 +66,8 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
+noremap <leader>p "_dP
 noremap YY "+y<CR>
-noremap <leader>p "_dP<CR>
 noremap XX "+x<CR>
 
 " buffer nav
@@ -143,11 +143,15 @@ Plug 'Raimondi/delimitMate'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'tpope/vim-surround'
 
 " themes
 Plug 'alligator/accent.vim'
 Plug 'davidosomething/vim-colors-meh'
 Plug 'ayu-theme/ayu-vim'
+Plug 'nikolvs/vim-sunbather'
+Plug 'owickstrom/vim-colors-paramount'
+Plug 'rose-pine/vim'
 
 " vim session
 Plug 'xolox/vim-misc'
@@ -180,11 +184,29 @@ if !has('gui_running')
     set t_Co=255
 endif
 set termguicolors
+set background=dark
+
+" ayu
 let ayucolor="dark"
 " colorscheme ayu
+
+" accent
 let g:accent_darken = 1
 " colorscheme accent
-colorscheme meh
+
+" meh
+let g:meh_pandoc_enabled = 1
+" colorscheme meh
+
+" sunbather
+let g:pencil_terminal_italics = 1
+" colorscheme sunbather
+
+" rosepine
+colorscheme rosepine
+
+" paramount
+" colorscheme paramount
 
 if $TERM == "xterm-kitty"
     let &t_ut=''
