@@ -144,6 +144,7 @@ Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-surround'
+" Plug 'itchyny/lightline.vim'
 
 " themes
 Plug 'alligator/accent.vim'
@@ -151,7 +152,8 @@ Plug 'davidosomething/vim-colors-meh'
 Plug 'ayu-theme/ayu-vim'
 Plug 'nikolvs/vim-sunbather'
 Plug 'owickstrom/vim-colors-paramount'
-Plug 'rose-pine/vim'
+Plug 'rose-pine/vim', { 'as': 'rose-pine' }
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 " vim session
 Plug 'xolox/vim-misc'
@@ -202,11 +204,18 @@ let g:meh_pandoc_enabled = 1
 let g:pencil_terminal_italics = 1
 " colorscheme sunbather
 
-" rosepine
-colorscheme rosepine
-
 " paramount
 " colorscheme paramount
+
+" rosepine
+" let g:disable_bg = 1
+" let g:disable_float_bg = 1
+" colorscheme rosepine
+" let g:lightline = { 'colorscheme': 'rosepine' }
+
+" catppuccin
+colorscheme catppuccin_mocha
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
 if $TERM == "xterm-kitty"
     let &t_ut=''
