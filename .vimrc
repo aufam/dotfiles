@@ -12,7 +12,7 @@ set number
 set relativenumber
 set wrap!
 set mouse=a
-set scrolloff=8
+set scrolloff=10
 set autoread
 set cursorline
 let mapleader=' '
@@ -145,6 +145,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-surround'
 " Plug 'itchyny/lightline.vim'
+" Plug 'ziglang/zig.vim'
 
 " themes
 Plug 'alligator/accent.vim'
@@ -210,12 +211,12 @@ let g:pencil_terminal_italics = 1
 " rosepine
 " let g:disable_bg = 1
 " let g:disable_float_bg = 1
-" colorscheme rosepine
-" let g:lightline = { 'colorscheme': 'rosepine' }
+colorscheme rosepine
+let g:lightline = { 'colorscheme': 'rosepine' }
 
-" catppuccin
-colorscheme catppuccin_mocha
-let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+" " catppuccin
+" colorscheme catppuccin_mocha
+" let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
 if $TERM == "xterm-kitty"
     let &t_ut=''
