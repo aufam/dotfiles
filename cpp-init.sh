@@ -96,7 +96,7 @@ include(CPack)
 EOL
 
 # Create basic .gitgnore
-curl https://raw.githubusercontent.com/aufam/dotfiles/main/.gitignore -o $PROJECT_NAME/.gitignore
+wget -q -O $PROJECT_NAME/.gitignore https://raw.githubusercontent.com/aufam/dotfiles/main/gitignore
 
 # Init git
 cd $PROJECT_NAME && git init --initial-branch=main
