@@ -6,7 +6,13 @@
 
 ### Some useful CLI tools
 sudo apt update
-sudo apt install -y git cmake curl build-essential ninja-build python3-pip vim-gtk3 fish neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
+sudo apt install -y ca-certificates libssl-dev build-essential git cmake curl ninja-build python3-pip vim fish neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
+
+if grep -iq "ubuntu" /etc/os-release && grep -q "24.04" /etc/os-release; then
+  sudo apt install -y eza
+else
+  sudo apt install -y exa
+fi
 
 if grep -q "ARM" /proc/cpuinfo; then
   sudo apt install -y htop
@@ -14,7 +20,11 @@ else
   sudo apt install -y btop cpufetch duf
 fi
 
-sudo pip install httpie thefuck cmake-language-server --break-system-packages
+if python3 -c 'import sys; exit(sys.version_info >= (3, 11))'; then
+    sudo pip install httpie thefuck cmake-language-server
+else
+    sudo pip install httpie thefuck cmake-language-server --break-system-packages
+fi
 
 ### Vim setup
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
