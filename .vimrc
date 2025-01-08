@@ -16,7 +16,6 @@ set scrolloff=10
 set autoread
 set cursorline
 let mapleader=' '
-syntax on
 
 " encoding
 set encoding=utf-8
@@ -100,25 +99,6 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-" make/cmake
-augroup vimrc-make-cmake
-  autocmd!
-  autocmd FileType make setlocal noexpandtab
-  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-augroup END
-
-if executable('cmake-language-server')
-  au User lsp_setup call lsp#register_server({
-  \ 'name': 'cmake',
-  \ 'cmd': {server_info->['cmake-language-server']},
-  \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'build/'))},
-  \ 'whitelist': ['cmake'],
-  \ 'initialization_options': {
-  \   'buildDirectory': 'build',
-  \ }
-  \})
-endif
-
 " plugin
 call plug#begin('~/.vim/plugged')
 if isdirectory('/usr/local/opt/fzf')
@@ -131,7 +111,7 @@ endif
 Plug 'ycm-core/YouCompleteMe'
 Plug 'sheerun/vim-polyglot'
 Plug 'bfrg/vim-cpp-modern'
-Plug 'voldikss/vim-floaterm'
+" Plug 'voldikss/vim-floaterm'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
@@ -180,6 +160,9 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 call plug#end()
+
+" reenable some settings after plug
+syntax on
 filetype plugin indent on
 
 " color and themes
@@ -218,16 +201,15 @@ let g:lightline = { 'colorscheme': 'rosepine' }
 " colorscheme catppuccin_mocha
 " let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
+" terminal
 if $TERM == "xterm-kitty"
-    let &t_ut=''
+  let &t_ut=''
 endif
-
-" comment string for c/cpp
-autocmd FileType c,cpp setlocal commentstring=//\ %s
-
-" floaterm
 nnoremap <silent> <leader>sh :terminal<CR>
-nnoremap <F12> :FloatermToggle<CR>
+
+" ycm
+nmap gd :YcmCompleter GoToDefinition<CR>
+nmap gD :YcmCompleter GoToDeclaration<CR>
 
 " ale
 let g:ale_linters = {}
@@ -261,10 +243,10 @@ nnoremap <silent> <F2> :NERDTreeFind<CR>
 nnoremap <silent> <F3> :NERDTreeToggle<CR>
 
 " grep.vim
-nnoremap <silent> <leader>f :Rgrep<CR>
 let Grep_Default_Options = '-IR'
 let Grep_Skip_Files = '*.log *.db'
 let Grep_Skip_Dirs = '.git node_modules'
+nnoremap <silent> <leader>f :Rgrep<CR>
 
 " html
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
@@ -293,8 +275,29 @@ let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#smart_auto_mappings = 0
 let python_highlight_all = 1
-:call extend(g:ale_linters, {
-    \'python': ['flake8'], })
+:call extend(g:ale_linters, {'python': ['flake8'], })
+
+" make/cmake
+augroup vimrc-make-cmake
+  autocmd!
+  autocmd FileType make setlocal noexpandtab
+  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+augroup END
+
+if executable('cmake-language-server')
+  au User lsp_setup call lsp#register_server({
+  \ 'name': 'cmake',
+  \ 'cmd': {server_info->['cmake-language-server']},
+  \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'build/'))},
+  \ 'whitelist': ['cmake'],
+  \ 'initialization_options': {
+  \   'buildDirectory': 'build',
+  \ }
+  \})
+endif
+
+" comment string for c/cpp
+autocmd FileType c,cpp setlocal commentstring=//\ %s
 
 " IndentLine
 let g:indentLine_enabled = 1
@@ -323,3 +326,4 @@ let g:airline_symbols.paste                   = 'ρ'
 let g:airline_symbols.paste                   = 'Þ'
 let g:airline_symbols.paste                   = '∥'
 let g:airline_symbols.whitespace              = 'Ξ'
+
