@@ -50,7 +50,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # project settings
 project($PROJECT_NAME
-    VERSION $PROJECT_VERSION
+    VERSION     $PROJECT_VERSION
     DESCRIPTION "$PROJECT_DESCRIPTION"
 )
 
@@ -60,13 +60,13 @@ add_executable($PROJECT_NAME \${SOURCES})
 
 # external libraries
 include(cmake/CPM.cmake)
-CPMAddPackage("gh:boostorg/preprocessor#boost-1.86.0")
-CPMAddPackage("gh:fmtlib/fmt#11.0.2")
+CPMAddPackage("gh:aufam/delameta#main")
 CPMAddPackage("gh:catchorg/Catch2@3.7.0")
 
 target_link_libraries($PROJECT_NAME PRIVATE
-    Boost::preprocessor
-    fmt
+    preprocessor
+    fmt-header-only
+    delameta
     Catch2
 )
 
@@ -79,7 +79,7 @@ target_compile_options($PROJECT_NAME PRIVATE
 
 # install
 install(
-    TARGETS $PROJECT_NAME
+    TARGETS     $PROJECT_NAME
     DESTINATION \${CMAKE_INSTALL_BINDIR}
 )
 
