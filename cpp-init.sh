@@ -2,7 +2,7 @@
 
 # C++ project initializer
 # How to use:
-# curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/cpp-init.sh | bash -s -- $project_name $project_version $project_definition
+# curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/cpp-init.sh | bash -s -- $project_name $project_version $project_description
 
 # Set the project name
 PROJECT_NAME=$1

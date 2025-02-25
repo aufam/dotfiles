@@ -16,6 +16,7 @@ set scrolloff=10
 set autoread
 set cursorline
 let mapleader=' '
+syntax enable
 
 " encoding
 set encoding=utf-8
@@ -153,6 +154,9 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
+" go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " async vim
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
@@ -162,7 +166,6 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 call plug#end()
 
 " reenable some settings after plug
-syntax on
 filetype plugin indent on
 
 " color and themes
@@ -326,4 +329,3 @@ let g:airline_symbols.paste                   = 'ρ'
 let g:airline_symbols.paste                   = 'Þ'
 let g:airline_symbols.paste                   = '∥'
 let g:airline_symbols.whitespace              = 'Ξ'
-
