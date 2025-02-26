@@ -2,7 +2,7 @@
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    neofetch
+    # neofetch
 end
 
 # aliases
@@ -16,6 +16,9 @@ alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
 alias ..... "cd ../../../.."
+
+# go
+set -x PATH $PATH /usr/local/go/bin
 
 # CPM.cmake
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
