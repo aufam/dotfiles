@@ -21,9 +21,9 @@ else
 fi
 
 if python3 -c 'import sys; exit(sys.version_info >= (3, 11))'; then
-    sudo pip install httpie thefuck cmake-language-server
+  sudo pip install httpie thefuck cmake-language-server
 else
-    sudo pip install httpie thefuck cmake-language-server --break-system-packages
+  sudo pip install httpie thefuck cmake-language-server --break-system-packages
 fi
 
 ### Vim setup
@@ -34,6 +34,7 @@ else
 fi
 
 curl https://raw.githubusercontent.com/aufam/dotfiles/main/.vimrc -o ~/.vimrc
+curl https://raw.githubusercontent.com/aufam/dotfiles/main/fish/config.fish -o ~/.config/fish/config.fish
 vim -u NONE -c 'source ~/.vim/plugins.vim' -c 'PlugInstall' -c 'qa'
 python3 ~/.vim/plugged/YouCompleteMe/install.py
 
@@ -44,10 +45,9 @@ else
   echo $(which fish) | sudo tee -a /etc/shells
   chsh -s $(which fish)
 
-  curl -L https://get.oh-my.fish | fish
-  omf install bobthefish
-  curl https://raw.githubusercontent.com/aufam/dotfiles/main/config.fish -o ~/.config/fish/config.fish 
-  omf reload
+  curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+  fisher ilancosman/tide@v6
+  fisher patrickf1/fzf.fish
 fi
 
 ### Kitty
