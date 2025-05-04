@@ -7,6 +7,7 @@ end
 
 # aliases
 alias cat batcat
+alias bat batcat
 alias ls 'exa --group-directories-first'
 alias la 'exa -a --group-directories-first'
 alias ll 'exa -l --group-directories-first'

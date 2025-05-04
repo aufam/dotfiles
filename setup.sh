@@ -8,6 +8,7 @@
 sudo apt update
 sudo apt install -y ca-certificates libssl-dev build-essential git cmake curl ninja-build python3-pip vim fish neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
 
+
 if grep -iq "ubuntu" /etc/os-release && grep -q "24.04" /etc/os-release; then
   sudo apt install -y eza
 else

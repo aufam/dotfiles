@@ -1,10 +1,3 @@
-" ~/.vimrc
-"
-" This is the Vim configuration file used by the user. It includes settings
-" for general usability, indentation, search behavior, key mappings, plugin
-" management using vim-plug, color scheme preferences, and filetype-specific
-" configurations for C/C++, HTML, JavaScript, and Python.
-"
 " curl -fLo ~/.vimrc https://raw.githubusercontent.com/aufam/configs/main/.vimrc
 
 " common settings
@@ -110,23 +103,17 @@ else
 endif
 
 Plug 'ycm-core/YouCompleteMe'
+Plug 'dense-analysis/ale'
 Plug 'sheerun/vim-polyglot'
-Plug 'bfrg/vim-cpp-modern'
-" Plug 'voldikss/vim-floaterm'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'tpope/vim-commentary'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
+Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'
-Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-surround'
-" Plug 'itchyny/lightline.vim'
-" Plug 'ziglang/zig.vim'
 
 " themes
 Plug 'alligator/accent.vim'
@@ -137,9 +124,20 @@ Plug 'owickstrom/vim-colors-paramount'
 Plug 'rose-pine/vim', { 'as': 'rose-pine' }
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
+" status line
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+
 " vim session
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+
+" async vim
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " html
 Plug 'hail2u/vim-css3-syntax'
@@ -157,11 +155,11 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-" async vim
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" zig
+Plug 'ziglang/zig.vim'
+
+" icons
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -174,6 +172,21 @@ if !has('gui_running')
 endif
 set termguicolors
 set background=dark
+
+let g:lightline = {
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'readonly', 'filename', 'modified' ],
+  \   ],
+  \   'right': [ [ 'lineinfo' ],
+  \              [ 'percent' ],
+  \              [ 'fileformat', 'fileencoding', 'fileicon'] ]
+  \ },
+  \ 'component_function': {
+  \   'fileicon': 'WebDevIconsGetFileTypeSymbol',
+  \ }
+\ }
 
 " ayu
 let ayucolor="dark"
@@ -198,17 +211,22 @@ let g:pencil_terminal_italics = 1
 " let g:disable_bg = 1
 " let g:disable_float_bg = 1
 colorscheme rosepine
-let g:lightline = { 'colorscheme': 'rosepine' }
+let g:lightline.colorscheme = 'rosepine'
 
 " " catppuccin
 " colorscheme catppuccin_mocha
-" let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+" let g:lightline.colorscheme = 'catppuccin_mocha'
 
 " terminal
 if $TERM == "xterm-kitty"
   let &t_ut=''
 endif
-nnoremap <silent> <leader>sh :terminal<CR>
+
+function! Execute(cmd)
+  execute 'terminal ' . a:cmd
+endfunction
+
+nnoremap <leader>r :call Execute(input('Command: ', '', 'shellcmd'))<CR>
 
 " ycm
 nmap gd :YcmCompleter GoToDefinition<CR>
@@ -219,12 +237,13 @@ let g:ale_linters = {}
 
 " fzf
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,.zig-cache
 let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
-nmap <leader>y :History:<CR>
+nmap <leader>y :History<CR>
+nmap <leader>Y :History:<CR>
 
 " ripgrep
 if executable('rg')
@@ -242,8 +261,7 @@ let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,*node_modules/
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
+nnoremap <silent> <leader>t :NERDTreeTabsToggle<cr>
 
 " grep.vim
 let Grep_Default_Options = '-IR'
@@ -299,8 +317,23 @@ if executable('cmake-language-server')
   \})
 endif
 
-" comment string for c/cpp
+" c/cpp
 autocmd FileType c,cpp setlocal commentstring=//\ %s
+let g:cpp_function_highlight = 1
+let g:cpp_attributes_highlight = 1
+let g:cpp_member_highlight = 1
+let g:cpp_type_name_highlight = 1
+let g:cpp_operator_highlight = 1
+let g:cpp_simple_highlight = 1
+
+" zig
+if executable('zls')
+  au User lsp_setup call lsp#register_server({
+  \ 'name': 'zls',
+  \ 'cmd': ['zls'],
+  \ 'allowlist': ['zls'],
+  \})
+endif
 
 " IndentLine
 let g:indentLine_enabled = 1
