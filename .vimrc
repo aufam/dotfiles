@@ -53,7 +53,8 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 set laststatus=2
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+set statusline=%{mode()}\ \|\ %F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+set noshowmode
 
 " copy paste cut
 if has('unnamedplus')
