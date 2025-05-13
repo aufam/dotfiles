@@ -34,14 +34,43 @@ return {
 		end
 
 		lspconfig.clangd.setup({
+			capabilities = capabilities,
 			cmd = { "clangd", "--clang-tidy", "--compile-commands-dir=" .. get_compile_commands_dir() },
 			root_dir = util.root_pattern("compile_commands.json", ".git", "compile_flags.txt"),
 		})
 
-		lspconfig.cmake.setup({ capabilities = capabilities })
-		lspconfig.pyright.setup({ capabilities = capabilities })
+		lspconfig.pyright.setup({
+			capabilities = capabilities,
+			on_new_config = function(new_config, new_root_dir)
+				local function get_python_path(root_dir)
+					local paths = {
+						root_dir .. "/venv/bin/python",
+						root_dir .. "/.venv/bin/python",
+						root_dir .. "/venv/Scripts/python.exe", -- Windows
+						root_dir .. "/.venv/Scripts/python.exe", -- Windows
+					}
+					for _, path in ipairs(paths) do
+						if vim.fn.executable(path) == 1 then
+							return path
+						end
+					end
+					return nil
+				end
+
+				local python_path = get_python_path(new_root_dir)
+				if python_path then
+					new_config.settings = vim.tbl_deep_extend("force", new_config.settings or {}, {
+						python = {
+							pythonPath = python_path,
+						},
+					})
+				end
+			end,
+		})
+
 		lspconfig.rust_analyzer.setup({ capabilities = capabilities })
 		lspconfig.gopls.setup({ capabilities = capabilities })
 		lspconfig.zls.setup({ capabilities = capabilities })
+		lspconfig.cmake.setup({ capabilities = capabilities })
 	end,
 }

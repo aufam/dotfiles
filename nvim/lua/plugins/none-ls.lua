@@ -1,16 +1,7 @@
 return {
 	"nvimtools/none-ls.nvim",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-	},
+	event = "VeryLazy",
 	config = function()
-		require("mason-tool-installer").setup({
-			ensure_installed = {
-				"stylua",
-			},
-		})
-
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 		local null_ls = require("null-ls")
 
@@ -30,7 +21,12 @@ return {
 						group = augroup,
 						buffer = bufnr,
 						callback = function()
-							vim.lsp.buf.format({ bufnr = bufnr })
+							vim.lsp.buf.format({
+								bufnr = bufnr,
+								filter = function(c)
+									return c.name == "null-ls"
+								end,
+							})
 						end,
 					})
 				end

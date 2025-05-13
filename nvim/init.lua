@@ -2,7 +2,7 @@ require("config.vim")
 
 local version = vim.version()
 if version.major > 0 or version.minor >= 10 then
-    require("config.lazy")
+	require("config.lazy")
 end
 
 require("config.remap")

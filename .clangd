@@ -1,0 +1,19 @@
+CompileFlags:
+  Add: [-Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
+
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+    Add: [
+      modernize-use-nullptr,
+      bugprone-use-after-move,
+      bugprone-dangling-handle,
+      bugprone-undefined-memory-manipulation,
+      bugprone-branch-clone,
+      clang-analyzer-core.NullDereference,
+      clang-analyzer-cplusplus.NewDelete,
+    ]
+    CheckOptions:
+      - key:             bugprone-use-after-move.StrictMode
+        value:           true
+
