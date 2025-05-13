@@ -229,10 +229,29 @@ endfunction
 
 nnoremap <leader>r :call Execute(input('Command: ', '', 'shellcmd'))<CR>
 
-" ycm
-nmap gd :YcmCompleter GoToDefinition<CR>
-nmap gD :YcmCompleter GoToDeclaration<CR>
+" " ycm
+" nmap gd :YcmCompleter GoToDefinition<CR>
+" nmap gD :YcmCompleter GoToDeclaration<CR>
 
+nmap <silent> gd <Plug>(lsp-definition)
+nmap <silent> gr <Plug>(lsp-references)
+nmap <silent> K <Plug>(lsp-hover)
+
+if executable('clangd')
+  au User lsp_setup call lsp#register_server({
+      \ 'name': 'clangd',
+      \ 'cmd': {server_info->['clangd']},
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cxx', 'cc'],
+      \ })
+endif
+
+if executable('rust-analyzer')
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'rust-analyzer',
+    \ 'cmd': {server_info->['rust-analyzer']},
+    \ 'whitelist': ['rust'],
+    \ })
+endif
 " ale
 let g:ale_linters = {}
 

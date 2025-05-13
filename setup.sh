@@ -6,7 +6,7 @@
 
 ### Some useful CLI tools
 sudo apt update
-sudo apt install -y ca-certificates libssl-dev build-essential git cmake curl ninja-build python3-pip vim fish neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
+sudo apt install -y ca-certificates libssl-dev build-essential git cmake curl ninja-build python3-pip vim neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
 
 
 if grep -iq "ubuntu" /etc/os-release && grep -q "24.04" /etc/os-release; then
@@ -46,9 +46,10 @@ else
   echo $(which fish) | sudo tee -a /etc/shells
   chsh -s $(which fish)
 
-  curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-  fisher ilancosman/tide@v6
-  fisher patrickf1/fzf.fish
+  curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+  fisher install jorgebucaran/fisher
+  fisher install ilancosman/tide@v6
+  fisher install patrickf1/fzf.fish
 fi
 
 ### Kitty

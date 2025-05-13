@@ -19,17 +19,14 @@ alias .... "cd ../../.."
 alias ..... "cd ../../../.."
 
 # go
-set -x PATH $PATH /usr/local/go/bin
+set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
+
+# nvim
+set -x PATH $PATH $HOME/nvim-linux-x86_64/bin/
 
 # CPM.cmake
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 
-# bobthefish theme
-# set -g fish_prompt_pwd_dir_length 0
-# set -g theme_newline_cursor yes
-# set -g theme_nerd_fonts yes
-# set -g theme_newline_prompt ">> "
-# set -g theme_date_format +%T
 
 # extract
 function ex
