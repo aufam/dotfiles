@@ -16,10 +16,9 @@ return {
 		})
 
 		-- cpp
-		local util = require("lspconfig.util")
-
 		local function get_compile_commands_dir()
-			local root_dir = util.root_pattern("compile_commands.json", ".git")(vim.fn.getcwd()) or vim.fn.getcwd()
+			local root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git")(vim.fn.getcwd())
+				or vim.fn.getcwd()
 
 			if vim.fn.filereadable(root_dir .. "/compile_commands.json") == 1 then
 				return root_dir
@@ -35,8 +34,14 @@ return {
 
 		lspconfig.clangd.setup({
 			capabilities = capabilities,
-			cmd = { "clangd", "--clang-tidy", "--compile-commands-dir=" .. get_compile_commands_dir() },
-			root_dir = util.root_pattern("compile_commands.json", ".git", "compile_flags.txt"),
+			cmd = {
+				"clangd-19",
+				"--header-insertion=never",
+				"--header-insertion-decorators=0",
+				"--clang-tidy",
+				"--compile-commands-dir=" .. get_compile_commands_dir(),
+			},
+			root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git", "compile_flags.txt"),
 		})
 
 		lspconfig.pyright.setup({
@@ -46,8 +51,12 @@ return {
 					local paths = {
 						root_dir .. "/venv/bin/python",
 						root_dir .. "/.venv/bin/python",
+						root_dir .. "/env/bin/python",
+						root_dir .. "/.env/bin/python",
 						root_dir .. "/venv/Scripts/python.exe", -- Windows
 						root_dir .. "/.venv/Scripts/python.exe", -- Windows
+						root_dir .. "/env/Scripts/python.exe", -- Windows
+						root_dir .. "/.env/Scripts/python.exe", -- Windows
 					}
 					for _, path in ipairs(paths) do
 						if vim.fn.executable(path) == 1 then

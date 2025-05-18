@@ -4,7 +4,12 @@
 # Usage: curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/setup.sh | bash
 
 sudo apt update
-sudo apt install -y ca-certificates libssl-dev git curl neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
+sudo apt install -y \
+    ca-certificates libssl-dev git curl \
+    build-essential \
+    python3 python3-pip \
+    libprotobuf-dev \
+    neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
 
 if grep -iq "ubuntu" /etc/os-release && grep -q "24.04" /etc/os-release; then
   sudo apt install -y eza
@@ -21,5 +26,5 @@ fi
 if python3 -c 'import sys; exit(sys.version_info >= (3, 11))'; then
   sudo pip install httpie
 else
-  sudo pip install httpie
+  sudo pip install httpie --break-system-packages
 fi

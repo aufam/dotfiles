@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # curl -s https://raw.githubusercontent.com/aufam/dotfiles/main/setup-fish.sh | bash
 
 set -e  # Exit on error
@@ -10,7 +9,7 @@ sudo apt update
 sudo apt install -y fish
 
 # Download config.fish
-echo "[+] Downloading config.fish from your GitHub..."
+echo "[+] Downloading config.fish from GitHub..."
 mkdir -p ~/.config/fish
 curl -fsSL https://raw.githubusercontent.com/aufam/dotfiles/main/fish/config.fish -o ~/.config/fish/config.fish
 

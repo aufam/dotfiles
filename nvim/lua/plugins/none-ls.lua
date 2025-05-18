@@ -10,6 +10,7 @@ return {
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.gofmt,
 				null_ls.builtins.formatting.goimports_reviser,
+				null_ls.builtins.formatting.black,
 			},
 			on_attach = function(client, bufnr)
 				if client.supports_method("textDocument/formatting") then

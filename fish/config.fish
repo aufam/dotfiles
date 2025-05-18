@@ -5,18 +5,11 @@ if status is-interactive
   neofetch
 end
 
-# aliases
-alias cat batcat
-alias bat batcat
-alias ls 'exa --group-directories-first'
-alias la 'exa -a --group-directories-first'
-alias ll 'exa -l --group-directories-first'
-alias lt 'exa -T --group-directories-first'
-alias please 'echo sudo $history[1] && eval command sudo $history[1]'
-alias .. "cd .."
-alias ... "cd ../.."
-alias .... "cd ../../.."
-alias ..... "cd ../../../.."
+set script_dir (dirname (status -f))
+set file_to_source "$script_dir/user-script.fish"
+if test -f $file_to_source
+    source $file_to_source
+end
 
 # go
 set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
@@ -27,6 +20,20 @@ set -x PATH $PATH $HOME/nvim-linux-x86_64/bin/
 # CPM.cmake
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 
+# bat theme
+set -x BAT_THEME gruvbox-dark
+
+# aliases
+alias bat batcat
+alias ls 'exa --group-directories-first'
+alias la 'exa -a --group-directories-first'
+alias ll 'exa -l --group-directories-first'
+alias lt 'exa -T --group-directories-first'
+alias please 'echo sudo $history[1] && eval command sudo $history[1]'
+alias .. "cd .."
+alias ... "cd ../.."
+alias .... "cd ../../.."
+alias ..... "cd ../../../.."
 
 # extract
 function ex

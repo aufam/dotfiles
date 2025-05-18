@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4

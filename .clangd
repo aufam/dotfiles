@@ -1,5 +1,5 @@
 CompileFlags:
-  Add: [-Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
+  Add: [-std=c++23, -Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
 
 Diagnostics:
   UnusedIncludes: Strict

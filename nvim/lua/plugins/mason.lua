@@ -11,6 +11,7 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				"lua_ls",
+				"buf_ls",
 			},
 			automatic_installation = true,
 		})
@@ -18,17 +19,18 @@ return {
 		require("mason-null-ls").setup({
 			ensure_installed = {
 				"stylua",
+				"black",
 			},
 			automatic_installation = true,
 		})
 
 		require("mason-nvim-dap").setup({
+			handlers = {},
 			ensure_installed = {
 				"codelldb",
 				"delve",
-				"python",
 			},
-			automatic_installation = true,
+			automatic_installation = false,
 		})
 	end,
 }

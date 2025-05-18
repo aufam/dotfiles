@@ -27,6 +27,7 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<leader>q", ":bp<CR>")
 vim.keymap.set("n", "<leader>w", ":bn<CR>")
 vim.keymap.set("n", "<leader>c", ":bd<CR>")
+vim.keymap.set("n", "<leader>C", ":bd!<CR>")
 
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
