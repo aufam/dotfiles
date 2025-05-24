@@ -9,7 +9,7 @@ sudo apt install -y \
     build-essential \
     python3 python3-pip \
     libprotobuf-dev \
-    neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
+    tmux neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
 
 if grep -iq "ubuntu" /etc/os-release && grep -q "24.04" /etc/os-release; then
   sudo apt install -y eza
