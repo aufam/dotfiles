@@ -28,3 +28,8 @@ vim.opt.termguicolors = true
 vim.opt.title = true
 vim.opt.titleold = "Terminal"
 vim.opt.titlestring = "%F"
+
+vim.cmd([[
+  syntax match TodoComment /\v<(TODO|FIXME|NOTE):?/
+  highlight TodoComment ctermfg=Yellow guifg=Yellow cterm=bold gui=bold
+]])

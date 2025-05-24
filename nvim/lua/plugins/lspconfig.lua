@@ -34,6 +34,7 @@ return {
 
 		lspconfig.clangd.setup({
 			capabilities = capabilities,
+			filetypes = { "c", "cpp", "cc", "cxx" },
 			cmd = {
 				"clangd-19",
 				"--header-insertion=never",
@@ -80,6 +81,8 @@ return {
 		lspconfig.rust_analyzer.setup({ capabilities = capabilities })
 		lspconfig.gopls.setup({ capabilities = capabilities })
 		lspconfig.zls.setup({ capabilities = capabilities })
+
 		lspconfig.cmake.setup({ capabilities = capabilities })
+		lspconfig.buf_ls.setup({ capabilities = capabilities })
 	end,
 }

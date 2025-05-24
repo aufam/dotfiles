@@ -13,7 +13,7 @@ return {
 				"lua_ls",
 				"buf_ls",
 			},
-			automatic_installation = true,
+			automatic_installation = false,
 		})
 
 		require("mason-null-ls").setup({
@@ -21,7 +21,7 @@ return {
 				"stylua",
 				"black",
 			},
-			automatic_installation = true,
+			automatic_installation = false,
 		})
 
 		require("mason-nvim-dap").setup({

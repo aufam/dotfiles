@@ -6,14 +6,15 @@ return {
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
+		local layout_config = { preview_width = 0.5 }
 
 		vim.keymap.set("n", "<leader>e", function()
-			builtin.find_files({ layout_config = { preview_width = 0.5 } })
+			builtin.find_files({ layout_config = layout_config })
 		end, {})
 
 		vim.keymap.set("n", "<leader>f", function()
 			local word = vim.fn.expand("<cword>")
-			builtin.live_grep({ default_text = word, layout_config = { preview_width = 0.5 } })
+			builtin.live_grep({ default_text = word, layout_config = layout_config })
 		end, { silent = true, noremap = true })
 
 		vim.keymap.set("v", "<leader>f", function()
@@ -31,11 +32,14 @@ return {
 		end, { silent = true, noremap = true })
 
 		vim.keymap.set("n", "<leader>b", function()
-			builtin.buffers({ layout_config = { preview_width = 0.5 } })
+			builtin.buffers({ layout_config = layout_config })
 		end, {})
 
 		vim.keymap.set("n", "<leader>gf", function()
-			builtin.git_files({ layout_config = { preview_width = 0.5 } })
+			builtin.git_files({
+				layout_config = layout_config,
+				git_command = { "git", "ls-files", "--modified", "--other", "--exclude-standard" },
+			})
 		end, {})
 	end,
 }
