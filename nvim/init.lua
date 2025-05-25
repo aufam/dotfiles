@@ -8,7 +8,7 @@ require("config.vim")
 local version = vim.version()
 if version.major > 0 or version.minor >= 10 then
 	require("config.lazy")
-	vim.cmd.colorscheme("gruvbox")
+	vim.cmd.colorscheme("rose-pine")
 end
 
 require("config.remap")
