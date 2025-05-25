@@ -1,9 +1,9 @@
 [shell]
 program = "/usr/bin/tmux"
-args = ["new-session", "-A", "-s", "main"]
 
 [window]
-opacity = 0.95
+startup_mode = "Fullscreen"
+opacity = 0.90
 
 [font]
 normal = { family = "Cartograph CF", style = "Regular" }
