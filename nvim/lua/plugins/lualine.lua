@@ -4,7 +4,13 @@ return {
 		require("lualine").setup({
 			options = { theme = "auto", section_separators = "", component_separators = "│" },
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = {
+					-- "mode",
+					{
+						require("noice").api.statusline.mode.get,
+						cond = require("noice").api.statusline.mode.has,
+					},
+				},
 				lualine_b = {
 					{
 						"buffers",
@@ -16,7 +22,13 @@ return {
 					},
 				},
 				lualine_c = {},
-				lualine_x = { "encoding", "fileformat", "filetype", "branch", "diff" },
+				lualine_x = {
+					"encoding",
+					"fileformat",
+					"filetype",
+					"branch",
+					"diff",
+				},
 				lualine_y = {},
 				lualine_z = { "progress", "location" },
 			},
