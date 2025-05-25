@@ -1,6 +1,9 @@
 CompileFlags:
   Add: [-std=c++23, -Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
 
+Index:
+  StandardLibrary: No
+
 Diagnostics:
   UnusedIncludes: Strict
   ClangTidy:

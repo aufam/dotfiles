@@ -1,6 +1,19 @@
 BasedOnStyle: LLVM
+Standard: c++20
+ColumnLimit: 130
+SortIncludes: Never
+
+# indentation
+MaxEmptyLinesToKeep: 2
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
-MaxEmptyLinesToKeep: 2
-NamespaceIndentation: Inner
+AccessModifierOffset: -4
+NamespaceIndentation: All
+IndentPPDirectives: AfterHash
+
+# functions, constructors, template parrameters
+BinPackParameters: true
+PackConstructorInitializers: Never
+BreakConstructorInitializersBeforeComma: true
+AlwaysBreakTemplateDeclarations: false
