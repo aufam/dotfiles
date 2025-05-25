@@ -103,7 +103,7 @@ else
   Plug 'junegunn/fzf.vim'
 endif
 
-Plug 'ycm-core/YouCompleteMe'
+"Plug 'ycm-core/YouCompleteMe'
 Plug 'dense-analysis/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'preservim/nerdtree'
