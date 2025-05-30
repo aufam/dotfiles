@@ -2,13 +2,34 @@ return {
 	"nvim-lualine/lualine.nvim",
 	config = function()
 		require("lualine").setup({
-			options = { theme = "auto", section_separators = "", component_separators = "│" },
+			options = { theme = "auto", section_separators = "", component_separators = "" },
 			sections = {
 				lualine_a = {
-					-- "mode",
+					"mode",
 					{
-						require("noice").api.statusline.mode.get,
-						cond = require("noice").api.statusline.mode.has,
+						function()
+							local str = require("noice").api.statusline.mode.get()
+
+							local rec = str:match("recording @(%a)")
+							if rec then
+								return "  @" .. rec
+							end
+
+							local mode_map = {
+								["-- V-LINE --"] = "V-L",
+								["-- V-BLOCK --"] = "V-B",
+								["-- REPLACE --"] = "R",
+								["-- COMMAND --"] = "C",
+								["-- SELECT --"] = "S",
+								["-- EX --"] = "EX",
+								["-- TERMINAL --"] = "TERM",
+							}
+
+							return mode_map[str] or ""
+						end,
+						cond = function()
+							return require("noice").api.statusline.mode.has()
+						end,
 					},
 				},
 				lualine_b = {
@@ -29,8 +50,8 @@ return {
 					"branch",
 					"diff",
 				},
-				lualine_y = {},
-				lualine_z = { "progress", "location" },
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
 			},
 		})
 	end,

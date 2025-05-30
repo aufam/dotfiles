@@ -16,4 +16,4 @@ IndentPPDirectives: AfterHash
 BinPackParameters: true
 PackConstructorInitializers: Never
 BreakConstructorInitializersBeforeComma: true
-AlwaysBreakTemplateDeclarations: false
+AlwaysBreakTemplateDeclarations: true

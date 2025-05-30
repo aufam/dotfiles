@@ -8,8 +8,8 @@ sudo apt install -y \
     ca-certificates libssl-dev git curl \
     build-essential \
     python3 python3-pip \
-    libprotobuf-dev \
-    tmux neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip
+    libprotobuf-dev libprotoc-dev \
+    tmux neofetch axel bat exa fzf fd-find rsync ascii ripgrep xclip acpi
 
 if grep -iq "ubuntu" /etc/os-release && grep -q "24.04" /etc/os-release; then
   sudo apt install -y eza
