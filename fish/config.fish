@@ -11,16 +11,10 @@ if test -f $file_to_source
     source $file_to_source
 end
 
-# go
 set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
-
-# nvim
 set -x PATH $PATH $HOME/nvim-linux-x86_64/bin/
-
-# CPM.cmake
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
-
-# bat theme
+set -x CPPXX_CACHE $HOME/.cache/cppxx
 set -x BAT_THEME gruvbox-dark
 
 # aliases
@@ -34,6 +28,31 @@ alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
 alias ..... "cd ../../../.."
+
+# gemini
+function gemini
+    argparse 'x/xclip' 'v/verbose' -- $argv
+    or return
+
+    if set -q _flag_xclip
+        set prompt "$argv\n$(xclip -selection clipboard -o)"
+    else
+        set prompt $argv
+    end
+
+    set api_url "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    set prompt_json (echo $prompt | jq -Rsa .)
+    if set -q _flag_verbose
+        printf "prompt:\n$prompt\n\n"
+        printf "response:\n"
+    end
+
+    curl -s "$api_url?key=$GEMINI_API_KEY" \
+        -H "Content-Type: application/json" \
+        -X POST \
+        -d "{\"contents\":[{\"parts\":[{\"text\":$prompt_json}]}]}" \
+        | jq -r '.candidates[0].content.parts[0].text // .error.message'
+end
 
 # extract
 function ex

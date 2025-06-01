@@ -12,8 +12,17 @@ AccessModifierOffset: -4
 NamespaceIndentation: All
 IndentPPDirectives: AfterHash
 
-# functions, constructors, template parrameters
-BinPackParameters: true
+# Functions, constructors, template parrameters
 PackConstructorInitializers: Never
-BreakConstructorInitializersBeforeComma: true
-AlwaysBreakTemplateDeclarations: true
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AlwaysBreakAfterReturnType: All
+PenaltyReturnTypeOnItsOwnLine: 0
+AlwaysBreakTemplateDeclarations: Yes
+
+# Aligns
+AlignConsecutiveMacros: true
+AlignEscapedNewlines: LeftWithLastLine
+AlignArrayOfStructures: Left
+AlignTrailingComments: Always
