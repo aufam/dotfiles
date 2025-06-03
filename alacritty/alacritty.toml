@@ -2,12 +2,12 @@
 program = "/usr/bin/tmux"
 
 [window]
-startup_mode = "Fullscreen"
+decorations = "none"
 opacity = 0.85
 
 [font]
 size = 12.0
-offset = { y = 5 }
+offset = { y = 9 }
 
 normal      = { family = "Cartograph CF", style = "Regular" }
 bold        = { family = "Cartograph CF", style = "Bold" }

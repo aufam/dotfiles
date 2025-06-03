@@ -1,12 +1,11 @@
 # ~/.config/fish/config.fish
 
-if status is-interactive
-  # Commands to run in interactive sessions can go here
-  neofetch
+function fish_greeting
+    neofetch
 end
 
-set script_dir (dirname (status -f))
-set file_to_source "$script_dir/user-script.fish"
+set -l script_dir (dirname (status -f))
+set -l file_to_source "$script_dir/user-script.fish"
 if test -f $file_to_source
     source $file_to_source
 end
