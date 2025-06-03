@@ -5,7 +5,24 @@ return {
 			options = { theme = "auto", section_separators = "", component_separators = "" },
 			sections = {
 				lualine_a = {
-					"mode",
+					{
+						"mode",
+						fmt = function(str)
+							local map = {
+								["NORMAL"] = "N",
+								["INSERT"] = "I",
+								["VISUAL"] = "V",
+								["V-LINE"] = "V-L",
+								["V-BLOCK"] = "V-B",
+								["REPLACE"] = "R",
+								["COMMAND"] = "C",
+								["SHELL"] = "S",
+								["TERMINAL"] = "T",
+								["SELECT"] = "S",
+							}
+							return map[str] or str:sub(1, 1)
+						end,
+					},
 					{
 						function()
 							local str = require("noice").api.statusline.mode.get()
