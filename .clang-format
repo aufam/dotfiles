@@ -17,7 +17,7 @@ PackConstructorInitializers: Never
 BinPackParameters: false
 BinPackArguments: false
 AllowAllParametersOfDeclarationOnNextLine: false
-AlwaysBreakAfterReturnType: All
+AlwaysBreakAfterReturnType: None
 PenaltyReturnTypeOnItsOwnLine: 0
 AlwaysBreakTemplateDeclarations: Yes
 
@@ -26,3 +26,5 @@ AlignConsecutiveMacros: true
 AlignEscapedNewlines: LeftWithLastLine
 AlignArrayOfStructures: Left
 AlignTrailingComments: Always
+AlignOperands: false
+BreakBeforeBinaryOperators: NonAssignment
