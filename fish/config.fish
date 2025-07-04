@@ -27,16 +27,23 @@ alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
 alias ..... "cd ../../../.."
+alias vim "nvim -u NONE +'set relativenumber' +':hi Normal guibg=NONE'"
 
 # gemini
 function gemini
-    argparse 'x/xclip' 'v/verbose' -- $argv
+    argparse 'x/xclip' 'v/verbose' 'l/long' -- $argv
     or return
 
-    if set -q _flag_xclip
-        set prompt "$argv\n$(xclip -selection clipboard -o)"
+    if set -q _flag_long
+        set pre_prompt ""
     else
-        set prompt $argv
+        set pre_prompt "answer shortly\n"
+    end
+
+    if set -q _flag_xclip
+        set prompt "$pre_prompt$argv\n$(xclip -selection clipboard -o)"
+    else
+        set prompt "$pre_prompt$argv"
     end
 
     set api_url "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
