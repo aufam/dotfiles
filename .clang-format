@@ -23,7 +23,7 @@ AlwaysBreakTemplateDeclarations: Yes
 
 # Aligns
 AlignConsecutiveMacros: true
-AlignEscapedNewlines: LeftWithLastLine
+# AlignEscapedNewlines: LeftWithLastLine
 AlignArrayOfStructures: Left
 AlignTrailingComments: Always
 AlignOperands: false

@@ -14,7 +14,7 @@ set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
 set -x PATH $PATH $HOME/nvim-linux-x86_64/bin/
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 set -x CPPXX_CACHE $HOME/.cache/cppxx
-set -x BAT_THEME gruvbox-dark
+set -x BAT_THEME rose-pine
 
 # aliases
 alias bat batcat

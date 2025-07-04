@@ -4,7 +4,7 @@
 sudo apt install -y python3 python3-pip
 
 if python3 -c 'import sys; exit(sys.version_info >= (3, 11))'; then
-  sudo pip install debugpy
+  sudo pip install debugpy pyright
 else
-  sudo pip install debugpy --break-system-packages
+  sudo pip install debugpy pyright --break-system-packages
 fi
