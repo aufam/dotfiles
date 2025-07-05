@@ -11,23 +11,40 @@ if test -f $file_to_source
 end
 
 set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
-set -x PATH $PATH $HOME/nvim-linux-x86_64/bin/
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 set -x CPPXX_CACHE $HOME/.cache/cppxx
-set -x BAT_THEME rose-pine
+set -x BAT_THEME gruvbox
 
 # aliases
-alias bat batcat
-alias ls 'exa --group-directories-first'
-alias la 'exa -a --group-directories-first'
-alias ll 'exa -l --group-directories-first'
-alias lt 'exa -T --group-directories-first'
 alias please 'echo sudo $history[1] && eval command sudo $history[1]'
 alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
 alias ..... "cd ../../../.."
 alias vim "nvim -u NONE +'set relativenumber' +':hi Normal guibg=NONE'"
+
+if type -q eza
+    alias ls 'eza --group-directories-first'
+    alias la 'eza -a --group-directories-first'
+    alias ll 'eza -l --group-directories-first'
+    alias lt 'eza -T --group-directories-first'
+    alias lla 'eza -la --group-directories-first'
+    alias llt 'eza -lT --group-directories-first'
+else if type -q exa
+    alias ls 'exa --group-directories-first'
+    alias la 'exa -a --group-directories-first'
+    alias ll 'exa -l --group-directories-first'
+    alias lt 'exa -T --group-directories-first'
+    alias lla 'exa -la --group-directories-first'
+    alias llt 'exa -lT --group-directories-first'
+else
+    alias ls 'ls --color=auto'
+    alias la 'ls -a --color=auto'
+    alias ll 'ls -l --color=auto'
+    alias lt 'ls -R --color=auto'
+    alias lla 'ls -la --color=auto'
+    alias llt 'ls -lR --color=auto'
+end
 
 # gemini
 function gemini

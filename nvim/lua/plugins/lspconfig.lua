@@ -36,7 +36,7 @@ return {
 			capabilities = capabilities,
 			filetypes = { "c", "cpp", "cc", "cxx" },
 			cmd = {
-				"clangd-19",
+				"clangd",
 				"--header-insertion=never",
 				"--header-insertion-decorators=false",
 				"--clang-tidy=true",

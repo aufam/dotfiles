@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "Hasklug Nerd Font", style = "SemiBold"}
+bold        = { family = "Hasklug Nerd Font", style = "Bold"}
+italic      = { family = "Hasklug Nerd Font", style = "SemiBold Italic"}
+bold_italic = { family = "Hasklug Nerd Font", style = "Bold Italic"}

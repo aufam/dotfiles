@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "CaskaydiaCove Nerd Font Mono", style = "SemiBold"}
+bold        = { family = "CaskaydiaCove Nerd Font Mono", style = "Bold"}
+italic      = { family = "CaskaydiaCove Nerd Font Mono", style = "Italic"}
+bold_italic = { family = "CaskaydiaCove Nerd Font Mono", style = "Bold Italic"}

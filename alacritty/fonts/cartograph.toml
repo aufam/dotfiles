@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "Cartograph CF", style = "Regular" }
+bold        = { family = "Cartograph CF", style = "Bold" }
+italic      = { family = "Cartograph CF", style = "Italic" }
+bold_italic = { family = "Cartograph CF", style = "Bold Italic" }
