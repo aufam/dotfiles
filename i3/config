@@ -44,8 +44,8 @@ exec --no-startup-id nm-applet
 
 exec --no-startup-id xrdb -merge ~/.Xresources
 exec --no-startup-id picom
-exec --no-startup-id feh --bg-scale --randomize ~/wallpapers/*
-bindsym Shift+Print exec feh --bg-scale --randomize ~/wallpapers/* 
+exec --no-startup-id feh --bg-fill ~/wallpapers/*
+bindsym $mod+Print exec feh --bg-fill --randomize ~/wallpapers/*
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -55,7 +55,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
-bindsym Print exec scrot -s -e ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png
+bindsym Print exec scrot -s ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i $f'
+bindsym Shift+Print exec scrot ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i $f'
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
