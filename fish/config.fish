@@ -1,13 +1,5 @@
-# ~/.config/fish/config.fish
-
 function fish_greeting
     neofetch
-end
-
-set -l script_dir (dirname (status -f))
-set -l file_to_source "$script_dir/user-script.fish"
-if test -f $file_to_source
-    source $file_to_source
 end
 
 set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
@@ -44,6 +36,10 @@ else
     alias lt 'ls -R --color=auto'
     alias lla 'ls -la --color=auto'
     alias llt 'ls -lR --color=auto'
+end
+
+if type -q fd-find
+    alias fd fd-find
 end
 
 # gemini
@@ -120,4 +116,11 @@ function ex
       end
     end
   end
+end
+
+# user script
+set -l script_dir (dirname (status -f))
+set -l file_to_source "$script_dir/user-script.fish"
+if test -f $file_to_source
+    source $file_to_source
 end
