@@ -1,0 +1,38 @@
+# vim: filetype=toml
+[global]
+    monitor = 0
+    origin = top-right
+    offset = 20x40
+    padding = 12
+    horizontal_padding = 12
+    frame_width = 2
+    frame_color = "#585b70AA"
+    separator_color = auto
+    transparency = 60
+    width = 300
+    notification_height = 0
+    alignment = left
+    vertical_alignment = bottom
+    font = Hasklug Nerd Font 12
+    format = "<b>%s</b>\n%b"
+    corner_radius = 10
+    icon_position = left
+    max_icon_size = 64
+    markup = full
+    show_indicators = yes
+    word_wrap = yes
+
+[urgency_low]
+    background = "#1e1e2eAA"
+    foreground = "#7f849c"
+    frame_color = "#1e1e2eAA"
+
+[urgency_normal]
+    background = "#1e1e2eAA"
+    foreground = "#cdd6f4"
+    frame_color = "#7f849cAA"
+
+[urgency_critical]
+    background = "#313244AA"
+    foreground = "#f38ba8"
+    frame_color = "#f38ba8AA"
