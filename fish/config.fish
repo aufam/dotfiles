@@ -13,7 +13,10 @@ alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
 alias ..... "cd ../../../.."
-alias vim "nvim -u NONE +'set relativenumber' +':hi Normal guibg=NONE'"
+alias vim "NO_LAZY=ON nvim"
+
+if type -q batcat; alias bat batcat; end
+if type -q fd-find; alias fd fd-find; end
 
 if type -q eza
     alias ls 'eza --group-directories-first'
@@ -36,10 +39,6 @@ else
     alias lt 'ls -R --color=auto'
     alias lla 'ls -la --color=auto'
     alias llt 'ls -lR --color=auto'
-end
-
-if type -q fd-find
-    alias fd fd-find
 end
 
 # gemini

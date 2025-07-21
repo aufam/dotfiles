@@ -1,39 +1,56 @@
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+-- Visual Mode: Move selected lines up/down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+-- Visual Mode: Indent and reselect
+vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "=ap", "ma=ap'a")
-vim.keymap.set("n", "<leader><leader>", ":noh<CR>", { silent = true })
+-- Normal Mode: Scrolling, search, and motion improvements
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result centered and unfolded" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result centered and unfolded" })
+vim.keymap.set("n", "=ap", "ma=ap'a", { desc = "Re-indent current paragraph" })
 
-if vim.fn.has("unnamedplus") == 1 then
-	vim.opt.clipboard = "unnamed,unnamedplus"
+vim.keymap.set("n", "<leader><leader>", ":noh<CR>", { desc = "Clear search highlight", silent = true })
+vim.keymap.set("n", "<leader>F", function()
+	if vim.bo.fileencoding == "utf-8" then
+		vim.cmd("%s/\\r//ge")
+		vim.cmd("%s/\\s\\+$//e")
+	end
+end, { desc = "Trim trailing whitespace and \\r (UTF-8 only)", silent = true })
+
+-- In normal mode, paste over selection without overwriting unnamed register
+vim.keymap.set("n", "<leader>p", '"_dP', { desc = "Paste without overwriting register" })
+
+-- System clipboard yanking and cutting
+vim.keymap.set("n", "YY", '"+yy', { desc = "Yank line to system clipboard" })
+vim.keymap.set("n", "XX", '"+dd', { desc = "Cut line to system clipboard" })
+
+-- Visual mode paste (without overwriting default register)
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste (visual) without overwriting register" })
+
+-- Yank to system clipboard (works in both normal and visual mode)
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
+
+-- Quick substitution using word under cursor
+vim.keymap.set(
+	"n",
+	"<leader>s",
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	{ desc = "Substitute word under cursor" }
+)
+
+-- Buffer navigation
+vim.keymap.set("n", "<S-Tab>", ":bp<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<Tab>", ":bn<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>c", ":bd<CR>", { desc = "Close buffer" })
+vim.keymap.set("n", "<leader>C", ":bd!<CR>", { desc = "Force close buffer" })
+for i = 1, 9 do
+	vim.keymap.set("n", "<leader>" .. i, ":buffer " .. i .. "<CR>", {
+		desc = "Go to buffer " .. i,
+	})
 end
-vim.keymap.set("n", "<leader>p", '"_dP')
-vim.keymap.set("n", "YY", '"+y')
-vim.keymap.set("n", "XX", '"+x')
-
-vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
-
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<S-Tab>", ":bp<CR>")
-vim.keymap.set("n", "<Tab>", ":bn<CR>")
-vim.keymap.set("n", "<leader>c", ":bd<CR>")
-vim.keymap.set("n", "<leader>C", ":bd!<CR>")
-
-vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
-vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-vim.keymap.set("n", "<leader>?", vim.diagnostic.open_float, {})
-vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, {})
-vim.keymap.set("n", "<leader>r", vim.lsp.buf.format, { silent = true })

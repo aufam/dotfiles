@@ -1,0 +1,724 @@
+# name: Rosé Pine Moon
+base: &base "#191724"
+surface: &surface "#1f1d2e"
+overlay: &overlay "#26233a"
+inactive: &inactive "#6e6a86"
+muted: &muted "#6e6a86"
+subtle: &subtle "#908caa"
+text: &text "#e0def4"
+love: &love "#eb6f92"
+gold: &gold "#f6c177"
+rose: &rose "#ebbcba"
+pine: &pine "#31748f"
+foam: &foam "#9ccfd8"
+iris: &iris "#c4a7e7"
+highlight_low: &highlight_low "#21202e"
+highlight_med: &highlight_med "#403d52"
+highlight_high: &highlight_high "#524f67"
+
+global:
+  enable_devtools: true
+
+window/bar:
+  providers: ["self"]
+  width: "{{ self.args.MONITOR_WIDTH }}"
+  height: "60" #This one is a bit funky, if you are using scaling, adjust accordingly
+  position_x: "{{ self.args.MONITOR_X }}"
+  position_y: "{{ self.args.MONITOR_Y }}"
+  z_order: "always_on_bottom"
+  show_in_taskbar: false
+  resizable: false
+  global_styles: |
+    @import "https://www.nerdfonts.com/assets/css/webfont.css";
+    @import "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css";
+
+    :root {
+      --rp-base: #191724;
+      --rp-base-alpha-bg: #191724dd;
+      --rp-surface: #1f1d2e;
+      --rp-overlay: #26233a;
+      --rp-muted: #6e6a86;
+      --rp-subtle: #908caa;
+      --rp-text: #e0def4;
+      --rp-love: #eb6f92;
+      --rp-gold: #f6c177;
+      --rp-rose: #ebbcba;
+      --rp-pine: #31748f;
+      --rp-foam: #9ccfd8;
+      --rp-iris: #c4a7e7;
+      --rp-highlight-low: #21202e;
+      --rp-highlight-med: #403d52;
+      --rp-highlight-high: #524f67;
+
+      --rp-moon-base: #232136;
+      --rp-moon-base-alpha-bg: #232136dd;
+      --rp-moon-surface: #2a273f;
+      --rp-moon-overlay: #393552;
+      --rp-moon-muted: #6e6a86;
+      --rp-moon-subtle: #908caa;
+      --rp-moon-text: #e0def4;
+      --rp-moon-love: #eb6f92;
+      --rp-moon-gold: #f6c177;
+      --rp-moon-rose: #ea9a97;
+      --rp-moon-pine: #3e8fb0;
+      --rp-moon-foam: #9ccfd8;
+      --rp-moon-iris: #c4a7e7;
+      --rp-moon-highlight-low: #2a283e;
+      --rp-moon-highlight-med: #44415a;
+      --rp-moon-highlight-high: #56526e;
+
+      --rp-dawn-base: #faf4ed;
+      --rp-dawn-base-alpha-bg: #faf4eddd
+      --rp-dawn-surface: #fffaf3;
+      --rp-dawn-overlay: #f2e9e1;
+      --rp-dawn-muted: #9893a5;
+      --rp-dawn-subtle: #797593;
+      --rp-dawn-text: #575279;
+      --rp-dawn-love: #b4637a;
+      --rp-dawn-gold: #ea9d34;
+      --rp-dawn-rose: #d7827e;
+      --rp-dawn-pine: #286983;
+      --rp-dawn-foam: #56949f;
+      --rp-dawn-iris: #907aa9;
+      --rp-dawn-highlight-low: #f4ede8;
+      --rp-dawn-highlight-med: #dfdad9;
+      --rp-dawn-highlight-high: #cecacd;
+
+      --text: var(--rp-text);
+      --bg: var(--rp-base-alpha-bg);
+      --border: var(--rp-base);
+      --icon: var(--rp-love);
+      --memory: var(--rp-iris);
+      --cpu: var(--rp-rose);
+      --cpu-high-usage: var(--rp-love);
+      --battery-good: var(--rp-foam);
+      --battery-mid: var(--rp-gold);
+      --battery-low: var(--rp-love);
+      --ws-1: var(--rp-love);
+      --ws-2: var(--rp-gold);
+      --ws-3: var(--rp-rose);
+      --ws-4: var(--rp-pine);
+      --ws-5: var(--rp-foam);
+      --ws-6: var(--rp-iris);
+      --weather: var(--rp-gold);
+    }
+
+    @keyframes flash {
+        from { opacity: 1.0; }
+        50% { opacity: 0.5; }
+        to { opacity: 1.0; }
+    }
+
+  styles: |
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    height: 40px;
+    margin: 10px 20px;
+    color: var(--text);
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 16px;
+    font-weight: 600;
+
+  group/left:
+    styles: |
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      height: 40px; 
+      width: fit-content;
+
+      .template {
+        margin: 4px;
+        display: flex;
+        align-items: center;
+
+        div {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      #memory, #cpu, #battery {
+        background: color-mix(in srgb, currentColor 10%, transparent);
+        border-radius: 9999px;
+        padding: 6px;
+        i {
+          font-size: 20px;
+          margin-right: 7px;
+        }
+      }
+
+    template/rose-pine:
+      styles: |
+        color: var(--icon);
+        background: color-mix(in srgb, currentColor 10%, transparent);
+        padding: 6px;
+        border-radius: 9999px
+      template: |
+        <i class="nf nf-md-flower_tulip"></i>
+
+    template/memory:
+      providers: ["memory"]
+      styles: |
+        color: var(--memory);
+      template: |
+        <i class="ti ti-rocket"></i>
+        {{ (memory.usedMemory / 1000000000).toFixed(2) }} GiB
+
+    template/cpu:
+      providers: ["cpu"]
+      styles: |
+        color: var(--cpu);
+
+        .high-usage {
+          color: var(--cpu-high-usage);
+          animation: flash 0.5s infinite;
+        }
+      template: |
+        <div class={{cpu.usage > 85 ? "high-usage" : ""}}>
+          <i class="ti ti-cpu"></i>
+          <span>{{ Math.round(cpu.usage) }}%</span>
+        </div>
+
+    template/battery:
+      providers: ["battery"]
+      styles: |
+        .critical {
+          color: var(--battery-low);
+          animation: flash 1s infinite;
+        }
+
+        .low {
+          color: var(--battery-low)
+        }
+
+        .mid {
+          color: var(--battery-mid)
+        }
+
+        .good {
+          color: var(--battery-good);
+        }
+      template: |
+        <div class="
+            @switch (true) {
+              @case (battery.chargePercent > 75) { good }
+              @case (battery.chargePercent > 50) { mid }
+              @case (battery.chargePercent > 25) { low }
+              @default { critical }
+            }
+          ">
+            <i class="ti ti-bolt"></i>
+            {{ Math.round(battery.chargePercent) }}%
+        </div>
+
+  group/center:
+    styles: |
+      justify-self: center;
+
+    template/glazewm:
+      styles: |
+        height: 40px;
+        display: flex;
+        align-items: center;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 9999px;
+        font-weight: 1000;
+
+        .workspace {
+          background:transparent;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+        }
+
+        i {
+          padding: 8px;
+          background: color-mix(in srgb, currentColor 10%, transparent);
+          border-radius: 9999px;
+        }      
+
+        button:nth-child(6n+1) i {
+          color: var(--ws-1);
+        }
+
+        button:nth-child(6n+2) i {
+          color: var(--ws-2);
+        }
+
+        button:nth-child(6n+3) i {
+          color: var(--ws-3);
+        }
+
+        button:nth-child(6n+4) i {
+          color: var(--ws-4);
+        }
+
+        button:nth-child(6n+5) i {
+          color: var(--ws-5);
+        }
+
+        button:nth-child(6n+6) i {
+          color: var(--ws-6);
+        }
+
+      providers: ["glazewm"]
+      events:
+        - type: "click"
+          fn_path: "script.js#focusWorkspace"
+          selector: ".workspace"
+      template: |
+        @for (workspace of glazewm.currentWorkspaces) {
+          <button class="workspace" id="{{ workspace.name }}">
+            <i class="nf {{ workspace.hasFocus? 'nf-cod-circle_filled' : 'nf-cod-circle' }}"></i>
+          </button>
+        }
+
+  group/right:
+    styles: |
+      justify-self: end;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+
+      .template {
+        margin: 4px;
+        display: flex;
+        align-items: center;
+      }
+
+      #weather {
+        background: color-mix(in srgb, currentColor 10%, transparent);
+        border-radius: 9999px;
+        padding: 6px;
+        i {
+          margin-right: 7px;
+        }
+      }
+
+    template/weather:
+      providers: ["weather"]
+      styles: |
+        margin: 10px;
+        i {
+          font-size: 20px;
+        }
+        color: var(--weather);
+      template: |
+        @switch (weather.status) {
+          @case ('clear_day') {<i class="nf nf-weather-day_sunny"></i>}
+          @case ('clear_night') {<i class="nf nf-weather-night_clear"></i>}
+          @case ('cloudy_day') {<i class="nf nf-weather-day_cloudy"></i>}
+          @case ('cloudy_night') {<i class="nf nf-weather-night_alt_cloudy"></i>}
+          @case ('light_rain_day') {<i class="nf nf-weather-day_sprinkle"></i>}
+          @case ('light_rain_night') {<i class="nf nf-weather-night_alt_sprinkle"></i>}
+          @case ('heavy_rain_day') {<i class="nf nf-weather-day_rain"></i>}
+          @case ('heavy_rain_night') {<i class="nf nf-weather-night_alt_rain"></i>}
+          @case ('snow_day') {<i class="nf nf-weather-day_snow"></i>}
+          @case ('snow_night') {<i class="nf nf-weather-night_alt_snow"></i>}
+          @case ('thunder_day') {<i class="nf nf-weather-day_lightning"></i>}
+          @case ('thunder_night') {<i class="nf nf-weather-night_alt_lightning"></i>}
+        }
+        {{ weather.celsiusTemp }}°
+
+    template/separator:
+      styles: |
+      template: |
+        <i class="nf nf-oct-dot_fill"></>
+
+    template/clock:
+      providers: ["date"]
+      styles: |
+        padding-right: 6px;
+      template: |
+        {{ date.toFormat(date.now, 't') }}
+
+general:
+  # Commands to run when the WM has started. This is useful for running a
+  # script or launching another application.
+  # Example: The below command launches Zebar.
+  startup_commands: ['shell-exec zebar']
+
+  # Commands to run just before the WM is shutdown.
+  # Example: The below command kills Zebar.
+  shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
+
+  # Commands to run after the WM config is reloaded.
+  config_reload_commands: []
+
+  # Whether to automatically focus windows underneath the cursor.
+  focus_follows_cursor: false
+
+  # Whether to switch back and forth between the previously focused
+  # workspace when focusing the current workspace.
+  toggle_workspace_on_refocus: false
+
+  cursor_jump:
+    # Whether to automatically move the cursor on the specified trigger.
+    enabled: true
+
+    # Trigger for cursor jump:
+    # - 'monitor_focus': Jump when focus changes between monitors.
+    # - 'window_focus': Jump when focus changes between windows.
+    trigger: 'monitor_focus'
+
+  # How windows should be hidden when switching workspaces.
+  # - 'cloak': Recommended. Hides windows with no animation.
+  # - 'hide': Legacy method (v3.5 and earlier) that has a brief animation,
+  # but has stability issues with some apps.
+  hide_method: 'cloak'
+
+  # Affects which windows get shown in the native Windows taskbar. Has no
+  # effect if `hide_method: 'hide'`.
+  # - 'true': Show all windows (regardless of workspace).
+  # - 'false': Only show windows from the currently shown workspaces.
+  show_all_in_taskbar: false
+
+gaps:
+  # Whether to scale the gaps with the DPI of the monitor.
+  scale_with_dpi: true
+
+  # Gap between adjacent windows.
+  inner_gap: '20px'
+
+  # Gap between windows and the screen edge.
+  outer_gap:
+    top: '60px'
+    right: '30px'
+    bottom: '30px'
+    left: '30px'
+
+bar:
+  enabled: true
+  height: "30px"
+  position: "top"
+  opacity: 1.0
+  background: *base
+  foreground: *text
+  font_family: "FiraCode Nerd Font"
+  font_size: "13px"
+  padding: "4px 6px"
+  offset_x: "0"
+  offset_y: "0"
+  border_radius: "0"
+  components_left:
+    - type: "weather"
+      latitude: 37.5078
+      longitude: 15.0830
+      label: "{temperature_celsius}°C "
+      label_sun: "☀️ {temperature_celsius}°C "
+      label_moon: "🌙 {temperature_celsius}°C "
+      label_cloud_moon: "🌙☁️ {temperature_celsius}°C "
+      label_cloud_sun: "⛅ {temperature_celsius}°C "
+      label_cloud_moon_rain: "🌙🌧️ {temperature_celsius}°C "
+      label_cloud_sun_rain: "🌦️ {temperature_celsius}°C "
+      label_cloud_rain: "🌧️ {temperature_celsius}°C "
+      label_snow_flake: "❄️ {temperature_celsius}°C "
+      label_thunderstorm: "⚡ {temperature_celsius}°C "
+      label_cloud: "☁️ {temperature_celsius}°C "  
+    - type: "workspaces"
+      focused_workspace_background: *pine
+      displayed_workspace_background: *muted
+      default_workspace_background: "transparent"
+  components_center:
+    - type: "window title"
+  components_right:
+    - type: "system tray"
+    - type: "tiling direction"
+      label_horizontal: "⮂"
+      label_vertical: "⮁"
+      background: *base
+      margin: "0 4px"
+      padding: "0 8px"
+    - type: "binding mode"
+      background: *iris
+      margin: "0 4px 0 0"
+      padding: "0 8px"
+    - type: "battery"
+      foreground: *foam
+      background: *overlay
+      label_draining: "{battery_level}% "
+      label_power_saver: "{battery_level}% "
+      label_charging: "{battery_level}% "
+    - type: "clock"
+      foreground: *gold
+      background: *surface
+      # Documentation on formatting date/time string:
+      # https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+      time_formatting: "hh:mm"
+
+window_effects:
+  # Visual effects to apply to the focused window.
+  focused_window:
+    # Highlight the window with a colored border.
+    # ** Exclusive to Windows 11 due to API limitations.
+    border:
+      enabled: true
+      color: *iris
+
+    # Remove the title bar from the window's frame. Note that this can
+    # cause rendering issues for some applications.
+    hide_title_bar:
+      enabled: false
+
+    # Change the corner style of the window's frame.
+    # ** Exclusive to Windows 11 due to API limitations.
+    corner_style:
+      enabled: true
+      # Allowed values: 'square', 'rounded', 'small_rounded'.
+      style: 'rounded'
+
+    # Change the transparency of the window.
+    transparency:
+      enabled: false
+      # Can be something like '95%' or '0.95' for slightly transparent windows.
+      # '0' or '0%' is fully transparent (and, by consequence, unfocusable).
+      opacity: '90%'
+
+  # Visual effects to apply to non-focused windows.
+  other_windows:
+    border:
+      enabled: true
+      color: *overlay
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: true
+      style: 'rounded'
+    transparency:
+      enabled: true
+      opacity: '95%'
+
+window_behavior:
+  # New windows are created in this state whenever possible.
+  # Allowed values: 'tiling', 'floating'.
+  initial_state: 'tiling'
+
+  # Sets the default options for when a new window is created. This also
+  # changes the defaults for when the state change commands, like
+  # `set-floating`, are used without any flags.
+  state_defaults:
+    floating:
+      # Whether to center floating windows by default.
+      centered: true
+
+      # Whether to show floating windows as always on top.
+      shown_on_top: false
+
+    fullscreen:
+      # Maximize the window if possible. If the window doesn't have a
+      # maximize button, then it'll be fullscreen'ed normally instead.
+      maximized: false
+
+      # Whether to show fullscreen windows as always on top.
+      shown_on_top: false
+
+workspaces:
+  - name: '1'
+  - name: '2'
+  - name: '3'
+  - name: '4'
+  - name: '5'
+  - name: '6'
+  - name: '7'
+  - name: '8'
+  - name: '9'
+
+window_rules:
+  - commands: ['ignore']
+    match:
+      # Ignores any Zebar windows.
+      - window_process: { equals: 'zebar' }
+
+      # Ignores picture-in-picture windows for browsers.
+      - window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+        window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
+
+      # Ignore rules for various 3rd-party apps.
+      - window_process: { equals: 'PowerToys' }
+        window_class: { regex: 'HwndWrapper\[PowerToys\.PowerAccent.*?\]' }
+      - window_process: { equals: 'PowerToys' }
+        window_title: { regex: '.*? - Peek' }
+      - window_process: { equals: 'Lively' }
+        window_class: { regex: 'HwndWrapper' }
+
+      # Ignore Remote Desktop windows
+      - window_process: { equals: 'mstsc' }
+      - window_class: { equals: 'TscShellContainerClass' }
+      - window_class: { equals: 'RAIL_WINDOW' }
+
+binding_modes:
+  # When enabled, the focused window can be resized via arrow keys or HJKL.
+  - name: 'resize'
+    keybindings:
+      - commands: ['resize --width -2%']
+        bindings: ['h', 'left']
+      - commands: ['resize --width +2%']
+        bindings: ['l', 'right']
+      - commands: ['resize --height +2%']
+        bindings: ['k', 'up']
+      - commands: ['resize --height -2%']
+        bindings: ['j', 'down']
+      # Press enter/escape to return to default keybindings.
+      - commands: ['wm-disable-binding-mode --name resize']
+        bindings: ['escape', 'enter']
+
+keybindings:
+  # Shift focus in a given direction.
+  - commands: ['focus --direction left']
+    bindings: ['LWin+h', 'LWin+left']
+  - commands: ['focus --direction right']
+    bindings: ['LWin+l', 'LWin+right']
+  - commands: ['focus --direction up']
+    bindings: ['LWin+k', 'LWin+up']
+  - commands: ['focus --direction down']
+    bindings: ['LWin+j', 'LWin+down']
+
+  # Move focused window in a given direction.
+  - commands: ['move --direction left']
+    bindings: ['LWin+shift+h', 'LWin+shift+left']
+  - commands: ['move --direction right']
+    bindings: ['LWin+shift+l', 'LWin+shift+right']
+  - commands: ['move --direction up']
+    bindings: ['LWin+shift+k', 'LWin+shift+up']
+  - commands: ['move --direction down']
+    bindings: ['LWin+shift+j', 'LWin+shift+down']
+
+  # Resize focused window by a percentage or pixel amount.
+  # - commands: ['resize --width -2%']
+  #   bindings: ['alt+u']
+  # - commands: ['resize --width +2%']
+  #   bindings: ['alt+p']
+  # - commands: ['resize --height +2%']
+  #   bindings: ['alt+o']
+  # - commands: ['resize --height -2%']
+  #   bindings: ['alt+i']
+
+  # As an alternative to the resize keybindings above, resize mode enables
+  # resizing via arrow keys or HJKL. The binding mode is defined above with
+  # the name 'resize'.
+  - commands: ['wm-enable-binding-mode --name resize']
+    bindings: ['LWin+r']
+
+  # Disables window management and all other keybindings until alt+shift+p
+  # is pressed again.
+  - commands: ['wm-toggle-pause']
+    bindings: ['LWin+space']
+
+  # Change tiling direction. This determines where new tiling windows will
+  # be inserted.
+  # - commands: ['toggle-tiling-direction']
+  #   bindings: ['alt+v']
+
+  # Change focus from tiling windows -> floating -> fullscreen.
+  # - commands: ['wm-cycle-focus']
+  #   bindings: ['alt+space']
+
+  # Change the focused window to be floating.
+  # - commands: ['toggle-floating --centered']
+  #   bindings: ['alt+shift+space']
+
+  # Change the focused window to be tiling.
+  # - commands: ['toggle-tiling']
+  #   bindings: ['alt+t']
+
+  # Change the focused window to be fullscreen.
+  # - commands: ['toggle-fullscreen']
+  #   bindings: ['alt+f']
+
+  # Minimize focused window.
+  - commands: ['toggle-minimized']
+    bindings: ['LWin+m']
+
+  # Close focused window.
+  # - commands: ['close']
+  #   bindings: ['alt+shift+q']
+
+  # Kill GlazeWM process safely.
+  # - commands: ['wm-exit']
+  #   bindings: ['alt+shift+e']
+
+  # Re-evaluate configuration file.
+  - commands: ['wm-reload-config']
+    bindings: ['LWin+shift+r']
+
+  # Redraw all windows.
+  # - commands: ['wm-redraw']
+  #   bindings: ['alt+shift+w']
+
+  # Launch CMD terminal. Alternatively, use `shell-exec wt` or
+  # `shell-exec %ProgramFiles%/Git/git-bash.exe` to start Windows
+  # Terminal and Git Bash respectively.
+  # - commands: ['shell-exec cmd']
+  #   bindings: ['alt+enter']
+
+  # Focus the next/previous active workspace defined in `workspaces` config.
+  - commands: ['focus --next-active-workspace']
+    bindings: ['LWin+w', 'LWin+]']
+  - commands: ['focus --prev-active-workspace']
+    bindings: ['LWin+q', 'LWin+[']
+
+  # Focus the workspace that last had focus.
+  # - commands: ['focus --recent-workspace']
+  #   bindings: ['alt+d']
+
+  # Change focus to a workspace defined in `workspaces` config.
+  - commands: ['focus --workspace 1']
+    bindings: ['LWin+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['LWin+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['LWin+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['LWin+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['LWin+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['LWin+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['LWin+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['LWin+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['LWin+9']
+
+  # Move the focused window's parent workspace to a monitor in a given
+  # direction.
+  # - commands: ['move-workspace --direction left']
+  #   bindings: ['LWin+shift+a']
+  # - commands: ['move-workspace --direction right']
+  #   bindings: ['LWin+shift+f']
+  # - commands: ['move-workspace --direction up']
+  #   bindings: ['LWin+shift+d']
+  # - commands: ['move-workspace --direction down']
+  #   bindings: ['LWin+shift+s']
+
+  # Move focused window to a workspace defined in `workspaces` config.
+  - commands: ['move --workspace 1', 'focus --workspace 1']
+    bindings: ['LWin+shift+1']
+  - commands: ['move --workspace 2', 'focus --workspace 2']
+    bindings: ['LWin+shift+2']
+  - commands: ['move --workspace 3', 'focus --workspace 3']
+    bindings: ['LWin+shift+3']
+  - commands: ['move --workspace 4', 'focus --workspace 4']
+    bindings: ['LWin+shift+4']
+  - commands: ['move --workspace 5', 'focus --workspace 5']
+    bindings: ['LWin+shift+5']
+  - commands: ['move --workspace 6', 'focus --workspace 6']
+    bindings: ['LWin+shift+6']
+  - commands: ['move --workspace 7', 'focus --workspace 7']
+    bindings: ['LWin+shift+7']
+  - commands: ['move --workspace 8', 'focus --workspace 8']
+    bindings: ['LWin+shift+8']
+  - commands: ['move --workspace 9', 'focus --workspace 9']
+    bindings: ['LWin+shift+9']

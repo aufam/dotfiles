@@ -1,3 +1,14 @@
+local on_attach = function(_, bufnr)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP: Hover documentation" })
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "LSP: Go to definition" })
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "LSP: Go to declaration" })
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = bufnr, desc = "LSP: Go to implementation" })
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr, desc = "LSP: Find references" })
+	vim.keymap.set("n", "<leader>?", vim.diagnostic.open_float, { buffer = bufnr, desc = "LSP: Show diagnostics" })
+	vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP: Code action" })
+	vim.keymap.set("n", "<leader>r", vim.lsp.buf.format, { buffer = bufnr, desc = "LSP: Format file", silent = true })
+end
+
 return {
 	"neovim/nvim-lspconfig",
 	config = function()
@@ -6,6 +17,7 @@ return {
 
 		-- lua
 		lspconfig.lua_ls.setup({
+			on_attach = on_attach,
 			capabilities = capabilities,
 			settings = {
 				Lua = {
@@ -33,6 +45,7 @@ return {
 		end
 
 		lspconfig.clangd.setup({
+			on_attach = on_attach,
 			capabilities = capabilities,
 			filetypes = { "c", "cpp", "cc", "cxx" },
 			cmd = {
@@ -50,6 +63,7 @@ return {
 		})
 
 		lspconfig.pyright.setup({
+			on_attach = on_attach,
 			capabilities = capabilities,
 			on_new_config = function(new_config, new_root_dir)
 				local function get_python_path(root_dir)
@@ -82,11 +96,10 @@ return {
 			end,
 		})
 
-		lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-		lspconfig.gopls.setup({ capabilities = capabilities })
-		lspconfig.zls.setup({ capabilities = capabilities })
-
-		lspconfig.cmake.setup({ capabilities = capabilities })
-		lspconfig.buf_ls.setup({ capabilities = capabilities })
+		lspconfig.rust_analyzer.setup({ on_attach = on_attach, capabilities = capabilities })
+		lspconfig.gopls.setup({ on_attach = on_attach, capabilities = capabilities })
+		lspconfig.zls.setup({ on_attach = on_attach, capabilities = capabilities })
+		lspconfig.cmake.setup({ on_attach = on_attach, capabilities = capabilities })
+		lspconfig.buf_ls.setup({ on_attach = on_attach, capabilities = capabilities })
 	end,
 }

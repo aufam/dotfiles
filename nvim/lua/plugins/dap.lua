@@ -37,9 +37,9 @@ return {
 			dapui.close()
 		end
 
-		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, {})
-		vim.keymap.set("n", "<leader>dc", dap.continue, {})
-		vim.keymap.set("n", "<leader>dd", dap.step_over, {})
-		vim.keymap.set("n", "<leader>ds", dap.step_into, {})
+		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "DAP: toggle breakpoint" })
+		vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "DAP: continue" })
+		vim.keymap.set("n", "<leader>dd", dap.step_over, { desc = "DAP: step over" })
+		vim.keymap.set("n", "<leader>ds", dap.step_into, { desc = "DAP: step into" })
 	end,
 }

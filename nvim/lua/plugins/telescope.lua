@@ -10,12 +10,12 @@ return {
 
 		vim.keymap.set("n", "<leader>e", function()
 			builtin.find_files({ layout_config = layout_config })
-		end, {})
+		end, { desc = "Telescope: find files" })
 
 		vim.keymap.set("n", "<leader>f", function()
 			local word = vim.fn.expand("<cword>")
 			builtin.live_grep({ default_text = word, layout_config = layout_config })
-		end, { silent = true, noremap = true })
+		end, { desc = "Telescope: live grep word under cursor", silent = true, noremap = true })
 
 		vim.keymap.set("v", "<leader>f", function()
 			local start_pos = vim.fn.getpos("'<")
@@ -29,17 +29,17 @@ return {
 			end
 			lines[1] = string.sub(lines[1], start_pos[3], -1)
 			builtin.live_grep({ default_text = lines[1] })
-		end, { silent = true, noremap = true })
+		end, { desc = "Telescope: live grep word under cursor", silent = true, noremap = true })
 
 		vim.keymap.set("n", "<leader>b", function()
 			builtin.buffers({ layout_config = layout_config })
-		end, {})
+		end, { desc = "Telescope: show buffers" })
 
 		vim.keymap.set("n", "<leader>gf", function()
 			builtin.git_files({
 				layout_config = layout_config,
 				git_command = { "git", "ls-files", "--modified", "--other", "--exclude-standard" },
 			})
-		end, {})
+		end, { desc = "Telescope: show modified files" })
 	end,
 }

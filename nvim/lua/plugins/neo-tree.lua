@@ -18,6 +18,6 @@ return {
 				},
 			},
 		})
-		vim.keymap.set("n", "<leader>t", ":Neotree filesystem reveal left\n", {})
+		vim.keymap.set("n", "<leader>t", ":Neotree filesystem reveal left\n", { desc = "Neotree: show filesystem" })
 	end,
 }

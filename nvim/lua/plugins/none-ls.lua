@@ -1,5 +1,6 @@
 return {
 	"nvimtools/none-ls.nvim",
+	branch = "main",
 	event = "VeryLazy",
 	config = function()
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -34,7 +35,5 @@ return {
 				end
 			end,
 		})
-
-		vim.keymap.set("n", "<leader>F", vim.lsp.buf.format, {})
 	end,
 }
