@@ -11,7 +11,7 @@
 set $mod Mod4
 
 # Font and appearance
-font pango:DejaVu Sans Mono 9
+font pango:Liga SFMono Nerd Font 8
 
 # Gaps
 gaps inner 10

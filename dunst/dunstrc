@@ -13,7 +13,7 @@
     notification_height = 0
     alignment = left
     vertical_alignment = bottom
-    font = Hasklug Nerd Font 12
+    font = Liga SFMono Nerd Font 12
     format = "<b>%s</b>\n%b"
     corner_radius = 10
     icon_position = left

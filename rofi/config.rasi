@@ -21,7 +21,7 @@ configuration {
   margin: 0;
   padding: 0;
   spacing: 0;
-  font: "Hasklug Nerd Font 12";
+  font: "Liga SFMono Nerd Font 12";
 }
 
 window {

@@ -1,7 +1,7 @@
 [general]
 import = [
-    "~/.config/alacritty/fonts/hasklug.toml",
-    "~/.config/alacritty/themes/gruvbox_dark.toml"
+    "~/.config/alacritty/fonts/sf.toml",
+    "~/.config/alacritty/themes/rose_pine.toml"
 ]
 
 [terminal.shell]

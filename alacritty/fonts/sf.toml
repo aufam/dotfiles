@@ -1,0 +1,6 @@
+# https://github.com/shaunsingh/SFMono-Nerd-Font-Ligaturized
+[font]
+normal      = { family = "Liga SFMono Nerd Font", style = "SemiBold"}
+bold        = { family = "Liga SFMono Nerd Font", style = "Bold"}
+italic      = { family = "Liga SFMono Nerd Font", style = "SemiBold Italic"}
+bold_italic = { family = "Liga SFMono Nerd Font", style = "Bold Italic"}
