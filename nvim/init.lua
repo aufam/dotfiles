@@ -3,6 +3,8 @@ function EnableTransparent()
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+	vim.api.nvim_set_hl(0, "WinBar", { bg = "none" })
+	vim.api.nvim_set_hl(0, "WinBarNC", { bg = "none" })
 end
 
 function GoTo(str)
