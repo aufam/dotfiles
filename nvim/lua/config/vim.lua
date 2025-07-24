@@ -59,11 +59,25 @@ if version.major > 0 or version.minor >= 10 then
 			},
 		},
 	})
+	vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
+		config = config or {}
+		config.border = "rounded"
+		return vim.lsp.handlers.hover(_, result, ctx, config)
+	end
+
+	vim.lsp.handlers["textDocument/signatureHelp"] = function(_, result, ctx, config)
+		config = config or {}
+		config.border = "rounded"
+		return vim.lsp.handlers.signature_help(_, result, ctx, config)
+	end
 else
 	vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
 	vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
 	vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
 	vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+	vim.lsp.handlers["textDocument/signatureHelp"] =
+		vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 end
 
 -- Basic autocommands
@@ -140,6 +154,4 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Border
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 vim.diagnostic.config({ float = { border = "rounded" } })

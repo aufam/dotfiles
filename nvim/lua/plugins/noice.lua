@@ -215,6 +215,6 @@ return {
 		"hrsh7th/nvim-cmp",
 	},
 	config = function()
-		-- require("noice").setup(default_opts)
+		require("noice").setup(default_opts)
 	end,
 }
