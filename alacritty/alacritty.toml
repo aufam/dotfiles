@@ -5,7 +5,7 @@ import = [
 ]
 
 [terminal.shell]
-program = "/usr/bin/tmux"
+program = "sh ~/.config/tmux/scripts/launch.sh"
 
 [window]
 decorations = "none"
