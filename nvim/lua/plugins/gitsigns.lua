@@ -4,12 +4,19 @@ return {
 	config = function()
 		require("gitsigns").setup({
 			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "-" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "*" },
-				untracked = { text = "?" },
+				add = { text = "" }, -- unstaged add
+				change = { text = "" }, -- unstaged change
+				delete = { text = "" }, -- unstaged delete
+				topdelete = { text = "󰐊" },
+				changedelete = { text = "󰍴" },
+				untracked = { text = "" },
+			},
+			signs_staged = {
+				add = { text = "" }, -- staged add (check-square)
+				change = { text = "" }, -- staged change (note)
+				delete = { text = "" }, -- staged delete (minus-square)
+				topdelete = { text = "󰘚" }, -- staged top delete
+				changedelete = { text = "󱗜" }, -- staged change + delete
 			},
 		})
 		vim.keymap.set("n", "<leader>gn", ":Gitsigns next_hunk<CR>", { desc = "Gitsigns: Go to next Git hunk" })

@@ -7,7 +7,7 @@ local function lsp_servers()
 		vim.tbl_map(function(client)
 			return client.name
 		end, clients),
-		"⋅"
+		" "
 	)
 end
 
@@ -25,7 +25,6 @@ return {
 				lualine_a = {},
 				lualine_b = {},
 				lualine_c = {
-					"fileformat",
 					"filetype",
 					{
 						function()
@@ -38,7 +37,7 @@ return {
 					},
 				},
 				lualine_z = {},
-				lualine_x = { "encoding", lsp_servers },
+				lualine_x = { "encoding", lsp_servers, "fileformat" },
 				lualine_y = {},
 			},
 			sections = {

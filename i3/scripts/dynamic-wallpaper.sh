@@ -20,7 +20,7 @@ fi
 
 # Loop to update wallpaper every hour
 while true; do
-    HOUR=$(date +'%H')
+    HOUR=$(date +'%-H')
     WALLPAPER="$WALLPAPER_DIR/$HOUR.jpg"
 
     # Only set wallpaper if the file exists
@@ -30,7 +30,7 @@ while true; do
         echo "[ERROR] $WALLPAPER does not exist"
     fi
 
-    Sleep until the next hour mark
+    # Sleep until the next hour mark
     sleep $((3600 - $(date +%M)*60 - $(date +%S)))
 done
 

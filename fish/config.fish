@@ -9,36 +9,36 @@ set -x BAT_THEME gruvbox
 
 # aliases
 alias please 'echo sudo $history[1] && eval command sudo $history[1]'
-alias .. "cd .."
-alias ... "cd ../.."
-alias .... "cd ../../.."
-alias ..... "cd ../../../.."
-alias vim "NO_LAZY=ON nvim"
+alias ..     'cd ..'
+alias ...    'cd ../..'
+alias ....   'cd ../../..'
+alias .....  'cd ../../../..'
+alias vim    'NO_LAZY=ON nvim'
 
 if type -q batcat; alias bat batcat; end
 if type -q fd-find; alias fd fd-find; end
 
 if type -q eza
-    alias ls 'eza --group-directories-first'
-    alias la 'eza -a --group-directories-first'
-    alias ll 'eza -l --group-directories-first'
-    alias lt 'eza -T --group-directories-first'
-    alias lla 'eza -la --group-directories-first'
-    alias llt 'eza -lT --group-directories-first'
+    alias ls 'eza -g --group-directories-first'
+    alias la 'eza -ga --group-directories-first'
+    alias ll 'eza -gl --group-directories-first'
+    alias lt 'eza -gT --group-directories-first'
+    alias lla 'eza -gla --group-directories-first'
+    alias llt 'eza -glT --group-directories-first'
+    if not type -q tree; alias tree 'eza --tree --group-directories-first'; end
 else if type -q exa
-    alias ls 'exa --group-directories-first'
-    alias la 'exa -a --group-directories-first'
-    alias ll 'exa -l --group-directories-first'
-    alias lt 'exa -T --group-directories-first'
-    alias lla 'exa -la --group-directories-first'
-    alias llt 'exa -lT --group-directories-first'
+    alias ls 'exa -g --group-directories-first'
+    alias la 'exa -ga --group-directories-first'
+    alias ll 'exa -gl --group-directories-first'
+    alias lt 'exa -gT --group-directories-first'
+    alias lla 'exa -gla --group-directories-first'
+    alias llt 'exa -glT --group-directories-first'
+    if not type -q tree; alias tree 'exa --tree --group-directories-first'; end
 else
-    alias ls 'ls --color=auto'
-    alias la 'ls -a --color=auto'
-    alias ll 'ls -l --color=auto'
-    alias lt 'ls -R --color=auto'
-    alias lla 'ls -la --color=auto'
-    alias llt 'ls -lR --color=auto'
+    alias ls 'ls --group-directories-first --color=auto'
+    alias la 'ls -a --group-directories-first --color=auto'
+    alias ll 'ls -l --group-directories-first --color=auto'
+    alias lla 'ls -la --group-directories-first --color=auto'
 end
 
 # gemini

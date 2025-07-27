@@ -1,7 +1,7 @@
 [general]
 import = [
     "~/.config/alacritty/fonts/sf.toml",
-    "~/.config/alacritty/themes/rose_pine.toml"
+    "~/.config/alacritty/themes/google.toml"
 ]
 
 [terminal.shell]
