@@ -35,10 +35,12 @@ else if type -q exa
     alias llt 'exa -glT --group-directories-first'
     if not type -q tree; alias tree 'exa --tree --group-directories-first'; end
 else
-    alias ls 'ls --group-directories-first --color=auto'
-    alias la 'ls -a --group-directories-first --color=auto'
-    alias ll 'ls -l --group-directories-first --color=auto'
-    alias lla 'ls -la --group-directories-first --color=auto'
+    alias ls 'ls -g --color=auto'
+    alias la 'ls -ga --color=auto'
+    alias ll 'ls -gl --color=auto'
+    alias lt 'ls -gR --color=auto'
+    alias lla 'ls -gla --color=auto'
+    alias llt 'ls -glR --color=auto'
 end
 
 # gemini
