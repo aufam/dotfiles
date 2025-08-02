@@ -21,7 +21,7 @@ fi
 # Loop to update wallpaper every hour
 while true; do
     HOUR=$(date +'%-H')
-    WALLPAPER=(ls "$WALLPAPER_DIR/$HOUR.*")
+    WALLPAPER=$(ls $WALLPAPER_DIR/$HOUR.*)
 
     # Only set wallpaper if the file exists
     if [ -f "$WALLPAPER" ]; then
