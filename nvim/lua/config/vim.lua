@@ -29,6 +29,7 @@ vim.opt.title = true
 vim.opt.titleold = "Terminal"
 vim.opt.titlestring = "%F"
 
+
 vim.opt.signcolumn = "yes"
 vim.opt.showmatch = true
 vim.opt.completeopt = "menuone,noinsert,noselect"
@@ -46,6 +47,52 @@ vim.cmd([[
   syntax match TodoComment /\v<(TODO|FIXME|NOTE):?/
   highlight default link TodoComment Todo
 ]])
+
+function BufferList()
+	local buflist = {}
+	local current_buf = vim.fn.bufnr("%")
+
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.fn.buflisted(buf) == 1 then
+			local name = vim.fn.bufname(buf)
+			name = name ~= "" and vim.fn.fnamemodify(name, ":t") or "[No Name]"
+			local is_current = buf == current_buf and "*" or " "
+			local is_modified = vim.fn.getbufvar(buf, "&modified") == 1 and "+" or ""
+			table.insert(buflist, string.format("%s%d:%s%s", is_current, buf, name, is_modified))
+		end
+	end
+
+	return table.concat(buflist, " ")
+end
+
+function ModeName()
+	local modes = {
+		n = "NORMAL",
+		i = "INSERT",
+		v = "VISUAL",
+		V = "V-LINE",
+		[""] = "V-BLOCK", -- CTRL-V
+		c = "COMMAND",
+		R = "REPLACE",
+		s = "SELECT",
+	}
+
+	local mode_code = vim.fn.mode()
+	return modes[mode_code] or "OTHER"
+end
+
+vim.opt.statusline = table.concat({
+	" %{v:lua.ModeName()}",
+	"%{v:lua.BufferList()}",
+	"%=",
+	"%{&fileencoding !=# '' ? &fileencoding : &encoding}",
+	"%{&fileformat} ",
+}, " ")
+
+vim.opt.laststatus = 2
+vim.opt.ruler = true
+vim.opt.showmode = true
+vim.opt.showcmd = true
 
 local version = vim.version()
 if version.major > 0 or version.minor >= 10 then
@@ -155,3 +202,4 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- Border
 vim.diagnostic.config({ float = { border = "rounded" } })
+
