@@ -6,6 +6,7 @@ Index:
 
 Diagnostics:
   UnusedIncludes: Strict
+  Suppress: [unknown-pragmas]
   ClangTidy:
     Add: [
       modernize-use-nullptr,
