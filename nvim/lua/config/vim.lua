@@ -29,7 +29,6 @@ vim.opt.title = true
 vim.opt.titleold = "Terminal"
 vim.opt.titlestring = "%F"
 
-
 vim.opt.signcolumn = "yes"
 vim.opt.showmatch = true
 vim.opt.completeopt = "menuone,noinsert,noselect"
@@ -47,6 +46,12 @@ vim.cmd([[
   syntax match TodoComment /\v<(TODO|FIXME|NOTE):?/
   highlight default link TodoComment Todo
 ]])
+
+vim.filetype.add({
+	pattern = {
+		["%.gitlab%-ci%.ya?ml"] = "yaml.gitlab",
+	},
+})
 
 function BufferList()
 	local buflist = {}
@@ -202,4 +207,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- Border
 vim.diagnostic.config({ float = { border = "rounded" } })
-
