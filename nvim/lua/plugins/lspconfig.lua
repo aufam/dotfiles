@@ -45,6 +45,16 @@ return {
 				and vim.fn.filereadable(root_dir .. "/build/compile_commands.json") == 1
 			then
 				return root_dir .. "/build"
+			elseif
+				vim.fn.isdirectory(root_dir .. "/debug") == 1
+				and vim.fn.filereadable(root_dir .. "/debug/compile_commands.json") == 1
+			then
+				return root_dir .. "/debug"
+			elseif
+				vim.fn.isdirectory(root_dir .. "/release") == 1
+				and vim.fn.filereadable(root_dir .. "/release/compile_commands.json") == 1
+			then
+				return root_dir .. "/release"
 			else
 				return root_dir -- fallback to root even if no compile_commands.json
 			end
