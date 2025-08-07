@@ -2,7 +2,7 @@ CompileFlags:
   Add: [-std=c++23, -Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
 
 Index:
-  StandardLibrary: No
+  StandardLibrary: false
 
 Diagnostics:
   UnusedIncludes: Strict
@@ -18,6 +18,6 @@ Diagnostics:
       clang-analyzer-cplusplus.NewDelete,
     ]
     CheckOptions:
-      - key:             bugprone-use-after-move.StrictMode
-        value:           true
+      bugprone-use-after-move.StrictMode: true
+
 
