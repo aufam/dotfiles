@@ -9,15 +9,12 @@ Diagnostics:
   Suppress: [unknown-pragmas]
   ClangTidy:
     Add: [
-      modernize-use-nullptr,
-      bugprone-use-after-move,
-      bugprone-dangling-handle,
-      bugprone-undefined-memory-manipulation,
-      bugprone-branch-clone,
-      clang-analyzer-core.NullDereference,
-      clang-analyzer-cplusplus.NewDelete,
+      bugprone-*,
+      clang-analyzer-nullability.*,
+      modernize-*,
+      performance-*,
     ]
-    CheckOptions:
-      bugprone-use-after-move.StrictMode: true
-
+    Remove: [
+      modernize-use-trailing-return-type,
+    ]
 
