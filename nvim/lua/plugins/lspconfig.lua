@@ -14,9 +14,9 @@ end
 
 return {
 	"neovim/nvim-lspconfig",
-    dependencies = {
-        "SmiteshP/nvim-navic"
-    },
+	dependencies = {
+		"SmiteshP/nvim-navic",
+	},
 	config = function()
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 		local lspconfig = require("lspconfig")
@@ -93,11 +93,11 @@ return {
 
 				local python_path = get_python_path(new_root_dir)
 				if python_path then
-					new_config.settings = vim.tbl_deep_extend("force", new_config.settings or {}, {
-						python = {
-							pythonPath = python_path,
-						},
-					})
+					new_config.settings = vim.tbl_deep_extend(
+						"force",
+						new_config.settings or {},
+						{ python = { pythonPath = python_path } }
+					)
 				end
 			end,
 		})

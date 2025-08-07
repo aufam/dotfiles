@@ -54,20 +54,23 @@ vim.filetype.add({
 })
 
 function BufferList()
-	local buflist = {}
-	local current_buf = vim.fn.bufnr("%")
+	local result = {}
+	local current_buf = vim.api.nvim_get_current_buf()
 
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 		if vim.fn.buflisted(buf) == 1 then
 			local name = vim.fn.bufname(buf)
 			name = name ~= "" and vim.fn.fnamemodify(name, ":t") or "[No Name]"
-			local is_current = buf == current_buf and "*" or " "
-			local is_modified = vim.fn.getbufvar(buf, "&modified") == 1 and "+" or ""
-			table.insert(buflist, string.format("%s%d:%s%s", is_current, buf, name, is_modified))
+			local is_current = (buf == current_buf) and "*" or " "
+			local is_modified = vim.api.nvim_buf_get_option(buf, "modified") and "+" or ""
+			local is_readonly = not vim.api.nvim_buf_get_option(buf, "modifiable")
+				or vim.api.nvim_buf_get_option(buf, "readonly")
+			local ro_symbol = is_readonly and "[-]" or ""
+			table.insert(result, string.format("%s%d:%s%s%s", is_current, buf, name, is_modified, ro_symbol))
 		end
 	end
 
-	return table.concat(buflist, " ")
+	return table.concat(result, " ")
 end
 
 function ModeName()
@@ -87,11 +90,13 @@ function ModeName()
 end
 
 vim.opt.statusline = table.concat({
-	" %{v:lua.ModeName()}",
+	"",
+	"%{v:lua.ModeName()}",
 	"%{v:lua.BufferList()}",
 	"%=",
 	"%{&fileencoding !=# '' ? &fileencoding : &encoding}",
-	"%{&fileformat} ",
+	"%{&fileformat}",
+	"",
 }, " ")
 
 vim.opt.laststatus = 2

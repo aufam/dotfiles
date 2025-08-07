@@ -11,6 +11,14 @@ local function lsp_servers()
 	)
 end
 
+local function is_readonly()
+	if not vim.bo.modifiable or vim.bo.readonly then
+		return "readonly"
+	else
+		return ""
+	end
+end
+
 return {
 	"nvim-lualine/lualine.nvim",
 	branch = "master",
@@ -25,6 +33,7 @@ return {
 				lualine_a = {},
 				lualine_b = {},
 				lualine_c = {
+					is_readonly,
 					"filetype",
 					{
 						function()
@@ -33,33 +42,15 @@ return {
 						cond = function()
 							return navic.is_available()
 						end,
-						color = { bg = "none" },
 					},
 				},
-				lualine_z = {},
-				lualine_x = { "encoding", lsp_servers, "fileformat" },
+				lualine_x = { lsp_servers, "encoding", "fileformat" },
 				lualine_y = {},
+				lualine_z = {},
 			},
 			sections = {
 				lualine_a = {
-					{
-						"mode",
-						-- fmt = function(str)
-						-- 	local map = {
-						-- 		["NORMAL"] = "N",
-						-- 		["INSERT"] = "I",
-						-- 		["VISUAL"] = "V",
-						-- 		["V-LINE"] = "V-L",
-						-- 		["V-BLOCK"] = "V-B",
-						-- 		["REPLACE"] = "R",
-						-- 		["COMMAND"] = "C",
-						-- 		["SHELL"] = "S",
-						-- 		["TERMINAL"] = "T",
-						-- 		["SELECT"] = "S",
-						-- 	}
-						-- 	return map[str] or str:sub(1, 1)
-						-- end,
-					},
+					"mode",
 					{
 						function()
 							local str = require("noice").api.statusline.mode.get()
@@ -89,11 +80,11 @@ return {
 				lualine_b = {
 					{
 						"buffers",
-						buffers_color = { active = "lualine_b_normal", inactive = "lualine_c_inactive" },
 						show_filename_only = true,
 						hide_filename_extension = false,
 						show_modified_status = true,
 						use_mode_colors = true,
+						buffers_color = { active = "lualine_b_normal", inactive = "lualine_c_inactive" },
 						symbols = {
 							modified = " •",
 							alternate_file = "",

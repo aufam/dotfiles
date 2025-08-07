@@ -45,7 +45,8 @@ function! BufferList()
       let name = bufname(buf) !=# '' ? fnamemodify(bufname(buf), ':t') : '[No Name]'
       let is_current = (buf == bufnr('%')) ? '*' : ' '
       let is_modified = getbufvar(buf, '&modified') ? '+' : ''
-      call add(l:buflist, printf('%s%d:%s%s', is_current, buf, name, is_modified))
+      let is_readonly = !getbufvar(buf, '&modifiable') || getbufvar(buf, '&readonly') ? '[-]' : ''
+      call add(l:buflist, printf('%s%d:%s%s%s', is_current, buf, name, is_modified, is_readonly))
     endif
   endfor
   return join(l:buflist, ' ')
