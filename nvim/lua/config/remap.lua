@@ -54,3 +54,35 @@ for i = 1, 9 do
 		desc = "Go to buffer " .. i,
 	})
 end
+
+-- Convert this buffer into quickfix list
+vim.keymap.set("n", "<leader>q", function()
+	local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+	local items = {}
+
+	for _, line in ipairs(lines) do
+		local filename = string.match(line, "^[^:]*")
+
+		local lnum = tonumber(string.match(line, "^[^:]*:(%d+)"))
+		local col = tonumber(string.match(line, "^[^:]*:%d+:(%d+)"))
+		local text = string.match(line, "^[^:]*:%d+:%d+: (.*)")
+
+		if filename and vim.fn.filereadable(filename) == 1 then
+			-- Valid file: add as navigable quickfix entry
+
+			table.insert(items, {
+
+				filename = filename,
+				lnum = lnum or 0,
+				col = col or 0,
+				text = text or line,
+			})
+		else
+			-- No file found: just plain text entry
+			table.insert(items, { text = line })
+		end
+	end
+
+	vim.fn.setqflist(items)
+	vim.cmd("copen")
+end, { desc = "Parse current buffer into quickfix (check file existence)" })

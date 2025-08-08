@@ -191,3 +191,32 @@ function! TrimWhitespaceIfUTF8()
 endfunction
 nnoremap <silent> <leader>F :call TrimWhitespaceIfUTF8()<CR>
 
+" Parse current buffer into quickfix list
+function! BuildQfFromBuffer()
+  let l:lines = getline(1, '$')
+  let l:items = []
+
+  for l:line in l:lines
+    let l:filename = matchstr(l:line, '^[^:]*')
+
+    let l:lnum     = str2nr(matchstr(l:line, '^[^:]*:\zs\d\+'))
+    let l:col      = str2nr(matchstr(l:line, '^[^:]*:\d\+:\zs\d\+'))
+    let l:text     = matchstr(l:line, '^[^:]*:\d\+:\d\+: \zs.*')
+
+    if filereadable(l:filename)
+      call add(l:items, {
+            \ 'filename': l:filename,
+            \ 'lnum': l:lnum,
+            \ 'col': l:col,
+            \ 'text': empty(l:text) ? l:line : l:text })
+    else
+      call add(l:items, { 'text': l:line })
+    endif
+
+  endfor
+
+  call setqflist(l:items)
+  copen
+endfunction
+
+nnoremap <leader>q :call BuildQfFromBuffer()<CR>
