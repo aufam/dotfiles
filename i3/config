@@ -96,6 +96,7 @@ bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+x     exec --no-startup-id rofi -show run
 bindsym $mod+e     exec --no-startup-id rofi -show window
 bindsym Mod1+Tab   exec --no-startup-id rofi -show window
+bindsym Mod1+F4    kill
 
 # Custom scripts
 bindsym $mod+Escape  exec --no-startup-id sh      ~/.config/i3/scripts/power-menu.sh
@@ -190,6 +191,28 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # Reload/Restart
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+
+# ------------------------------------------------------------------------------
+# MOUSE
+# ------------------------------------------------------------------------------
+
+bindsym $mod+y exec --no-startup-id xdotool mousemove_relative -- -10 0
+bindsym $mod+u exec --no-startup-id xdotool mousemove_relative 0 10
+bindsym $mod+i exec --no-startup-id xdotool mousemove_relative 0 -10
+bindsym $mod+o exec --no-startup-id xdotool mousemove_relative 10 0
+
+bindsym $mod+Ctrl+y exec --no-startup-id xdotool mousemove_relative -- -50 0
+bindsym $mod+Ctrl+u exec --no-startup-id xdotool mousemove_relative 0 50
+bindsym $mod+Ctrl+i exec --no-startup-id xdotool mousemove_relative 0 -50
+bindsym $mod+Ctrl+o exec --no-startup-id xdotool mousemove_relative 50 0
+
+bindsym $mod+Shift+y exec --no-startup-id xdotool click 6
+bindsym $mod+Shift+u exec --no-startup-id xdotool click 5
+bindsym $mod+Shift+i exec --no-startup-id xdotool click 4
+bindsym $mod+Shift+o exec --no-startup-id xdotool click 7
+
+bindsym $mod+Return exec --no-startup-id xdotool click 1
+bindsym $mod+Shift+Return exec --no-startup-id xdotool click 3
 
 # ------------------------------------------------------------------------------
 # RESIZE MODE
