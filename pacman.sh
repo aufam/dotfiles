@@ -1,13 +1,26 @@
 #!/bin/bash
 
 sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm --needed \
-    pacman-contrib \
-    ca-certificates openssl git \
-    base-devel g++ cmake ninja clang \
-    python python-pip \
-    protobuf protobuf-c \
-    curl wget axel \
-    fish tmux neofetch bat eza fzf fd rsync ascii ripgrep xclip acpi usbutils \
-    scrot ranger ueberzugpp btop jq dunst
 
+install_all_of() {
+    sudo pacman -S --noconfirm --needed "$*"
+}
+
+install_all_of pacman-contrib \
+               ca-certificates openssl git curl wget axel
+
+install_all_of base-devel g++ ninja cmake clang \
+               python python-pip \
+               npm \
+               rust go zig
+
+# System tools
+install_all_of xclip xdotool acpi scrot usbutils dunst rofi playerctl
+
+# Dev tools
+install_all_of nvim fish tmux neofetch ranger jq ueberzugpp \
+               opencv protobuf protoc-dev \
+               sqlite postgresql
+
+# Better tools
+install_all_of fzf bat fd-find rsync ripgrep eza btop

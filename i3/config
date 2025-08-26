@@ -52,13 +52,15 @@ exec --no-startup-id pkill --quite -f dynamic-wallpaper.sh; sh ~/.config/i3/scri
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
-# Volume
+# Audio Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c 'pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status && VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP "[0-9]+%" | head -1) && notify-send -u low -r 9110 -t 800 "  Volume" "<b>$VOL</b>"'
 bindsym XF86AudioLowerVolume exec --no-startup-id sh -c 'pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status && VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP "[0-9]+%" | head -1) && notify-send -u low -r 9110 -t 800 "  Volume" "<b>$VOL</b>"'
 bindsym XF86AudioMute        exec --no-startup-id sh -c 'pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status && MUTE=$(pactl get-sink-mute @DEFAULT_SINK@) && notify-send -u low -r 9110 -t 800 "  Volume" "<b>${MUTE^}</b>"'
-
-# Mic Mute
-bindsym XF86AudioMicMute exec --no-startup-id sh -c 'pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status && MUTE=$(pactl get-source-mute @DEFAULT_SOURCE@) && notify-send -u low -r 9111 -t 800 "  Mic" "<b>${MUTE^}</b>"'
+bindsym XF86AudioMicMute     exec --no-startup-id sh -c 'pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status && MUTE=$(pactl get-source-mute @DEFAULT_SOURCE@) && notify-send -u low -r 9111 -t 800 "  Mic" "<b>${MUTE^}</b>"'
+bindsym XF86AudioNext        exec --no-startup-id sh -c 'playerctl next && sleep 0.5 && notify-send "Now Playing" "$(playerctl metadata --format "{{artist}} - {{title}}")"'
+bindsym XF86AudioPrev        exec --no-startup-id sh -c 'playerctl previous && sleep 0.5 && notify-send "Now Playing" "$(playerctl metadata --format "{{artist}} - {{title}}")"'
+bindsym XF86AudioPlay        exec --no-startup-id playerctl play
+bindsym XF86AudioStop        exec --no-startup-id playerctl pause
 
 # Brightness
 bindsym XF86MonBrightnessUp   exec --no-startup-id sh -c 'brightnessctl set +10% && BRIGHT=$(brightnessctl get) && MAX=$(brightnessctl max) && PERC=$((BRIGHT * 100 / MAX)) && notify-send -u low -r 9112 -t 800 " Brightness" "<b>${PERC}%</b>"'

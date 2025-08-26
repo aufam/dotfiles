@@ -84,6 +84,7 @@ return {
 						hide_filename_extension = false,
 						show_modified_status = true,
 						use_mode_colors = true,
+						mode = 4,
 						buffers_color = { active = "lualine_b_normal", inactive = "lualine_c_inactive" },
 						symbols = {
 							modified = " •",

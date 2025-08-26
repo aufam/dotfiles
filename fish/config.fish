@@ -2,6 +2,12 @@ function fish_greeting
     neofetch
 end
 
+fish_vi_key_bindings
+set -g fish_cursor_default     block
+set -g fish_cursor_insert      line
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_visual      block
+
 set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 set -x CPPXX_CACHE $HOME/.cache/cppxx
