@@ -4,6 +4,7 @@ configuration {
   drun-display-format: "{icon} {name} - {generic}";
   modi: "window,run,drun";
   show-icons: true;
+  kb-accept-entry: "Return,space";
 }
 
 @theme "/dev/null"
@@ -16,7 +17,6 @@ configuration {
   fg: #cdd6f4;
   fg-alt: #7f849c;
 
-  
   border: 0;
   margin: 0;
   padding: 0;
