@@ -15,8 +15,9 @@ IndentPPDirectives: AfterHash
 # Functions, constructors, template parrameters
 PackConstructorInitializers: Never
 BinPackParameters: false
-BinPackArguments: false
-AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: true
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
 AlwaysBreakAfterReturnType: None
 PenaltyReturnTypeOnItsOwnLine: 0
 AlwaysBreakTemplateDeclarations: Yes
