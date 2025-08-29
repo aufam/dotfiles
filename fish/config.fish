@@ -11,7 +11,6 @@ set -g fish_cursor_visual      block
 set -x PATH $PATH /usr/local/go/bin $HOME/go/bin
 set -x CPM_SOURCE_CACHE $HOME/.cache/CPM
 set -x CPPXX_CACHE $HOME/.cache/cppxx
-set -x BAT_THEME gruvbox
 
 # aliases
 alias please 'echo sudo $history[1] && eval command sudo $history[1]'
