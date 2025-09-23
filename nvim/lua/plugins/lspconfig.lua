@@ -19,10 +19,9 @@ return {
 	},
 	config = function()
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		local lspconfig = require("lspconfig")
 
 		-- lua
-		lspconfig.lua_ls.setup({
+		vim.lsp.config("lua_ls", {
 			on_attach = on_attach,
 			capabilities = capabilities,
 			settings = {
@@ -35,8 +34,7 @@ return {
 
 		-- cpp
 		local function get_compile_commands_dir()
-			local root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git")(vim.fn.getcwd())
-				or vim.fn.getcwd()
+			local root_dir = vim.fn.getcwd()
 
 			if vim.fn.filereadable(root_dir .. "/compile_commands.json") == 1 then
 				return root_dir
@@ -60,7 +58,7 @@ return {
 			end
 		end
 
-		lspconfig.clangd.setup({
+		vim.lsp.config("clangd", {
 			on_attach = on_attach,
 			capabilities = capabilities,
 			filetypes = { "c", "cpp", "cc", "cxx" },
@@ -75,47 +73,49 @@ return {
 				"--j=2",
 				"--compile-commands-dir=" .. get_compile_commands_dir(),
 			},
-			root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git", "compile_flags.txt"),
 		})
 
-		lspconfig.pyright.setup({
+		local function get_python_path(root_dir)
+			local paths = {
+				root_dir .. "/venv/bin/python",
+				root_dir .. "/.venv/bin/python",
+				root_dir .. "/env/bin/python",
+				root_dir .. "/.env/bin/python",
+				root_dir .. "/venv/Scripts/python.exe", -- Windows
+				root_dir .. "/.venv/Scripts/python.exe", -- Windows
+				root_dir .. "/env/Scripts/python.exe", -- Windows
+				root_dir .. "/.env/Scripts/python.exe", -- Windows
+			}
+			for _, path in ipairs(paths) do
+				if vim.fn.executable(path) == 1 then
+					return path
+				end
+			end
+			return nil
+		end
+
+		vim.lsp.config("pyright", {
 			on_attach = on_attach,
 			capabilities = capabilities,
-			on_new_config = function(new_config, new_root_dir)
-				local function get_python_path(root_dir)
-					local paths = {
-						root_dir .. "/venv/bin/python",
-						root_dir .. "/.venv/bin/python",
-						root_dir .. "/env/bin/python",
-						root_dir .. "/.env/bin/python",
-						root_dir .. "/venv/Scripts/python.exe", -- Windows
-						root_dir .. "/.venv/Scripts/python.exe", -- Windows
-						root_dir .. "/env/Scripts/python.exe", -- Windows
-						root_dir .. "/.env/Scripts/python.exe", -- Windows
-					}
-					for _, path in ipairs(paths) do
-						if vim.fn.executable(path) == 1 then
-							return path
-						end
-					end
-					return nil
-				end
-
-				local python_path = get_python_path(new_root_dir)
-				if python_path then
-					new_config.settings = vim.tbl_deep_extend(
-						"force",
-						new_config.settings or {},
-						{ python = { pythonPath = python_path } }
-					)
-				end
-			end,
+			settings = {
+				python = {
+					pythonPath = get_python_path(vim.fn.getcwd()),
+					analysis = {
+						autoSearchPaths = true,
+						useLibraryCodeForTypes = true,
+						diagnosticMode = "openFilesOnly",
+					},
+				},
+			},
 		})
 
-		lspconfig.rust_analyzer.setup({ on_attach = on_attach, capabilities = capabilities })
-		lspconfig.gopls.setup({ on_attach = on_attach, capabilities = capabilities })
-		lspconfig.zls.setup({ on_attach = on_attach, capabilities = capabilities })
-		lspconfig.cmake.setup({ on_attach = on_attach, capabilities = capabilities })
-		lspconfig.buf_ls.setup({ on_attach = on_attach, capabilities = capabilities })
+		-- other servers
+		for _, server in ipairs({ "rust_analyzer", "gopls", "zls", "cmake", "buf_ls" }) do
+			vim.lsp.config(server, { on_attach = on_attach, capabilities = capabilities })
+		end
+
+		for _, server in ipairs({ "lua_ls", "clangd", "pyright", "rust_analyzer", "gopls", "zls", "cmake", "buf_ls" }) do
+			vim.lsp.enable(server)
+		end
 	end,
 }
