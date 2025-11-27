@@ -7,7 +7,7 @@ install_all_of() {
 }
 
 install_all_of pacman-contrib \
-               ca-certificates openssl git curl wget axel
+               ca-certificates openssl git curl wget axel pv
 
 install_all_of base-devel g++ ninja cmake clang \
                python python-pip \

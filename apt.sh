@@ -20,7 +20,7 @@ install_one_of() {
     return 1
 }
 
-install_all_of ca-certificates libssl-dev git curl wget axel
+install_all_of ca-certificates libssl-dev git curl wget axel pv
 
 install_all_of build-essential g++ ninja-build cmake clang \
                python3 python3-pip \
