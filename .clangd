@@ -1,5 +1,5 @@
 CompileFlags:
-  Add: [-std=c++23, -Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
+  Add: [-Wall, -Wextra, -Wpedantic, -Wnull-dereference, -Wuse-after-move]
 
 Index:
   StandardLibrary: false
@@ -19,5 +19,8 @@ Diagnostics:
       bugprone-reserved-identifier,
       modernize-use-trailing-return-type,
       modernize-use-nodiscard,
+      modernize-use-ranges,
+      modernize-use-using,
+      performance-enum-size,
     ]
 
