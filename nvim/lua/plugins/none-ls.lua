@@ -8,6 +8,11 @@ return {
 
 		null_ls.setup({
 			sources = {
+				null_ls.builtins.formatting.clang_format.with({
+					condition = function(utils)
+						return utils.root_has_file(".clang-format")
+					end,
+				}),
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.gofmt,
 				null_ls.builtins.formatting.goimports_reviser,
