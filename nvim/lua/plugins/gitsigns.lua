@@ -20,6 +20,7 @@ return {
 			},
 		})
 		vim.keymap.set("n", "<leader>gn", ":Gitsigns next_hunk<CR>", { desc = "Gitsigns: Go to next Git hunk" })
+		vim.keymap.set("n", "<leader>gN", ":Gitsigns prev_hunk<CR>", { desc = "Gitsigns: Go to prev Git hunk" })
 		vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "Gitsigns: Preview Git hunk" })
 		vim.keymap.set("n", "<leader>gu", ":Gitsigns undo_stage_hunk<CR>", { desc = "Gitsigns: Undo stage hunk" })
 		vim.keymap.set("n", "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Gitsigns: Stage this hunk" })
@@ -29,5 +30,6 @@ return {
 		vim.keymap.set("n", "<leader>gd", ":Gitsigns diffthis<CR>", { desc = "Gitsigns: Diff with index" })
 		vim.keymap.set("n", "<leader>gD", ":Gitsigns toggle_deleted<CR>", { desc = "Gitsigns: Toggle deleted lines" })
 		vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>", { desc = "Gitsigns: Show blame of this line" })
+		vim.keymap.set("n", "<leader>gB", ":Gitsigns blame<CR>", { desc = "Gitsigns: Show blame of this buffer" })
 	end,
 }

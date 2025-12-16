@@ -18,9 +18,9 @@ alias ..     'cd ..'
 alias ...    'cd ../..'
 alias ....   'cd ../../..'
 alias .....  'cd ../../../..'
-alias vim    'NO_LAZY=ON nvim'
 
-if type -q batcat; alias bat batcat; end
+if type -q nvim;    alias vim 'NO_LAZY=ON nvim'; end
+if type -q batcat;  alias bat batcat; end
 if type -q fd-find; alias fd fd-find; end
 
 if type -q eza
@@ -65,7 +65,7 @@ function gemini
         set prompt "$pre_prompt$argv"
     end
 
-    set api_url "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    set api_url "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent"
     set prompt_json (echo $prompt | jq -Rsa .)
     if set -q _flag_verbose
         printf "prompt:\n$prompt\n\n"
@@ -122,11 +122,4 @@ function ex
       end
     end
   end
-end
-
-# user script
-set -l script_dir (dirname (status -f))
-set -l file_to_source "$script_dir/user-script.fish"
-if test -f $file_to_source
-    source $file_to_source
 end
