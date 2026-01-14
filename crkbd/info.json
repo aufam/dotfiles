@@ -10,7 +10,7 @@
         "extrakey": false,
         "nkro": true,
         "oled": true,
-        "rgblight": true,
+        "rgblight": false,
         "rgb_matrix": false
     },
     "bootmagic": {
@@ -23,7 +23,7 @@
         }
     },
     "layout_aliases": {
-        "LAYOUT": "LAYOUT_split_3x6_3"
+        "LAYOUT": "LAYOUT_split_3x5_3"
     },
     "community_layouts": [ "split_3x5_3", "split_3x6_3" ],
     "layouts": {

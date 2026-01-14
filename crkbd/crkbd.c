@@ -104,32 +104,57 @@ bool oled_task_user(void) {
     static uint32_t tp                = 0;
     static uint8_t  current_tap_frame = 0;
     static uint32_t idle_cnt          = 0;
+    bool            w                 = false;
 
     if (key_pressed) {
         oled_write_raw_P(bongo_tap[current_tap_frame], ANIM_SIZE);
+        w = true;
         current_tap_frame ^= 1;
         key_pressed = false;
         next        = DO_ABSOLUTELY_NOTHING;
     } else if (key_released) {
         oled_write_raw_P(bongo_tap[2], ANIM_SIZE);
+        w            = true;
         key_released = false;
         next         = DO_NOTHING;
         tp           = timer_read32();
         idle_cnt     = 0;
     } else if (next == IDLE) {
         oled_write_raw_P(bongo_idle[idle_cnt++ % (sizeof(bongo_idle) / (ANIM_SIZE))], ANIM_SIZE);
+        w    = true;
         next = DO_NOTHING;
         tp   = timer_read32();
 
 #ifdef OLED_DISABLE_TIMEOUT
     } else if (next == SLEEP) {
         oled_write_raw_P(bongo_sleep, ANIM_SIZE);
+        w    = true;
         next = DO_ABSOLUTELY_NOTHING;
     } else if (next == DO_NOTHING && idle_cnt == (SLEEP_TIMEOUT) / (FRAME_PERIOD)) {
         next = SLEEP;
 #endif
     } else if (next == DO_NOTHING && timer_elapsed32(tp) > FRAME_PERIOD) {
         next = IDLE;
+    }
+
+    if (w) {
+        oled_set_cursor(0, 0);
+        switch (get_highest_layer(layer_state)) {
+            case 1:
+                oled_write_P(PSTR("COLEMAK"), false);
+                break;
+            case 2:
+                oled_write_P(PSTR("2"), false);
+                break;
+            case 3:
+                oled_write_P(PSTR("3"), false);
+                break;
+            case 4:
+                oled_write_P(PSTR("4"), false);
+                break;
+            default:
+                break;
+        }
     }
 
     return false;
