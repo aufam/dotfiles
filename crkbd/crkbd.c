@@ -86,7 +86,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    return is_keyboard_master() ? rotation : OLED_ROTATION_180;
+    return is_keyboard_master() ? OLED_ROTATION_0 : OLED_ROTATION_180;
 }
 
 bool oled_task_user(void) {

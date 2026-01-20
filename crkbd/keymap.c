@@ -16,7 +16,7 @@ enum {
     T_ALT = MT(MOD_LALT, KC_T),
 
     M_ALT   = MT(MOD_RALT, KC_M),
-    COM_SUP = MT(MOD_RGUI, KC_COMM),
+    COM_SUP = MT(MOD_LGUI, KC_COMM),
     DOT_CTL = MT(MOD_RCTL, KC_DOT),
     SLS_SFT = MT(MOD_RSFT, KC_SLSH),
 
