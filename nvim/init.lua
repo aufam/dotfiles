@@ -1,21 +1,4 @@
-function EnableTransparent()
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
-	vim.api.nvim_set_hl(0, "WinBar", { bg = "none" })
-	vim.api.nvim_set_hl(0, "WinBarNC", { bg = "none" })
-end
-
-function GoTo(str)
-	local path, line = str:match("^(.-):(%d+)")
-	if path and line then
-		vim.cmd("edit " .. path)
-		vim.cmd(line)
-	else
-		print("Invalid format:", str)
-	end
-end
+vim.g.transparent_background = vim.env.VIM_TRANSPARENT
 
 require("config.vim")
 
@@ -34,4 +17,13 @@ else
 end
 
 require("config.remap")
-EnableTransparent()
+
+function EnableTransparent()
+	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+	vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+	vim.api.nvim_set_hl(0, "WinBar", { bg = "none" })
+	vim.api.nvim_set_hl(0, "WinBarNC", { bg = "none" })
+end
+-- EnableTransparent()

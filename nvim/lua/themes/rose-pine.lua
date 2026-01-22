@@ -17,7 +17,7 @@ return {
 			styles = {
 				bold = true,
 				italic = true,
-				transparency = true,
+				transparency = vim.g.transparent_background,
 			},
 
 			groups = {
