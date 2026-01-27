@@ -18,6 +18,13 @@ return {
 				topdelete = { text = "󰘚" }, -- staged top delete
 				changedelete = { text = "󱗜" }, -- staged change + delete
 			},
+			preview_config = {
+				relative = "cursor",
+				row = 1,
+				col = 0,
+				style = "minimal",
+				border = "rounded",
+			},
 		})
 		vim.keymap.set("n", "<leader>gn", ":Gitsigns next_hunk<CR>", { desc = "Gitsigns: Go to next Git hunk" })
 		vim.keymap.set("n", "<leader>gN", ":Gitsigns prev_hunk<CR>", { desc = "Gitsigns: Go to prev Git hunk" })
