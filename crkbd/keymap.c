@@ -30,6 +30,18 @@ enum {
     CTRL_X = LCTL(KC_X),
     CTRL_C = LCTL(KC_C),
     CTRL_V = LCTL(KC_V),
+
+#ifdef RGB_MATRIX_ENABLE
+    LED_TOG = RM_TOGG,
+    LED_NXT = RM_NEXT,
+    LED_PRV = RM_NEXT,
+#endif
+#ifdef RGBLIGHT_ENABLE
+    LED_TOG = UG_TOGG,
+    LED_NXT = UG_NEXT,
+    LED_PRV = UG_NEXT,
+#endif
+
 };
 
 // clang-format off
@@ -86,11 +98,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [4] = LAYOUT(
         //,--------------------------------------------.                    ,--------------------------------------------.
-              KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      XXXXXXX, MS_BTN1,   MS_UP, MS_BTN2, XXXXXXX,
+              KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      LED_TOG, MS_BTN1,   MS_UP, MS_BTN2, XXXXXXX,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-              KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                      XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLU,
+              KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                      LED_NXT, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLU,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-            XXXXXXX, XXXXXXX, XXXXXXX,  KC_F11,  KC_F12,                      XXXXXXX, XXXXXXX, MS_WHLL, MS_WHLR, MS_WHLD,
+            XXXXXXX, XXXXXXX, XXXXXXX,  KC_F11,  KC_F12,                      LED_PRV, XXXXXXX, MS_WHLL, MS_WHLR, MS_WHLD,
         //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                          TO(0), _______, _______,    _______, _______,   TO(1)
                                    //`--------------------------'  `--------------------------'
