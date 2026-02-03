@@ -7,7 +7,7 @@
     },
     "features": {
         "bootmagic": false,
-        "extrakey": false,
+        "extrakey": true,
         "nkro": true,
         "oled": true,
         "rgblight": false,

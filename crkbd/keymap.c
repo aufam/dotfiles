@@ -34,12 +34,12 @@ enum {
 #ifdef RGB_MATRIX_ENABLE
     LED_TOG = RM_TOGG,
     LED_NXT = RM_NEXT,
-    LED_PRV = RM_NEXT,
+    LED_PRV = RM_PREV,
 #endif
 #ifdef RGBLIGHT_ENABLE
     LED_TOG = UG_TOGG,
     LED_NXT = UG_NEXT,
-    LED_PRV = UG_NEXT,
+    LED_PRV = UG_PREV,
 #endif
 
 };
