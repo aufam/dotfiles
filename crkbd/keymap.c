@@ -25,21 +25,27 @@ enum {
     SPC_L3  = LT(3, KC_SPACE),
     BSPC_L4 = LT(4, KC_BACKSPACE),
 
-    // ctrl+kc
-    CTRL_Z = LCTL(KC_Z),
-    CTRL_X = LCTL(KC_X),
-    CTRL_C = LCTL(KC_C),
-    CTRL_V = LCTL(KC_V),
-
 #ifdef RGB_MATRIX_ENABLE
     LED_TOG = RM_TOGG,
     LED_NXT = RM_NEXT,
     LED_PRV = RM_PREV,
+    LED_HU  = RM_HUEU,
+    LED_HD  = RM_HUED,
+    LED_SU  = RM_SATU,
+    LED_SD  = RM_SATD,
+    LED_VU  = RM_VALU,
+    LED_VD  = RM_VALD,
 #endif
 #ifdef RGBLIGHT_ENABLE
     LED_TOG = UG_TOGG,
     LED_NXT = UG_NEXT,
     LED_PRV = UG_PREV,
+    LED_HU  = UG_HUEU,
+    LED_HD  = UG_HUED,
+    LED_SU  = UG_SATU,
+    LED_SD  = UG_SATD,
+    LED_VU  = UG_VALU,
+    LED_VD  = UG_VALD,
 #endif
 
 };
@@ -88,9 +94,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //,--------------------------------------------.                    ,--------------------------------------------.
              KC_GRV, KC_TILD,   KC_UP, XXXXXXX,  KC_TAB,                      KC_HOME,  KC_END, KC_PGUP, KC_PGDN, KC_PSCR,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-            XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT,  KC_DEL,                      KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,
+             LED_VU, KC_LEFT, KC_DOWN, KC_RGHT,  KC_DEL,                      KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-             CTRL_Z,  CTRL_X,  CTRL_C,  CTRL_V, KC_BSPC,                      KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_QUOT,
+             LED_VD,  LED_SD,  LED_SU,  LED_HD,  LED_HU,                      KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_QUOT,
         //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                          TO(0), _______, _______,    _______, _______,   TO(0)
                                    //`--------------------------'  `--------------------------'

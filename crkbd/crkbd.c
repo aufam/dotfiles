@@ -1,7 +1,8 @@
 #include "quantum.h"
 
-#define ANIM_SIZE 512
-#define FRAME_PERIOD 200
+#ifndef OLED_ENABLE
+#    error "OLED must be enabled"
+#endif
 
 #if defined(OLED_TIMEOUT) && OLED_TIMEOUT > 0
 #    define SLEEP_TIMEOUT OLED_TIMEOUT
@@ -9,6 +10,8 @@
 #    define SLEEP_TIMEOUT 10000
 #endif
 
+#define ANIM_SIZE 512
+#define FRAME_PERIOD 200
 _Static_assert(SLEEP_TIMEOUT > FRAME_PERIOD && (SLEEP_TIMEOUT % FRAME_PERIOD) == 0, "SLEEP_TIMEOUT must be divisible by FRAME_PERIOD");
 
 static const char PROGMEM bongo_idle[][ANIM_SIZE] = {
@@ -67,15 +70,6 @@ static const char logo[ANIM_SIZE] PROGMEM =
 
 static bool key_pressed  = false;
 static bool key_released = false;
-static bool suspended    = false;
-
-void suspend_power_down_user() {
-    suspended = true;
-}
-
-void suspend_wakeup_init_user() {
-    suspended = false;
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed)
@@ -89,9 +83,12 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return is_keyboard_master() ? OLED_ROTATION_0 : OLED_ROTATION_180;
 }
 
-bool oled_task_user(void) {
-    if (suspended) return false;
+void suspend_power_down_user(void) {
+    oled_set_cursor(0, 0);
+    oled_write_P(PSTR("     zzz"), false);
+}
 
+bool oled_task_user(void) {
     if (!is_keyboard_master()) {
         static bool done = false;
         if (!done) {
