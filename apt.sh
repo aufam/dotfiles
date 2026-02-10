@@ -31,7 +31,7 @@ install_all_of xclip xdotool acpi scrot usbutils dunst rofi playerctl
 
 # Dev tools
 install_all_of vim fish tmux neofetch ranger jq ueberzug \
-               libopencv-dev libprotobuf-dev libprotoc-dev \
+               libopencv-dev libprotobuf-dev libprotoc-dev libgrpc-dev \
                libsqlite3-dev libpq-dev postgresql-client
 
 # Better tools
