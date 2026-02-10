@@ -65,19 +65,6 @@ return {
 			which_key = true,
 			neotree = true,
 		},
-		overrides = {
-			Normal = {
-				"#fddce3",
-				"#1d2021",
-
-				-- Additional highlight options can be included here
-				style = { "bold", "italic" },
-			},
-			Keyword = {
-				fg = "#ce96de",
-				bg = "#ae45be",
-			},
-		},
 		color_overrides = {},
 	},
 }

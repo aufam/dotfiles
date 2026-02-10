@@ -13,14 +13,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result centered and unfolded" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result centered and unfolded" })
 vim.keymap.set("n", "=ap", "ma=ap'a", { desc = "Re-indent current paragraph" })
-
 vim.keymap.set("n", "<leader><leader>", ":noh<CR>", { desc = "Clear search highlight", silent = true })
-vim.keymap.set("n", "<leader>F", function()
-	if vim.bo.fileencoding == "utf-8" then
-		vim.cmd("%s/\\r//ge")
-		vim.cmd("%s/\\s\\+$//e")
-	end
-end, { desc = "Trim trailing whitespace and \\r (UTF-8 only)", silent = true })
 
 -- In normal mode, paste over selection without overwriting unnamed register
 vim.keymap.set("n", "<leader>p", '"_dP', { desc = "Paste without overwriting register" })

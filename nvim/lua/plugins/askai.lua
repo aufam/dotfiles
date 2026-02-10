@@ -2,9 +2,9 @@ return {
 	"aufam/askai.nvim",
 	config = function()
 		require("askai").setup({
-			provider = "gemini", -- gemini or openai
+			provider = "gemini", -- "gemini"|"openai"|"anthropic"
 		})
 
-		vim.keymap.set("v", "<leader>ai", ":AskAI ", { desc = "askai: Ask AI about visual selections" })
+		vim.keymap.set({ "n", "v" }, "<leader>ai", ":AskAI ", { desc = "askai: Ask AI about visual selections" })
 	end,
 }

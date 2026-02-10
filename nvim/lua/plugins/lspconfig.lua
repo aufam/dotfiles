@@ -12,6 +12,88 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<leader>r", vim.lsp.buf.format, { buffer = bufnr, desc = "LSP: Format file", silent = true })
 end
 
+local enable_formatter = function(augroup, client, bufnr)
+	if client.supports_method("textDocument/formatting") then
+		vim.api.nvim_clear_autocmds({
+			group = augroup,
+			buffer = bufnr,
+		})
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = augroup,
+			buffer = bufnr,
+			callback = function()
+				vim.lsp.buf.format({
+					bufnr = bufnr,
+				})
+			end,
+		})
+	end
+end
+
+local get_python_path = function(root_dir)
+	local paths = {
+		root_dir .. "/venv/bin/python",
+		root_dir .. "/.venv/bin/python",
+		root_dir .. "/env/bin/python",
+		root_dir .. "/.env/bin/python",
+		root_dir .. "/venv/Scripts/python.exe", -- Windows
+		root_dir .. "/.venv/Scripts/python.exe", -- Windows
+		root_dir .. "/env/Scripts/python.exe", -- Windows
+		root_dir .. "/.env/Scripts/python.exe", -- Windows
+	}
+	for _, path in ipairs(paths) do
+		if vim.fn.executable(path) == 1 then
+			return path
+		end
+	end
+	return nil
+end
+
+local function get_compile_commands_dir()
+	local root_dir = vim.fn.getcwd()
+
+	if vim.fn.filereadable(root_dir .. "/compile_commands.json") == 1 then
+		return root_dir
+	elseif
+		vim.fn.isdirectory(root_dir .. "/build") == 1
+		and vim.fn.filereadable(root_dir .. "/build/compile_commands.json") == 1
+	then
+		return root_dir .. "/build"
+	elseif
+		vim.fn.isdirectory(root_dir .. "/debug") == 1
+		and vim.fn.filereadable(root_dir .. "/debug/compile_commands.json") == 1
+	then
+		return root_dir .. "/debug"
+	elseif
+		vim.fn.isdirectory(root_dir .. "/release") == 1
+		and vim.fn.filereadable(root_dir .. "/release/compile_commands.json") == 1
+	then
+		return root_dir .. "/release"
+	else
+		return root_dir -- fallback to root even if no compile_commands.json
+	end
+end
+
+local settings = {
+	Lua = {
+		diagnostics = { globals = { "vim" } },
+		workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+	},
+	python = {
+		pythonPath = get_python_path(vim.fn.getcwd()),
+		analysis = {
+			autoSearchPaths = true,
+			useLibraryCodeForTypes = true,
+			diagnosticMode = "openFilesOnly",
+		},
+	},
+	zls = {
+		enable_autofix = true,
+		enable_inlay_hints = true,
+		warn_style = true,
+	},
+}
+
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
@@ -19,45 +101,9 @@ return {
 	},
 	config = function()
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-		-- lua
-		vim.lsp.config("lua_ls", {
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				Lua = {
-					diagnostics = { globals = { "vim" } },
-					workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-				},
-			},
-		})
+		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 		-- cpp
-		local function get_compile_commands_dir()
-			local root_dir = vim.fn.getcwd()
-
-			if vim.fn.filereadable(root_dir .. "/compile_commands.json") == 1 then
-				return root_dir
-			elseif
-				vim.fn.isdirectory(root_dir .. "/build") == 1
-				and vim.fn.filereadable(root_dir .. "/build/compile_commands.json") == 1
-			then
-				return root_dir .. "/build"
-			elseif
-				vim.fn.isdirectory(root_dir .. "/debug") == 1
-				and vim.fn.filereadable(root_dir .. "/debug/compile_commands.json") == 1
-			then
-				return root_dir .. "/debug"
-			elseif
-				vim.fn.isdirectory(root_dir .. "/release") == 1
-				and vim.fn.filereadable(root_dir .. "/release/compile_commands.json") == 1
-			then
-				return root_dir .. "/release"
-			else
-				return root_dir -- fallback to root even if no compile_commands.json
-			end
-		end
-
 		vim.lsp.config("clangd", {
 			on_attach = on_attach,
 			capabilities = capabilities,
@@ -75,46 +121,38 @@ return {
 			},
 		})
 
-		local function get_python_path(root_dir)
-			local paths = {
-				root_dir .. "/venv/bin/python",
-				root_dir .. "/.venv/bin/python",
-				root_dir .. "/env/bin/python",
-				root_dir .. "/.env/bin/python",
-				root_dir .. "/venv/Scripts/python.exe", -- Windows
-				root_dir .. "/.venv/Scripts/python.exe", -- Windows
-				root_dir .. "/env/Scripts/python.exe", -- Windows
-				root_dir .. "/.env/Scripts/python.exe", -- Windows
-			}
-			for _, path in ipairs(paths) do
-				if vim.fn.executable(path) == 1 then
-					return path
-				end
-			end
-			return nil
+		-- lsp only
+		for _, server in ipairs({ "lua_ls", "gopls", "cmake", "pyright", "tombi" }) do
+			vim.lsp.config(server, { on_attach = on_attach, capabilities = capabilities, settings = settings })
 		end
 
-		vim.lsp.config("pyright", {
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				python = {
-					pythonPath = get_python_path(vim.fn.getcwd()),
-					analysis = {
-						autoSearchPaths = true,
-						useLibraryCodeForTypes = true,
-						diagnosticMode = "openFilesOnly",
-					},
-				},
-			},
-		})
-
-		-- other servers
-		for _, server in ipairs({ "rust_analyzer", "gopls", "zls", "cmake", "buf_ls" }) do
-			vim.lsp.config(server, { on_attach = on_attach, capabilities = capabilities })
+		-- lsp + formatter
+		for _, server in ipairs({ "rust_analyzer", "zls", "buf_ls" }) do
+			vim.lsp.config(server, {
+				on_attach = function(client, bufnr)
+					enable_formatter(augroup, client, bufnr)
+					on_attach(client, bufnr)
+				end,
+				capabilities = capabilities,
+				settings = settings,
+			})
 		end
 
-		for _, server in ipairs({ "lua_ls", "clangd", "pyright", "rust_analyzer", "gopls", "zls", "cmake", "buf_ls" }) do
+		-- enable all
+		for _, server in ipairs({
+			-- cpp
+			"clangd",
+			-- lsp only
+			"lua_ls",
+			"gopls",
+			"cmake",
+			"pyright",
+			"tombi",
+			-- lsp + formatter
+			"rust_analyzer",
+			"zls",
+			"buf_ls",
+		}) do
 			vim.lsp.enable(server)
 		end
 	end,
