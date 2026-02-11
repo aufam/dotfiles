@@ -121,13 +121,25 @@ return {
 			},
 		})
 
+		local lsps = { "lua_ls", "gopls", "cmake", "pyright", "tombi", "nginx_language_server", "dockerls" }
+		local lsp_and_formatters = {
+			"rust_analyzer",
+			"zls",
+			"buf_ls",
+			"html",
+			"yamlls",
+			"cssls",
+			"docker_compose_language_service",
+			"gitlab_ci_ls",
+		}
+
 		-- lsp only
-		for _, server in ipairs({ "lua_ls", "gopls", "cmake", "pyright", "tombi" }) do
+		for _, server in ipairs(lsps) do
 			vim.lsp.config(server, { on_attach = on_attach, capabilities = capabilities, settings = settings })
 		end
 
 		-- lsp + formatter
-		for _, server in ipairs({ "rust_analyzer", "zls", "buf_ls" }) do
+		for _, server in ipairs(lsp_and_formatters) do
 			vim.lsp.config(server, {
 				on_attach = function(client, bufnr)
 					enable_formatter(augroup, client, bufnr)
@@ -139,20 +151,10 @@ return {
 		end
 
 		-- enable all
-		for _, server in ipairs({
-			-- cpp
-			"clangd",
-			-- lsp only
-			"lua_ls",
-			"gopls",
-			"cmake",
-			"pyright",
-			"tombi",
-			-- lsp + formatter
-			"rust_analyzer",
-			"zls",
-			"buf_ls",
-		}) do
+		local total = { "clangd" }
+		vim.list_extend(total, lsps)
+		vim.list_extend(total, lsp_and_formatters)
+		for _, server in ipairs(total) do
 			vim.lsp.enable(server)
 		end
 	end,
