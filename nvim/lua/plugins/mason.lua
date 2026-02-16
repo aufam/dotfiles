@@ -13,14 +13,15 @@ return {
 				"lua_ls",
 				"zls",
 				"buf_ls",
-				"tombi",
+				"ts_ls",
+				-- "tombi",
 				"yamlls",
 				"html",
 				"cssls",
 				"dockerls",
 				"docker_compose_language_service",
 				"gitlab_ci_ls",
-				"nginx_language_server",
+				--"nginx_language_server",
 			},
 			automatic_installation = false,
 		})
@@ -28,7 +29,7 @@ return {
 		require("mason-null-ls").setup({
 			ensure_installed = {
 				"stylua",
-				"black",
+				-- "black",
 				"shfmt",
 			},
 			automatic_installation = false,

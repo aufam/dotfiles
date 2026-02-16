@@ -78,6 +78,7 @@ local settings = {
 	Lua = {
 		diagnostics = { globals = { "vim" } },
 		workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+		format = { enable = false },
 	},
 	python = {
 		pythonPath = get_python_path(vim.fn.getcwd()),
@@ -107,7 +108,7 @@ return {
 		vim.lsp.config("clangd", {
 			on_attach = on_attach,
 			capabilities = capabilities,
-			filetypes = { "c", "cpp", "cc", "cxx" },
+			Filetypes = { "c", "cpp" },
 			cmd = {
 				"clangd",
 				"--header-insertion=never",
@@ -126,6 +127,7 @@ return {
 			"rust_analyzer",
 			"zls",
 			"buf_ls",
+			"ts_ls",
 			"html",
 			"yamlls",
 			"cssls",

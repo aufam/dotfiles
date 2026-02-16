@@ -24,7 +24,7 @@ return {
 			search = { "italic", "reverse" },
 			incsearch = { "italic", "reverse" },
 			types = { "italic" },
-			keyword = { "italic" },
+			keyword = { "bold" },
 			comment = { "italic" },
 		},
 		integrations = {
