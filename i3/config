@@ -11,7 +11,7 @@
 set $mod Mod4
 
 # Font and appearance
-font pango:Liga SFMono Nerd Font 8
+font pango:Space Mono 8
 
 # Gaps
 gaps inner 10
@@ -134,8 +134,8 @@ bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
 
 # Layout controls
-bindsym $mod+minus     split h
-bindsym $mod+backslash split v
+bindsym $mod+minus     split v
+bindsym $mod+backslash split h
 bindsym $mod+Shift+f   fullscreen toggle
 bindsym $mod+f         floating toggle
 
