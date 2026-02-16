@@ -1,12 +1,14 @@
+#:tombi schema.strict = false
+
 [general]
 import = [
-    "~/.config/alacritty/fonts/sf.toml",
+    "~/.config/alacritty/fonts/space.toml",
     "~/.config/alacritty/themes/google.toml"
 ]
 
 [terminal.shell]
 program = "sh"
-args = ["-c", " ~/.config/tmux/scripts/launch.sh"]
+args = ["-c", "~/.config/tmux/scripts/launch.sh"]
 
 [window]
 decorations = "none"
@@ -18,4 +20,3 @@ offset = { y = 9 }
 
 [colors.primary]
 background = "#000000"
-

@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "Space Mono", style = "Regular"}
+bold        = { family = "Space Mono", style = "Bold"}
+italic      = { family = "Space Mono", style = "Italic"}
+bold_italic = { family = "Space Mono", style = "Bold Italic"}

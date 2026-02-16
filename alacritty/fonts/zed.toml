@@ -1,5 +1,5 @@
 [font]
-normal      = { family = "ZedMono Nerd Font", style = "Extended Medium"}
-bold        = { family = "ZedMono Nerd Font", style = "Extended ExtraBold"}
-italic      = { family = "ZedMono Nerd Font", style = "Extended Italic"}
-bold_italic = { family = "ZedMono Nerd Font", style = "Extended ExtraBold Italic"}
+normal      = { family = "Zed Mono", style = "Extended Medium"}
+bold        = { family = "Zed Mono", style = "Extended ExtraBold"}
+italic      = { family = "Zed Mono", style = "Extended Italic"}
+bold_italic = { family = "Zed Mono", style = "Extended ExtraBold Italic"}

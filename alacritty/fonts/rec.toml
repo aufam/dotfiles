@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "Rec Mono Duotone", style = "Regular"}
+bold        = { family = "Rec Mono Duotone", style = "Bold"}
+italic      = { family = "Rec Mono Duotone", style = "Italic"}
+bold_italic = { family = "Rec Mono Duotone", style = "Bold Italic"}

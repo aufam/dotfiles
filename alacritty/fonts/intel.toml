@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "Intel One Mono", style = "Regular"}
+bold        = { family = "Intel One Mono", style = "Bold"}
+italic      = { family = "Intel One Mono", style = "Italic"}
+bold_italic = { family = "Intel One Mono", style = "Bold Italic"}

@@ -1,0 +1,5 @@
+[font]
+normal      = { family = "DM Mono", style = "Regular"}
+bold        = { family = "DM Mono", style = "Medium"}
+italic      = { family = "DM Mono", style = "Italic"}
+bold_italic = { family = "DM Mono", style = "Medium Italic"}
