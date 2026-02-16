@@ -9,6 +9,7 @@ Diagnostics:
   Suppress: [unknown-pragmas]
   ClangTidy:
     Add: [
+    #
       bugprone-*,
       clang-analyzer-nullability.*,
       modernize-*,
@@ -21,6 +22,7 @@ Diagnostics:
       modernize-use-nodiscard,
       modernize-use-ranges,
       modernize-use-using,
+      modernize-avoid-c-arrays,
       performance-enum-size,
     ]
 
