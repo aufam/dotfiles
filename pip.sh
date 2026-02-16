@@ -1,7 +1,23 @@
 #!/bin/bash
+set -e
 
-if python3 -c 'import sys; exit(sys.version_info >= (3, 11))'; then
-  sudo pip install httpie cmake-language-server debugpy pyright
-else
-  sudo pip install httpie cmake-language-server debugpy pyright --break-system-packages
+VENV="$HOME/.venv"
+PYTHON="${PYTHON:-python3}"
+
+PACKAGES=(
+	httpie
+	cmake-language-server
+	debugpy
+	pyright
+	black
+	tombi
+)
+
+if [ ! -x "$VENV/bin/python" ]; then
+	echo "Creating virtual environment at $VENV"
+	"$PYTHON" -m venv "$VENV"
+	"$VENV/bin/python" -m ensurepip --upgrade
 fi
+
+"$VENV/bin/python" -m pip install --upgrade pip
+"$VENV/bin/pip" install "${PACKAGES[@]}"
