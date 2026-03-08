@@ -220,3 +220,4 @@ function! BuildQfFromBuffer()
 endfunction
 
 nnoremap <leader>q :call BuildQfFromBuffer()<CR>
+nnoremap Q @q

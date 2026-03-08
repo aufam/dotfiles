@@ -8,7 +8,7 @@ local no_lazy = vim.env.NO_LAZY
 
 if (version.major > 0 or version.minor >= 10) and not no_lazy then
 	require("config.lazy")
-	vim.cmd.colorscheme("evergarden")
+	vim.cmd.colorscheme("koda")
 else
 	require("config.nolazy")
 	vim.notify(
