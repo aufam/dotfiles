@@ -95,6 +95,7 @@ function FileTypeIcon()
 	local icons = {
 		["c"] = " ",
 		["cpp"] = " ",
+		["cmake"] = " ",
 		["go"] = " ",
 		["rust"] = " ",
 		["zig"] = " ",
@@ -108,6 +109,9 @@ function FileTypeIcon()
 		["json"] = " ",
 		["yaml"] = " ",
 		["toml"] = " ",
+		["xml"] = "󰗀 ",
+
+		["text"] = "󰦨 ",
 		["markdown"] = " ",
 
 		["lua"] = " ",
