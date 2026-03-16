@@ -1,5 +1,6 @@
 " Leader key
 let mapleader = " "
+set hidden
 
 " Line numbers
 set number
@@ -40,13 +41,15 @@ set completeopt=menuone,noinsert,noselect
 " Status line
 function! BufferList()
   let l:buflist = []
+  let l:idx = 1
   for buf in range(1, bufnr('$'))
     if buflisted(buf)
       let name = bufname(buf) !=# '' ? fnamemodify(bufname(buf), ':t') : '[No Name]'
       let is_current = (buf == bufnr('%')) ? '*' : ' '
       let is_modified = getbufvar(buf, '&modified') ? '+' : ''
       let is_readonly = !getbufvar(buf, '&modifiable') || getbufvar(buf, '&readonly') ? '[-]' : ''
-      call add(l:buflist, printf('%s%d:%s%s%s', is_current, buf, name, is_modified, is_readonly))
+      call add(l:buflist, printf('%s%d:%s%s%s', is_current, idx, name, is_modified, is_readonly))
+      let idx += 1
     endif
   endfor
   return join(l:buflist, ' ')
@@ -65,7 +68,35 @@ function! ModeName()
         \ }, mode(), 'OTHER')
 endfunction
 
-set statusline=%{ModeName()}\ %{BufferList()}\ %=%{&fileencoding}\ %{&fileformat}
+function! FileTypeIcon()
+  let icons = {
+        \ 'c': ' ',
+        \ 'cpp': ' ',
+        \ 'go': ' ',
+        \ 'rust': ' ',
+        \ 'zig': ' ',
+        \ 'java': ' ',
+        \ 'javascript': ' ',
+        \ 'typescript': ' ',
+        \ 'html': ' ',
+        \ 'css': ' ',
+        \ 'json': ' ',
+        \ 'yaml': ' ',
+        \ 'toml': ' ',
+        \ 'markdown': ' ',
+        \ 'lua': ' ',
+        \ 'vim': ' ',
+        \ 'python': ' ',
+        \ 'fish': '󰈺 ',
+        \ 'bash': ' ',
+        \ 'sh': ' ',
+        \ 'dockerfile': '󰡨 ',
+        \ }
+  let ft = &filetype
+  return get(icons, ft, ' ')
+endfunction
+
+set statusline=\ %{ModeName()}\ %{BufferList()}\ %=%{&fileencoding}\ %{&fileformat}\ %{FileTypeIcon()}
 set laststatus=2
 set ruler
 set showmode
@@ -171,16 +202,22 @@ nnoremap <Tab> :bn<CR>
 nnoremap <leader>c :bd<CR>
 nnoremap <leader>C :bd!<CR>
 
-" Jump to specific buffer by number
-nnoremap <leader>1 :buffer 1<CR>
-nnoremap <leader>2 :buffer 2<CR>
-nnoremap <leader>3 :buffer 3<CR>
-nnoremap <leader>4 :buffer 4<CR>
-nnoremap <leader>5 :buffer 5<CR>
-nnoremap <leader>6 :buffer 6<CR>
-nnoremap <leader>7 :buffer 7<CR>
-nnoremap <leader>8 :buffer 8<CR>
-nnoremap <leader>9 :buffer 9<CR>
+for i in range(1, 9)
+  execute "nnoremap <silent> <leader>" . i . " :call GoToBuffer(" . i . ")<CR>"
+endfor
+
+function! GoToBuffer(buf_idx)
+  let ls_output = execute("ls")
+  let lines = split(ls_output, "\n")
+  if a:buf_idx < 1 || a:buf_idx > len(lines)
+    echom "Buffer index " . a:buf_idx . " is out of range."
+    return
+  endif
+
+  let line = lines[a:buf_idx - 1]
+  let bufnr = str2nr(line)
+  execute "buffer " . bufnr
+endfunction
 
 " Trim trailing whitespace and \r (UTF-8 only)
 function! TrimWhitespaceIfUTF8()
@@ -198,7 +235,6 @@ function! BuildQfFromBuffer()
 
   for l:line in l:lines
     let l:filename = matchstr(l:line, '^[^:]*')
-
     let l:lnum     = str2nr(matchstr(l:line, '^[^:]*:\zs\d\+'))
     let l:col      = str2nr(matchstr(l:line, '^[^:]*:\d\+:\zs\d\+'))
     let l:text     = matchstr(l:line, '^[^:]*:\d\+:\d\+: \zs.*')
@@ -212,7 +248,6 @@ function! BuildQfFromBuffer()
     else
       call add(l:items, { 'text': l:line })
     endif
-
   endfor
 
   call setqflist(l:items)

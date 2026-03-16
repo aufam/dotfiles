@@ -57,6 +57,7 @@ function BufferList()
 	local result = {}
 	local current_buf = vim.api.nvim_get_current_buf()
 
+	local idx = 1
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 		if vim.fn.buflisted(buf) == 1 then
 			local name = vim.fn.bufname(buf)
@@ -66,7 +67,8 @@ function BufferList()
 			local is_readonly = not vim.api.nvim_buf_get_option(buf, "modifiable")
 				or vim.api.nvim_buf_get_option(buf, "readonly")
 			local ro_symbol = is_readonly and "[-]" or ""
-			table.insert(result, string.format("%s%d:%s%s%s", is_current, buf, name, is_modified, ro_symbol))
+			table.insert(result, string.format("%s%d:%s%s%s", is_current, idx, name, is_modified, ro_symbol))
+			idx = idx + 1
 		end
 	end
 
@@ -89,6 +91,38 @@ function ModeName()
 	return modes[mode_code] or "OTHER"
 end
 
+function FileTypeIcon()
+	local icons = {
+		["c"] = " ",
+		["cpp"] = " ",
+		["go"] = " ",
+		["rust"] = " ",
+		["zig"] = " ",
+		["java"] = " ",
+
+		["javascript"] = " ",
+		["typescript"] = " ",
+		["html"] = " ",
+		["css"] = " ",
+
+		["json"] = " ",
+		["yaml"] = " ",
+		["toml"] = " ",
+		["markdown"] = " ",
+
+		["lua"] = " ",
+		["vim"] = " ",
+		["python"] = " ",
+		["fish"] = "󰈺 ",
+		["bash"] = " ",
+		["sh"] = " ",
+		["dockerfile"] = "󰡨 ",
+	}
+
+	local ft = vim.bo.filetype
+	return icons[ft] or " "
+end
+
 vim.opt.statusline = table.concat({
 	"",
 	"%{v:lua.ModeName()}",
@@ -96,7 +130,7 @@ vim.opt.statusline = table.concat({
 	"%=",
 	"%{&fileencoding !=# '' ? &fileencoding : &encoding}",
 	"%{&fileformat}",
-	"",
+	"%{v:lua.FileTypeIcon()}",
 }, " ")
 
 vim.opt.laststatus = 2

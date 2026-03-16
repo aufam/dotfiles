@@ -13,7 +13,15 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result centered and unfolded" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result centered and unfolded" })
 vim.keymap.set("n", "=ap", "ma=ap'a", { desc = "Re-indent current paragraph" })
-vim.keymap.set("n", "<leader><leader>", ":noh<CR>", { desc = "Clear search highlight", silent = true })
+
+vim.keymap.set("n", "<leader><leader>", function()
+	if vim.bo.fileencoding == "utf-8" then
+		vim.cmd("keeppatterns %s/\\r//ge")
+		vim.cmd("keeppatterns %s/\\s\\+$//e")
+	end
+	vim.cmd([[keeppatterns %s/\%x80..//ge]])
+	vim.cmd("noh")
+end, { desc = "Trim whitspace clear <80> symbols and clear search highlight", silent = true })
 
 -- In normal mode, paste over selection without overwriting unnamed register
 vim.keymap.set("n", "<leader>p", '"_dP', { desc = "Paste without overwriting register" })
@@ -42,10 +50,22 @@ vim.keymap.set("n", "<S-Tab>", ":bp<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<Tab>", ":bn<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>c", ":bd<CR>", { desc = "Close buffer" })
 vim.keymap.set("n", "<leader>C", ":bd!<CR>", { desc = "Force close buffer" })
+
 for i = 1, 9 do
-	vim.keymap.set("n", "<leader>" .. i, ":buffer " .. i .. "<CR>", {
-		desc = "Go to buffer " .. i,
-	})
+	vim.keymap.set("n", "<leader>" .. i, function()
+		local ls_output = vim.fn.execute("ls")
+
+		local lines = vim.split(ls_output, "\n")
+		local line = lines[i + 1]
+		if line == nil then
+			print("Buffer " .. i .. " not found.")
+			return
+		end
+
+		local bufnr_str, _ = line:match("^%s*(%d+)%s+(.-)$")
+		local bufnr = tonumber(bufnr_str)
+		vim.cmd("buffer " .. bufnr)
+	end, { desc = "Go to buffer " .. i })
 end
 
 -- Convert this buffer into quickfix list
@@ -55,16 +75,13 @@ vim.keymap.set("n", "<leader>q", function()
 
 	for _, line in ipairs(lines) do
 		local filename = string.match(line, "^[^:]*")
-
 		local lnum = tonumber(string.match(line, "^[^:]*:(%d+)"))
 		local col = tonumber(string.match(line, "^[^:]*:%d+:(%d+)"))
 		local text = string.match(line, "^[^:]*:%d+:%d+: (.*)")
 
 		if filename and vim.fn.filereadable(filename) == 1 then
 			-- Valid file: add as navigable quickfix entry
-
 			table.insert(items, {
-
 				filename = filename,
 				lnum = lnum or 0,
 				col = col or 0,
@@ -79,3 +96,5 @@ vim.keymap.set("n", "<leader>q", function()
 	vim.fn.setqflist(items)
 	vim.cmd("copen")
 end, { desc = "Parse current buffer into quickfix (check file existence)" })
+
+vim.keymap.set("n", "<leader>Q", "@q", { desc = "apply q macro" })
