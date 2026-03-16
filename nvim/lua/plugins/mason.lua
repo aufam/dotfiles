@@ -14,7 +14,6 @@ return {
 				"zls",
 				"buf_ls",
 				"ts_ls",
-				-- "tombi",
 				"yamlls",
 				"html",
 				"cssls",
@@ -29,7 +28,6 @@ return {
 		require("mason-null-ls").setup({
 			ensure_installed = {
 				"stylua",
-				-- "black",
 				"shfmt",
 			},
 			automatic_installation = false,
