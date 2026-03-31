@@ -1,8 +1,10 @@
+local common = require("config.common")
+
 return {
 	"kylechui/nvim-surround",
 	version = "^3.0.0",
 	event = "VeryLazy",
 	config = function()
-		require("nvim-surround").setup({})
+		require("nvim-surround").setup(common.surround)
 	end,
 }

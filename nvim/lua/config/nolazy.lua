@@ -1,146 +1,48 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy"
+local common = require("config.common")
 
+local lazypath = vim.fn.stdpath("data") .. "/lazy"
 for _, dir in ipairs({
 	lazypath .. "/askai.nvim",
+	lazypath .. "/copilot.vim",
 	lazypath .. "/gitsigns.nvim",
+	lazypath .. "/nvim-autopairs",
 	lazypath .. "/nvim-treesitter",
 	lazypath .. "/nvim-surround",
+	lazypath .. "/plenary.nvim",
+	lazypath .. "/telescope.nvim",
 	lazypath .. "/vim-easy-align",
 	lazypath .. "/vim-visual-multi",
-	lazypath .. "/nvim-cmp",
-	lazypath .. "/cmp-buffer",
-	lazypath .. "/cmp-path",
-	lazypath .. "/cmp-cmdline",
-	lazypath .. "/cmp-nvim-lsp",
-	lazypath .. "/cmp_luasnip",
-	lazypath .. "/LuaSnip",
+	lazypath .. "/non-existent",
 }) do
-	vim.opt.rtp:append(dir)
+	if vim.fn.isdirectory(dir) == 1 then
+		vim.opt.rtp:append(dir)
+	end
 end
 
-require("askai").setup({ provider = "gemini" })
+if pcall(require, "askai") then
+	require("askai").setup(common.askai)
+end
 
-require("nvim-surround").setup({})
+if pcall(require, "gitsigns") then
+	require("gitsigns").setup(common.gitsigns)
+end
 
-require("nvim-treesitter.configs").setup({
-	ensure_installed = {
-		-- vim/nvim related
-		"vim",
-		"vimdoc",
-		"lua",
+if pcall(require, "nvim-autopairs") then
+	require("nvim-autopairs").setup(common.autopairs)
+end
 
-		-- programming languages
-		"c",
-		"cpp",
-		"cmake",
-		"python",
-		"go",
-		"gomod",
-		"gosum",
-		"rust",
-		"zig",
-		"javascript",
-		"typescript",
-		"html",
+if pcall(require, "nvim-treesitter.config") then
+	require("nvim-treesitter.config").setup(common.treesitter)
+end
 
-		-- scripting
-		"bash",
-		"fish",
-		"tmux",
-		"make",
-		"json",
-		"yaml",
-		"xml",
-		"toml",
-		"regex",
+if pcall(require, "nvim-surround") then
+	require("nvim-surround").setup(common.surround)
+end
 
-		-- stack
-		"gitignore",
-		"dockerfile",
-		"nginx",
-		"proto",
-		"sql",
+if pcall(require, "telescope") then
+	common.telescope.setup()
+end
 
-		-- text
-		"markdown",
-		"doxygen",
-	},
-	sync_install = false,
-	auto_install = false,
-	ignore_install = {},
-	modules = {},
-	highlight = { enable = true },
-	indent = { enable = true },
-})
-
-require("gitsigns").setup({
-	signs = {
-		add = { text = "" }, -- unstaged add
-		change = { text = "" }, -- unstaged change
-		delete = { text = "" }, -- unstaged delete
-		topdelete = { text = "󰐊" },
-		changedelete = { text = "󰍴" },
-		untracked = { text = "" },
-	},
-	signs_staged = {
-		add = { text = "" }, -- staged add (check-square)
-		change = { text = "" }, -- staged change (note)
-		delete = { text = "" }, -- staged delete (minus-square)
-		topdelete = { text = "󰘚" }, -- staged top delete
-		changedelete = { text = "󱗜" }, -- staged change + delete
-	},
-	preview_config = {
-		relative = "cursor",
-		row = 1,
-		col = 0,
-		style = "minimal",
-		border = "rounded",
-	},
-})
-
-local cmp = require("cmp")
-local luasnip = require("luasnip")
-
-cmp.setup({
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	completion = {
-		completeopt = "menu,menuone,noinsert",
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if luasnip.jumpable(1) then
-				luasnip.jump(1)
-			elseif cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			elseif cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
-		{ name = "path" },
-		{ name = "cmdline" },
-	}),
-})
+if pcall(require, "non-existent") then
+	require("non-existent").setup(common)
+end

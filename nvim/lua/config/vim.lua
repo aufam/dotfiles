@@ -127,6 +127,16 @@ function FileTypeIcon()
 	return icons[ft] or " "
 end
 
+function LspServers()
+	local names = {}
+
+	for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+		table.insert(names, client.name)
+	end
+
+	return table.concat(names, ", ")
+end
+
 vim.opt.statusline = table.concat({
 	"",
 	"%{v:lua.ModeName()}",
@@ -134,6 +144,7 @@ vim.opt.statusline = table.concat({
 	"%=",
 	"%{&fileencoding !=# '' ? &fileencoding : &encoding}",
 	"%{&fileformat}",
+	"%{v:lua.LspServers()}",
 	"%{v:lua.FileTypeIcon()}",
 }, " ")
 

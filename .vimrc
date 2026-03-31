@@ -1,5 +1,7 @@
 " Leader key
 let mapleader = " "
+
+" Allow hidden buffers
 set hidden
 
 " Line numbers
@@ -36,7 +38,6 @@ set showmatch
 set wildmenu
 set wildmode=longest:full,full
 set path+=**
-set completeopt=menuone,noinsert,noselect
 
 " Status line
 function! BufferList()
@@ -258,4 +259,17 @@ function! BuildQfFromBuffer()
 endfunction
 
 nnoremap <leader>q :call BuildQfFromBuffer()<CR>
+
+" Apply macro in register 'q' to current line
 nnoremap Q @q
+
+" Completion
+set completeopt=menu,menuone,noinsert,noselect
+set complete=.,w,b,u,t,i
+
+inoremap <C-Space> <C-x><C-p> " previous keyword
+inoremap <C-f> <C-x><C-f> " file path
+
+inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"

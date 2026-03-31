@@ -1,31 +1,10 @@
+local common = require("config.common")
+
 return {
 	"lewis6991/gitsigns.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
-		require("gitsigns").setup({
-			signs = {
-				add = { text = "" }, -- unstaged add
-				change = { text = "" }, -- unstaged change
-				delete = { text = "" }, -- unstaged delete
-				topdelete = { text = "󰐊" },
-				changedelete = { text = "󰍴" },
-				untracked = { text = "" },
-			},
-			signs_staged = {
-				add = { text = "" }, -- staged add (check-square)
-				change = { text = "" }, -- staged change (note)
-				delete = { text = "" }, -- staged delete (minus-square)
-				topdelete = { text = "󰘚" }, -- staged top delete
-				changedelete = { text = "󱗜" }, -- staged change + delete
-			},
-			preview_config = {
-				relative = "cursor",
-				row = 1,
-				col = 0,
-				style = "minimal",
-				border = "rounded",
-			},
-		})
+		require("gitsigns").setup(common.gitsigns)
 		vim.keymap.set("n", "<leader>gn", ":Gitsigns next_hunk<CR>", { desc = "Gitsigns: Go to next Git hunk" })
 		vim.keymap.set("n", "<leader>gN", ":Gitsigns prev_hunk<CR>", { desc = "Gitsigns: Go to prev Git hunk" })
 		vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "Gitsigns: Preview Git hunk" })

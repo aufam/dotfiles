@@ -97,4 +97,37 @@ vim.keymap.set("n", "<leader>q", function()
 	vim.cmd("copen")
 end, { desc = "Parse current buffer into quickfix (check file existence)" })
 
+-- Macro
 vim.keymap.set("n", "<leader>Q", "@q", { desc = "apply q macro" })
+
+-- Completion
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" }
+vim.opt.complete = { ".", "w", "b", "u", "t", "i" }
+
+vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { silent = true })
+vim.keymap.set("i", "<C-b>", "<C-x><C-n>", { silent = true })
+vim.keymap.set("i", "<C-f>", "<C-x><C-f>", { silent = true })
+
+vim.keymap.set("i", "<Down>", function()
+	if vim.fn.pumvisible() == 1 then
+		return "<C-n>"
+	else
+		return "<Down>"
+	end
+end, { expr = true, silent = true })
+
+vim.keymap.set("i", "<Up>", function()
+	if vim.fn.pumvisible() == 1 then
+		return "<C-p>"
+	else
+		return "<Up>"
+	end
+end, { expr = true, silent = true })
+
+vim.keymap.set("i", "<CR>", function()
+	if vim.fn.pumvisible() == 1 then
+		return "<C-y>"
+	else
+		return "<CR>"
+	end
+end, { expr = true, silent = true })
