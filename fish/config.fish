@@ -96,17 +96,80 @@ function gemini
 end
 
 function commit
-    set prompt "Write a concise git commit message in imperative mood. No quotes, no punctuation at the end."
-    set diff (git diff --staged --unified=0 | string collect)
-    set msg (printf "%s\n%s" "$prompt" "$diff" | gemini -l)
+    argparse 'l/long' -- $argv
+    or return
 
-    echo "message: $msg"
+    if set -q _flag_long
+        set prompt "
+        Write a git commit message using this format:
+
+        <emoji> <short subject>
+
+        <body explaining what and why>
+
+        Rules:
+        - imperative mood
+        - subject <= 72 chars
+        - no trailing period in subject
+        - blank line between subject and body
+        - body wrapped at ~72 chars
+        - do not repeat the subject in body
+
+        Emoji guide:
+        ✨ feat: new feature
+        🐛 fix: bug fix
+        ♻️ refactor: code change without behavior change
+        ⚡ perf: performance improvement
+        📝 docs: documentation only
+        🎨 style: formatting / lint
+        ✅ test: add/update tests
+        🔧 chore: build/config/tooling
+        🚀 ci: CI/CD changes
+        "
+    else
+        set prompt "
+        Write a single-line git commit message.
+
+        Rules:
+        - output only one line
+        - format: <emoji> <imperative subject>
+        - no body
+        - no quotes
+        - no trailing period
+        - <= 72 characters
+        - be specific and concise
+
+        Emoji guide:
+        ✨ feat
+        🐛 fix
+        ♻️ refactor
+        ⚡ perf
+        📝 docs
+        🎨 style
+        ✅ test
+        🔧 chore
+        🚀 ci
+        🔥 remove
+        "
+    end
+
+    set diff (git diff --staged --unified=0 | string collect)
+    set msg (printf "%s\n%s" "$prompt" "$diff" | gemini -l | string collect)
+
+    echo "message:"
+    echo "$msg"
+
     read -P "Commit with this message? [y/N] " confirm
     if test "$confirm" != y
         return 1
     end
 
-    git commit -m "$msg"
+    if set -q _flag_long
+        git commit -m (printf "%s" "$msg" | head -n1) \
+                   -m (printf "%s" "$msg" | tail -n +2)
+    else
+        git commit -m (printf "%s" "$msg" | head -n1)
+    end
 end
 
 # extract
