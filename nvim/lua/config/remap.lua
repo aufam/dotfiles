@@ -41,8 +41,8 @@ vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboar
 vim.keymap.set(
 	"n",
 	"<leader>s",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "Substitute word under cursor" }
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]],
+	{ desc = "Substitute word under cursor with confirm" }
 )
 
 -- Buffer navigation
