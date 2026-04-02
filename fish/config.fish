@@ -165,8 +165,7 @@ function commit
     end
 
     if set -q _flag_long
-        git commit -m (printf "%s" "$msg" | head -n1) \
-                   -m (printf "%s" "$msg" | tail -n +2)
+        printf "%s" "$msg" | git commit -F -
     else
         git commit -m (printf "%s" "$msg" | head -n1)
     end
