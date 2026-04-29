@@ -1,5 +1,5 @@
 function fish_greeting
-    neofetch
+    # neofetch
 end
 
 fish_vi_key_bindings
@@ -22,7 +22,7 @@ alias ....   'cd ../../..'
 alias .....  'cd ../../../..'
 
 if type -q nvim;    alias vim 'NO_LAZY=ON nvim'; end
-if type -q batcat;  alias bat batcat; end
+if type -q batcat;  alias bat batcat; alias cat "batcat -p"; end
 if type -q fd-find; alias fd fd-find; end
 
 if type -q eza
@@ -95,8 +95,52 @@ function gemini
         | jq -r '.candidates[0].content.parts[0].text // .error.message'
 end
 
+function qwen
+    argparse 'f/file=' 'x/xclip' 'v/verbose' 'l/long' -- $argv
+    or return
+
+    if set -q _flag_long
+        set pre_prompt ""
+    else
+        set pre_prompt "answer shortly\n"
+    end
+
+    set prompt "$pre_prompt$argv"
+    if test (count $argv) -eq 0; and not isatty stdin
+        while read line
+            set prompt "$prompt\n$line"
+        end
+    end
+
+    if set -q _flag_file
+        if test -f $_flag_file
+            set prompt "$prompt\n$(cat $_flag_file)"
+        else
+            echo "Error: File '$_flag_file' not found."
+            exit 1
+        end
+    end
+
+    if set -q _flag_xclip
+        set prompt "$prompt\n$(xclip -selection clipboard -o)"
+    end
+
+    set api_url "http://localhost:11434/api/generate"
+    set prompt_json (echo $prompt | jq -Rsa .)
+    if set -q _flag_verbose
+        printf "prompt:\n$prompt\n\n"
+        printf "response:\n"
+    end
+
+    curl -s "$api_url" \
+        -H "Content-Type: application/json" \
+        -X POST \
+        -d "{\"prompt\":$prompt_json,\"model\":\"qwen2.5:0.5b\",\"stream\":false}" \
+        | jq -r '.response // .error'
+end
+
 function commit
-    argparse 'l/long' -- $argv
+    argparse 'l/long' 'c/context=' -- $argv
     or return
 
     if set -q _flag_long
@@ -108,6 +152,7 @@ function commit
         <body explaining what and why>
 
         Rules:
+        - you must infer the appropriate emoji based on the type of change
         - imperative mood
         - subject <= 72 chars
         - no trailing period in subject
@@ -116,7 +161,6 @@ function commit
         - do not repeat the subject in body
 
         Emoji guide:
-        ✨ feat: new feature
         🐛 fix: bug fix
         ♻️ refactor: code change without behavior change
         ⚡ perf: performance improvement
@@ -125,12 +169,14 @@ function commit
         ✅ test: add/update tests
         🔧 chore: build/config/tooling
         🚀 ci: CI/CD changes
+        ✨ feat: new feature
         "
     else
         set prompt "
         Write a single-line git commit message.
 
         Rules:
+        - you must infer the appropriate emoji based on the type of change
         - output only one line
         - format: <emoji> <imperative subject>
         - no body
@@ -140,7 +186,6 @@ function commit
         - be specific and concise
 
         Emoji guide:
-        ✨ feat
         🐛 fix
         ♻️ refactor
         ⚡ perf
@@ -150,6 +195,17 @@ function commit
         🔧 chore
         🚀 ci
         🔥 remove
+        ✨ feat
+        "
+    end
+
+    if set -q _flag_context
+        set formatted (string join "\n- " $_flag_context)
+
+        set prompt "$prompt
+
+        Additional context:
+        - $formatted
         "
     end
 
@@ -160,14 +216,20 @@ function commit
     echo "$msg"
 
     read -P "Commit with this message? [y/N] " confirm
-    if test "$confirm" != y
+    switch $confirm
+    case y Y
+        if set -q _flag_long
+            printf "%s" "$msg" | git commit -F -
+        else
+            git commit -m (printf "%s" "$msg" | head -n1)
+        end
+    case e E
+        set tmpfile (mktemp)
+        printf "$s\n" "$msg" > $tmpfile
+        git commit -v -e -F $tmpfile
+        rm $tmpfile
+    case '*'
         return 1
-    end
-
-    if set -q _flag_long
-        printf "%s" "$msg" | git commit -F -
-    else
-        git commit -m (printf "%s" "$msg" | head -n1)
     end
 end
 
