@@ -1,0 +1,4 @@
+line-height = 2.0
+font-dirs = ["~/.local/share/fonts"]
+font-family = "Space Mono"
+theme = "github-dark"
