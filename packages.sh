@@ -27,11 +27,12 @@ download_and_extract() {
 }
 
 # ---- Versions ----
-GO_VERSION="1.24.0"
-ZIG_VERSION="0.15.1"
+GO_VERSION="1.26.3"
+ZIG_VERSION="0.15.2"
 LLVM_VERSION="22.1.4"
 NVIM_VERSION="0.11.4"
 JSON_TUI_VERSION="1.4.1"
+ARM_VERSION="15.2"
 
 # ---- Go ----
 if [ ! -d "go" ]; then
@@ -39,7 +40,7 @@ if [ ! -d "go" ]; then
 		"https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" \
 		"go${GO_VERSION}.linux-amd64.tar.gz"
 
-	ln -s "$(pwd)/go" "/usr/local/go"
+	sudo ln -s "$(pwd)/go" "/usr/local/go"
 fi
 
 # ---- Zig ----
@@ -49,7 +50,7 @@ if [ ! -d "$ZIG_DIR" ]; then
 		"https://ziglang.org/download/${ZIG_VERSION}/${ZIG_DIR}.tar.xz" \
 		"${ZIG_DIR}.tar.xz"
 
-	ln -s "$(pwd)/$ZIG_DIR/zig" "/usr/local/bin/zig"
+	sudo ln -s "$(pwd)/$ZIG_DIR/zig" "/usr/local/bin/zig"
 fi
 
 # ---- LLVM ----
@@ -59,10 +60,10 @@ if [ ! -d "$LLVM_DIR" ]; then
 		"https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_VERSION}/${LLVM_DIR}.tar.xz" \
 		"${LLVM_DIR}.tar.xz"
 
-	ln -s "$(pwd)/$LLVM_DIR/bin/clang" "/usr/local/bin/clang"
-	ln -s "$(pwd)/$LLVM_DIR/bin/clang++" "/usr/local/bin/clang++"
-	ln -s "$(pwd)/$LLVM_DIR/bin/clangd" "/usr/local/bin/clangd"
-	ln -s "$(pwd)/$LLVM_DIR/bin/clang-format" "/usr/local/bin/clang-format"
+	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clang" "/usr/local/bin/clang"
+	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clang++" "/usr/local/bin/clang++"
+	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clangd" "/usr/local/bin/clangd"
+	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clang-format" "/usr/local/bin/clang-format"
 fi
 
 # ---- Neovim ----
@@ -72,7 +73,7 @@ if [ ! -d "$NVIM_DIR" ]; then
 		"https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/${NVIM_DIR}.tar.gz" \
 		"${NVIM_DIR}.tar.gz"
 
-	ln -s "$(pwd)/$NVIM_DIR/bin/nvim" "/usr/local/bin/nvim"
+	sudo ln -s "$(pwd)/$NVIM_DIR/bin/nvim" "/usr/local/bin/nvim"
 fi
 
 # ---- json-tui ----
@@ -82,7 +83,21 @@ if [ ! -d "$JSON_TUI_DIR" ]; then
 		"https://github.com/ArthurSonzogni/json-tui/releases/download/v${JSON_TUI_VERSION}/${JSON_TUI_DIR}.tar.gz" \
 		"${JSON_TUI_DIR}.tar.gz"
 
-	ln -s "$(pwd)/$JSON_TUI_DIR/bin/json-tui" "/usr/local/bin/json-tui"
+	sudo ln -s "$(pwd)/$JSON_TUI_DIR/bin/json-tui" "/usr/local/bin/json-tui"
+fi
+
+# ---- arm none eabi gnu toolchain ----
+ARM_DIR="arm-gnu-toolchain-${ARM_VERSION}.rel1-x86_64-arm-none-eabi"
+if [ ! -d "$ARM_DIR" ]; then
+	download_and_extract \
+		"https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_VERSION}.rel1/binrel/${ARM_DIR}.tar.xz" \
+		"${ARM_DIR}.tar.xz"
+
+	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-g++" "/usr/local/bin/arm-none-eabi-g++"
+	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-gcc" "/usr/local/bin/arm-none-eabi-gcc"
+	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-objcopy" "/usr/local/bin/arm-none-eabi-objcopy"
+	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-objdump" "/usr/local/bin/arm-none-eabi-objdump"
+	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-size" "/usr/local/bin/arm-none-eabi-size"
 fi
 
 echo "✅ All tools installed successfully"
