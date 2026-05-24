@@ -18,7 +18,7 @@ install_all_of xclip xdotool acpi scrot usbutils dunst rofi playerctl
 
 # Dev tools
 install_all_of nvim fish tmux neofetch ranger jq ueberzugpp \
-	opencv protobuf protoc-dev grpc \
+	opencv protobuf grpc \
 	sqlite postgresql
 
 # Better tools

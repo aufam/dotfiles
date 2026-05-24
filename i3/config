@@ -29,7 +29,7 @@ gaps right 10
 exec --no-startup-id pgrep -x dex > /dev/null || dex --autostart --environment i3
 
 # Lock screen before suspend
-exec --no-startup-id pgrep -x xss-lock > /dev/null || xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id pgrep -x xss-lock > /dev/null || xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager tray applet
 exec --no-startup-id pgrep -x nm-applet > /dev/null || nm-applet
@@ -38,13 +38,13 @@ exec --no-startup-id pgrep -x nm-applet > /dev/null || nm-applet
 exec --no-startup-id xrdb -merge ~/.Xresources
 
 # Compositor for transparency and shadows
-exec --no-startup-id pkill --quite picom; picom
+exec_always --no-startup-id pkill -x picom; picom
 
 # Notification daemon
-exec --no-startup-id pkill --quite dunst; dunst
+exec_always --no-startup-id pkill -x dunst; dunst
 
 # Dynamic wallpaper script
-exec --no-startup-id pkill --quite -f dynamic-wallpaper.sh; sh ~/.config/i3/scripts/dynamic-wallpaper.sh
+exec_always --no-startup-id ~/.config/i3/scripts/dynamic-wallpaper.sh >> ~/.dynamic-wallpaper.log
 
 # ------------------------------------------------------------------------------
 # MEDIA & SCREENSHOTS
@@ -215,6 +215,9 @@ bindsym $mod+Shift+o exec --no-startup-id xdotool click 7
 
 bindsym $mod+Return exec --no-startup-id xdotool click 1
 bindsym $mod+Shift+Return exec --no-startup-id xdotool click 3
+
+bindsym $mod+Shift+p exec --no-startup-id xrandr --output eDP-1 --rotate normal
+bindsym $mod+p exec --no-startup-id xrandr --output eDP-1 --rotate inverted
 
 # ------------------------------------------------------------------------------
 # RESIZE MODE

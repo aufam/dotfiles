@@ -22,6 +22,7 @@ alias ....   'cd ../../..'
 alias .....  'cd ../../../..'
 
 if type -q nvim;    alias vim 'NO_LAZY=ON nvim'; end
+if type -q bat;     alias cat "bat -p"; end
 if type -q batcat;  alias bat batcat; alias cat "batcat -p"; end
 if type -q fd-find; alias fd fd-find; end
 

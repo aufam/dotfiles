@@ -24,5 +24,6 @@ Diagnostics:
       modernize-use-using,
       modernize-avoid-c-arrays,
       performance-enum-size,
+      performance-avoid-endl,
     ]
 
