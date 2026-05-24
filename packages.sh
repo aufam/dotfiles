@@ -2,6 +2,15 @@
 
 set -euo pipefail
 
+# ---- Versions ----
+GO_VERSION="1.26.3"
+ZIG_VERSION="0.15.2"
+LLVM_VERSION="22.1.4"
+NVIM_VERSION="0.11.4"
+JSON_TUI_VERSION="1.4.1"
+ARM_VERSION="15.2"
+PROTOBUF_VERSION="3.20.3"
+
 ROOT_DIR="$(pwd)"
 PKG_DIR="$ROOT_DIR/packages"
 INSTALL_DIR="/usr/local/bin"
@@ -20,19 +29,12 @@ download_and_extract() {
 	case "$archive" in
 	*.tar.gz) tar -xzf "$archive" ;;
 	*.tar.xz) tar -xf "$archive" ;;
+	*.zip) mkdir "${archive%.*}" && cd "${archive%.*}" && unzip "../$archive" && cd .. ;;
 	*) echo "Unknown archive format: $archive" && exit 1 ;;
 	esac
 
 	rm "$archive"
 }
-
-# ---- Versions ----
-GO_VERSION="1.26.3"
-ZIG_VERSION="0.15.2"
-LLVM_VERSION="22.1.4"
-NVIM_VERSION="0.11.4"
-JSON_TUI_VERSION="1.4.1"
-ARM_VERSION="15.2"
 
 # ---- Go ----
 if [ ! -d "go" ]; then
@@ -98,6 +100,16 @@ if [ ! -d "$ARM_DIR" ]; then
 	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-objcopy" "/usr/local/bin/arm-none-eabi-objcopy"
 	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-objdump" "/usr/local/bin/arm-none-eabi-objdump"
 	sudo ln -s "$(pwd)/$ARM_DIR/bin/arm-none-eabi-size" "/usr/local/bin/arm-none-eabi-size"
+fi
+
+PROTOC_DIR="protoc-${PROTOBUF_VERSION}-linux-x86_64"
+if [ ! -d "$PROTOC_DIR" ]; then
+	download_and_extract \
+		"https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOBUF_VERSION}/${PROTOC_DIR}.zip" \
+		"${PROTOC_DIR}.zip"
+
+	sudo ln -s "$(pwd)/$PROTOC_DIR/bin/protoc" "/usr/local/bin/protoc"
+	sudo ln -s "$(pwd)/$PROTOC_DIR/include/google" "/usr/local/include/google"
 fi
 
 echo "✅ All tools installed successfully"
