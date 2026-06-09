@@ -74,6 +74,70 @@ local function get_compile_commands_dir()
 	end
 end
 
+local function progress(client_id, token, value)
+	vim.schedule(function()
+		vim.lsp.handlers["$/progress"](nil, {
+			token = token,
+			value = value,
+		}, {
+			client_id = client_id,
+			method = "$/progress",
+		})
+	end)
+end
+
+local function carton_configure()
+	local token = "carton-configure"
+	local client = vim.lsp.get_clients({ name = "clangd" })[1]
+	if not client then
+		vim.notify("clangd is not active", vim.log.levels.ERROR, { title = token })
+		return
+	end
+
+	if vim.fn.filereadable("carton.toml") ~= 1 then
+		vim.notify("carton.toml is missing", vim.log.levels.ERROR, { title = token })
+		return
+	end
+
+	progress(client.id, token, {
+		kind = "begin",
+		title = "carton configure",
+		message = "Running...",
+	})
+
+	local function on_output(_, data)
+		if not data then
+			return
+		end
+
+		for _, line in ipairs(data) do
+			line = vim.trim(line)
+
+			if line ~= "" then
+				progress(client.id, token, {
+					kind = "report",
+					message = line,
+				})
+			end
+		end
+	end
+
+	vim.fn.jobstart({ "carton" }, {
+		stdout_buffered = false,
+		stderr_buffered = false,
+
+		on_stdout = on_output,
+		on_stderr = on_output,
+
+		on_exit = function(_, code)
+			progress(client.id, token, {
+				kind = "end",
+				message = code == 0 and "Done" or ("Failed (" .. code .. ")"),
+			})
+		end,
+	})
+end
+
 local settings = {
 	Lua = {
 		diagnostics = { globals = { "vim" } },
@@ -111,15 +175,26 @@ return {
 			Filetypes = { "c", "cpp" },
 			cmd = {
 				"clangd",
+				"--background-index", -- keep this
+				"--all-scopes-completion", -- 🔥 improves symbol resolution
+				"--completion-style=detailed",
+				"--clang-tidy",
 				"--header-insertion=never",
 				"--header-insertion-decorators=false",
-				"--clang-tidy=true",
-				"--background-index=true",
-				"--pch-storage=memory",
-				"--completion-style=detailed",
-				"--j=2",
+				"--pch-storage=memory", -- faster preamble reuse
+				"--limit-results=0", -- no truncation of results
+				"--j=8", -- 🔥 use ALL cores (important),
 				"--compile-commands-dir=" .. get_compile_commands_dir(),
 			},
+		})
+
+		vim.api.nvim_create_autocmd("BufWritePost", {
+			pattern = { "**/*.cppm", "carton.toml" },
+			callback = carton_configure,
+		})
+		vim.api.nvim_create_autocmd("BufNewFile", {
+			pattern = { "**/*.cpp", "**/*.cppm", "carton.toml" },
+			callback = carton_configure,
 		})
 
 		local lsps = { "lua_ls", "gopls", "cmake", "pyright", "tombi", "nginx_language_server", "dockerls" }
