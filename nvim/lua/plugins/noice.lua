@@ -164,7 +164,6 @@ local default_opts = {
 	markdown = {
 		hover = {
 			["|(%S-)|"] = vim.cmd.help, -- vim help links
-			["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
 		},
 		highlights = {
 			["|%S-|"] = "@text.reference",
@@ -215,6 +214,7 @@ return {
 		"hrsh7th/nvim-cmp",
 	},
 	config = function()
+		default_opts.markdown.hover["%[.-%]%((%S-)%)"] = require("noice.util").open
 		require("noice").setup(default_opts)
 	end,
 }
