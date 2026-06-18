@@ -6,8 +6,6 @@ PYTHON="${PYTHON:-python3}"
 
 PACKAGES=(
 	httpie
-	pygls==1.1.1
-	cmake-language-server
 	debugpy
 	pyright
 	black

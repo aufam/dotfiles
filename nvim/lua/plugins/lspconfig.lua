@@ -49,12 +49,10 @@ local get_python_path = function(root_dir)
 	return nil
 end
 
-local function get_compile_commands_dir()
+local function get_cmake_dir()
 	local root_dir = vim.fn.getcwd()
 
-	if vim.fn.filereadable(root_dir .. "/compile_commands.json") == 1 then
-		return root_dir
-	elseif
+	if
 		vim.fn.isdirectory(root_dir .. "/build") == 1
 		and vim.fn.filereadable(root_dir .. "/build/compile_commands.json") == 1
 	then
@@ -70,7 +68,18 @@ local function get_compile_commands_dir()
 	then
 		return root_dir .. "/release"
 	else
-		return root_dir -- fallback to root even if no compile_commands.json
+		return nil
+	end
+end
+
+local function get_compile_commands_dir(cmake_dir)
+	local root_dir = vim.fn.getcwd()
+	if vim.fn.filereadable(root_dir .. "/compile_commands.json") == 1 then
+		return root_dir
+	elseif cmake_dir ~= nil then
+		return cmake_dir
+	else
+		return nil
 	end
 end
 
@@ -86,7 +95,7 @@ local function progress(client_id, token, value)
 	end)
 end
 
-local function carton_configure()
+local function carton_configure(cmake_dir)
 	local token = "carton-configure"
 	local client = vim.lsp.get_clients({ name = "clangd" })[1]
 	if not client then
@@ -94,48 +103,52 @@ local function carton_configure()
 		return
 	end
 
-	if vim.fn.filereadable("carton.toml") ~= 1 then
-		vim.notify("carton.toml is missing", vim.log.levels.ERROR, { title = token })
-		return
-	end
+	local function run(title, cmd)
+		progress(client.id, token, {
+			kind = "begin",
+			title = title,
+			message = "Running...",
+		})
 
-	progress(client.id, token, {
-		kind = "begin",
-		title = "carton configure",
-		message = "Running...",
-	})
+		local function on_output(_, data)
+			if not data then
+				return
+			end
 
-	local function on_output(_, data)
-		if not data then
-			return
-		end
-
-		for _, line in ipairs(data) do
-			line = vim.trim(line)
-
-			if line ~= "" then
-				progress(client.id, token, {
-					kind = "report",
-					message = line,
-				})
+			for _, line in ipairs(data) do
+				line = vim.trim(line)
+				if line ~= "" then
+					progress(client.id, token, {
+						kind = "report",
+						message = line,
+					})
+				end
 			end
 		end
+
+		vim.fn.jobstart(cmd, {
+			stdout_buffered = false,
+			stderr_buffered = false,
+
+			on_stdout = on_output,
+			on_stderr = on_output,
+
+			on_exit = function(_, code)
+				progress(client.id, token, {
+					kind = "end",
+					message = code == 0 and "Done" or ("Failed (" .. code .. ")"),
+				})
+			end,
+		})
 	end
 
-	vim.fn.jobstart({ "carton" }, {
-		stdout_buffered = false,
-		stderr_buffered = false,
-
-		on_stdout = on_output,
-		on_stderr = on_output,
-
-		on_exit = function(_, code)
-			progress(client.id, token, {
-				kind = "end",
-				message = code == 0 and "Done" or ("Failed (" .. code .. ")"),
-			})
-		end,
-	})
+	if vim.fn.filereadable("carton.toml") == 1 then
+		run("carton configure", { "carton" })
+	elseif cmake_dir ~= nil then
+		run("cmake configure", { "sh", "-c", ("cmake -B %s && cmake --build %s"):format(cmake_dir, cmake_dir) })
+	else
+		vim.notify("carton.toml is missing", vim.log.levels.ERROR, { title = token })
+	end
 end
 
 local settings = {
@@ -157,6 +170,15 @@ local settings = {
 		enable_inlay_hints = true,
 		warn_style = true,
 	},
+	neocmake = {
+		format = {
+			enable = true,
+		},
+		lint = {
+			enable = true,
+		},
+		line_max_words = 120,
+	},
 }
 
 return {
@@ -169,35 +191,44 @@ return {
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 		-- cpp
-		vim.lsp.config("clangd", {
-			on_attach = on_attach,
-			capabilities = capabilities,
-			Filetypes = { "c", "cpp" },
-			cmd = {
-				"clangd",
-				"--background-index", -- keep this
-				"--all-scopes-completion", -- 🔥 improves symbol resolution
-				"--completion-style=detailed",
-				"--clang-tidy",
-				"--header-insertion=never",
-				"--header-insertion-decorators=false",
-				"--pch-storage=memory", -- faster preamble reuse
-				"--limit-results=0", -- no truncation of results
-				"--j=8", -- 🔥 use ALL cores (important),
-				"--compile-commands-dir=" .. get_compile_commands_dir(),
-			},
-		})
+		local cmake_dir = get_cmake_dir()
+		local compile_commands_dir = get_compile_commands_dir(cmake_dir)
+
+		if compile_commands_dir ~= nil then
+			vim.lsp.config("clangd", {
+				on_attach = on_attach,
+				capabilities = capabilities,
+				Filetypes = { "c", "cpp" },
+				cmd = {
+					"clangd",
+					"--background-index", -- keep this
+					"--all-scopes-completion", -- 🔥 improves symbol resolution
+					"--completion-style=detailed",
+					"--clang-tidy",
+					"--header-insertion=never",
+					"--header-insertion-decorators=false",
+					"--pch-storage=memory", -- faster preamble reuse
+					"--limit-results=0", -- no truncation of results
+					"--j=8", -- 🔥 use ALL cores (important),
+					"--compile-commands-dir=" .. compile_commands_dir,
+				},
+			})
+		end
 
 		vim.api.nvim_create_autocmd("BufWritePost", {
 			pattern = { "**/*.cppm", "carton.toml" },
-			callback = carton_configure,
+			callback = function(_)
+				carton_configure(cmake_dir)
+			end,
 		})
 		vim.api.nvim_create_autocmd("BufNewFile", {
 			pattern = { "**/*.cpp", "**/*.cppm", "carton.toml" },
-			callback = carton_configure,
+			callback = function(_)
+				carton_configure(cmake_dir)
+			end,
 		})
 
-		local lsps = { "lua_ls", "gopls", "cmake", "pyright", "tombi", "nginx_language_server", "dockerls" }
+		local lsps = { "lua_ls", "gopls", "pyright", "tombi", "nginx_language_server", "dockerls" }
 		local lsp_and_formatters = {
 			"rust_analyzer",
 			"zls",
@@ -208,6 +239,7 @@ return {
 			"cssls",
 			"docker_compose_language_service",
 			"gitlab_ci_ls",
+			"neocmake",
 		}
 
 		-- lsp only
