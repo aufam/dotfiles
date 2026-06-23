@@ -6,7 +6,7 @@ set -euo pipefail
 GO_VERSION="1.26.3"
 ZIG_VERSION="0.15.2"
 LLVM_VERSION="22.1.4"
-NVIM_VERSION="0.11.4"
+NVIM_VERSION="0.12.3"
 JSON_TUI_VERSION="1.4.1"
 ARM_VERSION="15.2"
 PROTOBUF_VERSION="3.20.3"
@@ -37,12 +37,14 @@ download_and_extract() {
 }
 
 # ---- Go ----
-if [ ! -d "go" ]; then
+GO_DIR_VER="go-v${GO_VERSION}"
+if [ ! -d "$GO_DIR_VER" ]; then
 	download_and_extract \
 		"https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" \
 		"go${GO_VERSION}.linux-amd64.tar.gz"
 
-	sudo ln -s "$(pwd)/go" "/usr/local/go"
+	mv "go" "$GO_DIR_VER"
+	sudo ln -s "$(pwd)/$GO_DIR_VER" "/usr/local/go"
 fi
 
 # ---- Zig ----
@@ -66,16 +68,19 @@ if [ ! -d "$LLVM_DIR" ]; then
 	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clang++" "/usr/local/bin/clang++"
 	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clangd" "/usr/local/bin/clangd"
 	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clang-format" "/usr/local/bin/clang-format"
+	sudo ln -s "$(pwd)/$LLVM_DIR/bin/clang-scan-deps" "/usr/local/bin/clang-scan-deps"
 fi
 
 # ---- Neovim ----
 NVIM_DIR="nvim-linux-x86_64"
-if [ ! -d "$NVIM_DIR" ]; then
+NVIM_DIR_VER="nvim-linux-x86_64-v${NVIM_VERSION}"
+if [ ! -d "$NVIM_DIR_VER" ]; then
 	download_and_extract \
 		"https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/${NVIM_DIR}.tar.gz" \
 		"${NVIM_DIR}.tar.gz"
 
-	sudo ln -s "$(pwd)/$NVIM_DIR/bin/nvim" "/usr/local/bin/nvim"
+	mv "$NVIM_DIR" "$NVIM_DIR_VER"
+	sudo ln -s "$(pwd)/$NVIM_DIR_VER/bin/nvim" "/usr/local/bin/nvim"
 fi
 
 # ---- json-tui ----
