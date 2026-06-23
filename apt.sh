@@ -20,21 +20,19 @@ install_one_of() {
 	return 1
 }
 
-install_all_of ca-certificates libssl-dev git curl wget axel pv
+install_all_of ca-certificates libssl-dev git curl wget
 
-install_all_of build-essential g++ ninja-build cmake clang \
-	python3 python3-pip \
-	npm
+install_all_of build-essential g++ ninja-build cmake python3 python3-pip npm
+
+install_all_of libopencv-dev libprotobuf-dev libgrpc-dev libsqlite3-dev libpq-dev postgresql-client
 
 # System tools
-install_all_of xclip xdotool acpi scrot usbutils dunst rofi playerctl
+install_all_of xclip xdotool acpi scrot usbutils dunst rofi playerctl neofetch
 
 # Dev tools
-install_all_of vim fish tmux neofetch ranger jq ueberzug \
-	libopencv-dev libprotobuf-dev libgrpc-dev \
-	libsqlite3-dev libpq-dev postgresql-client
+install_all_of vim fish tmux ranger jq ueberzug
 
 # Better tools
 install_one_of eza exa
 install_one_of btop htop
-install_all_of fzf bat fd-find rsync ripgrep
+install_all_of fzf bat
