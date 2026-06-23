@@ -18,4 +18,4 @@ install_all_of xclip xdotool acpi scrot usbutils dunst rofi playerctl neofetch
 install_all_of fish tmux ranger jq ueberzugpp
 
 # Better tools
-install_all_of fzf bat eza btop
+install_all_of fzf bat eza btop fd ripgrep
