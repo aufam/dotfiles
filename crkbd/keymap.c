@@ -20,6 +20,14 @@ enum {
     DOT_CTL = MT(MOD_RCTL, KC_DOT),
     SLS_SFT = MT(MOD_RSFT, KC_SLSH),
 
+    // apple
+    D_ALT   = MT(MOD_LALT, KC_D),
+    F_SUP   = MT(MOD_LGUI, KC_F),
+    S_ALT   = MT(MOD_LALT, KC_S),
+    T_SUP   = MT(MOD_LGUI, KC_T),
+    M_SUP   = MT(MOD_LGUI, KC_M),
+    COM_ALT = MT(MOD_RALT, KC_COMM),
+
     // layer tap
     ESC_L2  = LT(2, KC_ESC),
     SPC_L3  = LT(3, KC_SPACE),
@@ -57,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //,--------------------------------------------.                    ,--------------------------------------------.
                KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-              A_SFT,   S_CTL,   D_SUP,   F_ALT,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
+              A_SFT,   S_CTL,   D_ALT,   F_SUP,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-               KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,   M_ALT, COM_SUP, DOT_CTL, SLS_SFT,
+               KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,   M_SUP, COM_ALT, DOT_CTL, SLS_SFT,
         //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                          TO(2),  ESC_L2,  SPC_L3,    SC_SENT, BSPC_L4,   TO(4)
                                    //`--------------------------'  `--------------------------'
@@ -70,9 +78,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //,--------------------------------------------.                    ,--------------------------------------------.
                KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-              A_SFT,   R_CTL,   S_SUP,   T_ALT,    KC_D,                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O,
+              A_SFT,   R_CTL,   S_ALT,   T_SUP,    KC_D,                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O,
         //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-               KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_K,   M_ALT, COM_SUP, DOT_CTL, SLS_SFT,
+               KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_K,   M_SUP, COM_ALT, DOT_CTL, SLS_SFT,
         //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                          TO(0), _______, _______,    _______, _______,   TO(0)
                                    //`--------------------------'  `--------------------------'
