@@ -87,7 +87,6 @@ static const char logo_K[] PROGMEM     = {0x11, 0x09, 0x05, 0x03, 0x05, 0x09, 0x
 static const char logo_2[] PROGMEM     = {0x1F, 0x01, 0x01, 0x0E, 0x10, 0x11, 0x0E};
 static const char logo_3[] PROGMEM     = {0x0E, 0x11, 0x10, 0x0C, 0x08, 0x10, 0x1F};
 static const char logo_4[] PROGMEM     = {0x08, 0x08, 0x1F, 0x09, 0x0A, 0x0C, 0x08};
-static const char logo_5[] PROGMEM     = {0x0E, 0x11, 0x10, 0x10, 0x0F, 0x01, 0x1F};
 static const char logo_blank[] PROGMEM = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static const char logo_shift[] PROGMEM = {0x04, 0x04, 0x1F, 0x0E, 0x0A, 0x04, 0x04};
 static const char logo_cmd[] PROGMEM   = {0x0D, 0x12, 0x15, 0x0A, 0x15, 0x12, 0x0D};
@@ -243,18 +242,7 @@ bool oled_task_user(void) {
                 oled_set_cursor(0, 1);
                 oled_write_raw_P(logo_L, sizeof(logo_L));
                 oled_set_cursor(0, 2);
-                oled_write_raw(logo_4, sizeof(logo_4));
-                oled_set_cursor(0, 3);
-                oled_write_raw(logo_blank, sizeof(logo_blank));
-                break;
-
-            case 5:
-                oled_set_cursor(0, 0);
-                oled_write_raw_P(logo_blank, sizeof(logo_blank));
-                oled_set_cursor(0, 1);
-                oled_write_raw_P(logo_L, sizeof(logo_L));
-                oled_set_cursor(0, 2);
-                oled_write_raw_P(logo_5, sizeof(logo_5));
+                oled_write_raw_P(logo_4, sizeof(logo_4));
                 oled_set_cursor(0, 3);
                 oled_write_raw_P(logo_blank, sizeof(logo_blank));
                 break;
