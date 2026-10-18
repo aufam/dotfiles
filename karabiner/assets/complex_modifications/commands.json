@@ -1,0 +1,44 @@
+{
+  "title": "Command mods",
+  "rules": [{
+    "description": "Left Command: tap Escape, hold Command; Command + HJKL arrows",
+    "manipulators": [
+      {
+        "type": "basic",
+        "from": { "key_code": "left_command" },
+        "to_if_alone": [{ "key_code": "escape" }],
+        "to": [{ "key_code": "left_command", "lazy": true }]
+      },
+      {
+        "type": "basic",
+        "from": { "key_code": "h", "modifiers": { "mandatory": [ "left_command" ], "optional": [ "any" ] } },
+        "to": [{ "key_code": "left_arrow" }]
+      },
+      {
+        "type": "basic",
+        "from": { "key_code": "j", "modifiers": { "mandatory": [ "left_command" ], "optional": [ "any" ] } },
+        "to": [{ "key_code": "down_arrow" }]
+      },
+      {
+        "type": "basic",
+        "from": { "key_code": "k", "modifiers": { "mandatory": [ "left_command" ], "optional": [ "any" ] } },
+        "to": [{ "key_code": "up_arrow" } ]},
+      {
+        "type": "basic",
+        "from": { "key_code": "l", "modifiers": { "mandatory": [ "left_command" ], "optional": [ "any" ] } },
+        "to": [{ "key_code": "right_arrow" }]
+      }
+    ]
+  },
+  {
+    "description": "Right Command: tap Backspace, hold Right Command",
+    "manipulators": [
+      {
+        "type": "basic",
+        "from": { "key_code": "right_command" },
+        "to_if_alone": [{ "key_code": "delete_or_backspace" }],
+        "to": [{ "key_code": "right_command", "lazy": true }]
+      }
+    ]
+  }]
+}
