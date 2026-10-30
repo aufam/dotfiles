@@ -289,5 +289,32 @@ return {
 		for _, server in ipairs(total) do
 			vim.lsp.enable(server)
 		end
+
+		if vim.fn.executable("templ") == 1 then
+			vim.filetype.add({
+				extension = {
+					templ = "templ",
+				},
+			})
+
+			vim.lsp.config("templ", {
+				cmd = { "templ", "lsp" },
+				filetypes = { "templ" },
+				on_attach = function(client, bufnr)
+					enable_formatter(augroup, client, bufnr)
+					on_attach(client, bufnr)
+				end,
+				capabilities = capabilities,
+			})
+
+			vim.lsp.enable("templ")
+		end
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "cpp", "c", "go", "rust", "typescript", "javascript" },
+			callback = function()
+				vim.treesitter.start()
+			end,
+		})
 	end,
 }
